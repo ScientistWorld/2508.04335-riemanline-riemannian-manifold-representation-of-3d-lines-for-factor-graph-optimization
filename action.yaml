@@ -1,3 +1,3 @@
 action: done
 milestone: secondary_claims
-notes: "Final verification passed after CPU validation regenerated complete score files; workspace ready as a scaled synthetic RiemanLine gym."
+notes: "Final verification passed: secondary_claims is justified, docs were tightened for method-agnostic gym use, and validate.py --compare passes."

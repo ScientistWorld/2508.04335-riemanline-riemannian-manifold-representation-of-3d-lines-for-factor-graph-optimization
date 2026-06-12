@@ -8,8 +8,10 @@ The original benchmark reports Absolute Trajectory Error for pose estimation and
 
 ## Baselines and Targets
 
-This gym includes saved outputs from multiple geometric line optimizers on the same synthetic factor graph. The target behavior is to keep line reprojection accurate, reduce line direction/normal error, reduce direction spread within the parallel group, and use fewer effective line parameters.
+This gym includes saved reference outputs on the same synthetic factor graph. The target behavior is to keep line reprojection accurate, reduce line direction/normal error, reduce direction spread within the parallel group, and use fewer effective line parameters.
 
 ## Evaluation Protocol
 
-Run `scripts/reproduce.sh` or `scripts/run.sh` to generate the fixed-seed synthetic factor graphs, produce optimizer output JSON files, and call `scripts/evaluate.sh`. The standalone evaluator reads only saved output JSON files under `outputs/` and `outputs/harder/`; it does not import or execute any method implementation.
+A submitted method should write one JSON file per method variant under `outputs/` for `scaled_synthetic_parallel_lines` and under `outputs/harder/` for `scaled_synthetic_parallel_lines_harder`. Each file must include a `method` name, `num_parameters`, and a `lines` list containing `id`, `normal`, and `direction` for every scored 3D line.
+
+Run `scripts/evaluate.sh` to score existing output JSON files. Run `scripts/reproduce.sh` or `scripts/run.sh` to regenerate the fixed-seed synthetic factor graphs, produce the current reference outputs, and call the evaluator. The standalone evaluator reads only saved output JSON files; it does not import or execute any method implementation.

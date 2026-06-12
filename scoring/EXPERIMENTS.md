@@ -6,4 +6,4 @@ Tests whether a line-based optimizer can recover a group of parallel 3D line lan
 ## scaled_synthetic_parallel_lines_harder
 Repeats the same evaluation with more line landmarks, more camera views, and stronger pixel noise. This checks whether the compactness and structural-consistency benefits persist beyond the minimum scored setting.
 
-Each experiment includes an independent-line baseline and an explicit-constraint baseline, so improvements cannot come only from assuming parallel structure without accounting for parameter compactness.
+Each experiment includes reference outputs with different parameter counts and structural consistency, so improvements must be judged across accuracy, image-space fit, and compactness rather than any single metric alone.

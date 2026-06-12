@@ -40,5 +40,9 @@
 - CPU job `4b3ae4c3-066` completed the final validation run and regenerated `scores.json`, `scores_train.json`, and `scores_test.json` with both experiments and full metric coverage.
 - Final verification passed with the milestone unchanged; the gym is ready at scaled synthetic scope.
 
+### [2026-06-12 17:22] - secondary_claims
+- Final verifier reran `python validate.py --compare`; scoring, import separation, train/test wiring, and shared-path checks passed.
+- Tightened method-agnostic evaluation and scoring documentation while keeping the milestone unchanged.
+
 ## Stop Justification
 - Completed at milestone `secondary_claims`.

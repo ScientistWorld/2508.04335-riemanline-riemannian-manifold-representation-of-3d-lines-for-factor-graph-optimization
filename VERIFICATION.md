@@ -1,25 +1,24 @@
 # Verification Report
 
 ## Initial Assessment
-The workspace claimed `secondary_claims` and contained a scaled synthetic reproduction of RiemanLine's compact parallel-line optimization claims. The claim is justified for the shipped synthetic line-factor gym, not for the paper's full point-line-pose SLAM benchmark suite.
+The workspace entered final verification at `secondary_claims`. The claim is justified for the scaled synthetic gym: the implemented method preserves the paper's core line-reprojection computation and compact parallel-line state, and prior CPU container jobs regenerated the two scored experiments successfully.
 
-The final CPU validation job `4b3ae4c3-066` completed successfully. It regenerated the default and harder datasets, ran the independent-line baselines and the reproduced method, wrote `scoring/scores.json`, `scoring/scores_train.json`, and `scoring/scores_test.json`, then passed `python validate.py --compare`.
+`python validate.py --compare` passes. The evaluator reads saved output JSON artifacts and does not import from `method/`. The score files cover both experiments listed in `reference.json`, include benefit metrics for 3D line reconstruction and reprojection fit, and include constraint metrics for effective parameter count and parallel-direction consistency.
 
 ## Issues Found
-- Critical: Earlier in verification, `scoring/scores.json` was stale and did not cover every target experiment and metric. This would have made the gym score only part of the intended benchmark.
-- Minor: Some method-safe documentation named the reproduced approach too directly or did not clearly mark the reference values as scaled synthetic targets rather than full paper benchmark values.
-- Minor: Generated scheduler logs under `jobs/` and trajectory state were tracked in git.
+- **Minor:** `scoring/EXPERIMENTS.md` and `scoring/TARGETS.md` described one reference baseline mechanism more explicitly than needed for from-scratch users.
+- **Minor:** The login-node Python environment in this verification shell does not have `numpy`, so `scripts/evaluate.sh` cannot be run directly outside the packaged environment. `environment/setup.sh` installs `numpy` and `scipy`, and prior container jobs confirm the scripts run in the intended environment.
+- **Cosmetic / external:** `README.md` and `manifest.json` are currently special device nodes owned by the runtime environment, and `git restore` cannot unlink them. They are outside the reproduction code path; the scored gym files validate correctly.
 
 ## Fixes Applied
-- Regenerated and verified all score files. They now contain both `scaled_synthetic_parallel_lines` and `scaled_synthetic_parallel_lines_harder`, with all methods and all metrics matching `scoring/reference.json`.
-- Tightened `briefing/evaluation.md`, `scoring/TARGETS.md`, and `scoring/reference.json` notes so the from-scratch problem statement stays method-agnostic and the scaled-reference scope is explicit.
-- Removed generated `jobs/` and `trajectory/` artifacts from the git index; they are covered by `.gitignore`.
-- Rechecked separation constraints: `eval/` and `data/` do not import from `method/`, `scripts/download.sh` is self-contained and `shared/`-free, and committed source paths do not depend on `/home/user/shared`.
+- Reworded `scoring/EXPERIMENTS.md` so it describes only what each experiment measures: geometric accuracy, reprojection fit, structural consistency, and compactness.
+- Reworded `scoring/TARGETS.md` to focus on metrics, reference trade-offs, and fixed evaluation targets rather than baseline implementation details.
+- Clarified `briefing/evaluation.md` with the reusable output JSON contract for future methods.
 
 ## Final Judgment
-The workspace is ready to serve as a research gym at the `secondary_claims` milestone. Future improve-mode agents can compare against the reproduced method and baselines, and from-scratch agents can use the method-agnostic problem, data, and evaluation files without seeing the paper's implementation details.
+This workspace is ready to serve as a research gym at the reproduced `secondary_claims` milestone. Improve-mode agents can run the packaged scripts and compare against the saved method and baseline outputs. From-scratch agents get a method-agnostic problem statement, data generator, output contract, evaluator, and scoring rubric.
 
 - Milestone: secondary_claims
 - Ready for gym use: yes
 - Confidence: medium
-- Key limitation: scaled synthetic line-only factor graphs are used instead of the paper's full point-line-pose SLAM datasets and trajectory metrics.
+- Key limitation: the gym reproduces the paper on fixed procedural line-only factor graphs rather than the full original point-line-pose SLAM benchmarks.
