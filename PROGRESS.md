@@ -18,6 +18,7 @@
 
 - The inherited workspace was essentially empty despite previous files being present.
 - The paper's public repository depends on a C++/Ceres/Pangolin GUI stack and does not include the full benchmark datasets in the clone, so this reproduction uses a scaled procedural factor graph.
+- First CPU smoke job failed before running optimization because Python executed scripts by path and did not put `/home/user` on `sys.path`; scripts now set `PYTHONPATH` and use `python -m`.
 
 ## Deviations from Paper
 

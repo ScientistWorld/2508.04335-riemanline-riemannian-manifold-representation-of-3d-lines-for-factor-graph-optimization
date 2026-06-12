@@ -23,6 +23,7 @@
 set -e
 
 cd /home/user
+export PYTHONPATH="/home/user:${PYTHONPATH:-}"
 
 mkdir -p scoring
 
@@ -30,7 +31,7 @@ DATA_PATH="${1:-data/riemanline_synthetic.json}"
 OUTPUT_DIR="${2:-outputs}"
 SCORES_PATH="${3:-scoring/scores.json}"
 
-python eval/evaluate_outputs.py \
+python -m eval.evaluate_outputs \
   --data "$DATA_PATH" \
   --outputs-dir "$OUTPUT_DIR" \
   --scores "$SCORES_PATH"

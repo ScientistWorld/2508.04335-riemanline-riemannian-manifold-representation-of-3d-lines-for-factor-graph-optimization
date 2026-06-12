@@ -16,8 +16,9 @@
 set -e
 
 cd /home/user
+export PYTHONPATH="/home/user:${PYTHONPATH:-}"
 
 DATA_PATH="${1:-data/riemanline_synthetic.json}"
 OUTPUT_PATH="${2:-outputs/orthline.json}"
 
-python baseline/orthline_optimize.py --data "$DATA_PATH" --output "$OUTPUT_PATH"
+python -m baseline.orthline_optimize --data "$DATA_PATH" --output "$OUTPUT_PATH"
