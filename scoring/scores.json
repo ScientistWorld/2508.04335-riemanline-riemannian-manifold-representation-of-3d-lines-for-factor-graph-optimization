@@ -17,6 +17,24 @@
           "reprojection_rmse_px": 1.0472499908571395
         }
       }
+    },
+    "scaled_synthetic_parallel_lines_harder": {
+      "results": {
+        "orthline": {
+          "effective_params": 64.0,
+          "median_direction_error_deg": 0.3860429381704586,
+          "median_normal_error_deg": 0.3768292062530041,
+          "parallel_spread_deg": 0.544337939605842,
+          "reprojection_rmse_px": 1.289135952523518
+        },
+        "struct_riemanline": {
+          "effective_params": 34.0,
+          "median_direction_error_deg": 0.127620237742375,
+          "median_normal_error_deg": 0.19912214404599304,
+          "parallel_spread_deg": 0.0,
+          "reprojection_rmse_px": 1.4172014398375243
+        }
+      }
     }
   }
 }

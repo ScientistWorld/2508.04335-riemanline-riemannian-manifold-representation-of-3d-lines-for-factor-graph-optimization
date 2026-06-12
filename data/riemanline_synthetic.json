@@ -704,6 +704,7 @@
     }
   ],
   "name": "scaled_synthetic_parallel_lines",
+  "noise_px": 1.2,
   "notes": "Procedural factor graph with known camera poses and one group of parallel 3D line landmarks.",
   "observations": [
     {
