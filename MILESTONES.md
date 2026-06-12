@@ -33,4 +33,4 @@
 - Confirmed all six output artifacts now report the correct experiment names for default and harder settings.
 
 ## Stop Justification
-- Completed at milestone `secondary_claims` on the scaled reproduction suite.
+- Completed at milestone `secondary_claims`.
