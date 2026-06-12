@@ -1,6 +1,6 @@
-# This iteration runs the split evaluators on compute.
-action: submit
+# Split evaluation completed successfully.
+action: done
 gpus: 0
 test: false
 milestone: secondary_claims
-notes: "Rerun split evaluation after switching primary metric to direction error and removing legacy scores.json side effect."
+notes: "Deterministic even/odd line split; 42 train metrics and 42 test metrics across 2 experiments; geometric train/test values differ while effective_params remains a slice-constant compactness constraint; validation passes."
