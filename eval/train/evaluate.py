@@ -36,9 +36,10 @@ def _subset_reprojection_rmse_px(
     dataset: dict[str, Any],
     lines_by_id: dict[int, dict[str, Any]],
     selected_ids: set[int],
-) -> float:
+) -> tuple[float, float]:
     cameras = {int(camera["id"]): camera for camera in dataset["cameras"]}
     squared_errors: list[float] = []
+    endpoint_errors: list[float] = []
     for obs in dataset["observations"]:
         line_id = int(obs["line_id"])
         if line_id not in selected_ids:
@@ -50,9 +51,10 @@ def _subset_reprojection_rmse_px(
         for key in ("p0", "p1"):
             distance = point_line_distance(np.asarray(obs[key], dtype=float), image_line)
             squared_errors.append(distance * distance)
+            endpoint_errors.append(abs(distance))
     if not squared_errors:
         raise ValueError("selected train slice has no observations")
-    return float(np.sqrt(np.mean(squared_errors)))
+    return float(np.sqrt(np.mean(squared_errors))), float(np.percentile(endpoint_errors, 90))
 
 
 def _score_one(dataset: dict[str, Any], output: dict[str, Any], selected_ids: list[int]) -> dict[str, float]:
@@ -76,10 +78,18 @@ def _score_one(dataset: dict[str, Any], output: dict[str, Any], selected_ids: li
         normal_errors.append(angle_deg(est_n, gt_n))
         directions.append(est_d)
 
+    reprojection_rmse, p90_reprojection = _subset_reprojection_rmse_px(
+        dataset,
+        out_lines,
+        set(selected_ids),
+    )
+
     return {
         "median_direction_error_deg": float(np.median(dir_errors)),
+        "p90_direction_error_deg": float(np.percentile(dir_errors, 90)),
         "median_normal_error_deg": float(np.median(normal_errors)),
-        "reprojection_rmse_px": _subset_reprojection_rmse_px(dataset, out_lines, set(selected_ids)),
+        "reprojection_rmse_px": reprojection_rmse,
+        "p90_reprojection_error_px": p90_reprojection,
         "effective_params": float(output["num_parameters"]),
         "parallel_spread_deg": _parallel_spread_deg(directions),
     }

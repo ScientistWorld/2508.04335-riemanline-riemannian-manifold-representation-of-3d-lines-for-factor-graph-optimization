@@ -2,8 +2,8 @@
 # Once you set action to 'done', STOP immediately.
 # Do NOT sleep, poll, or wait. The system reads this file
 # only after your turn ends.
-action: pending
+action: done
 gpus: 0
 test: false
 milestone: secondary_claims
-notes: ""
+notes: "Improvements: added tail direction/reprojection metrics to train/test slices, completed metric descriptions, rebalanced coefficients toward geometric quality, documented checks and runtime concerns. Notes: no experiments or evaluators were run."
