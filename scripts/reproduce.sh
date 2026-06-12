@@ -18,7 +18,9 @@ set -e
 
 cd /home/user
 
-# TODO: implement full reproduction pipeline
-# e.g.:
-#   bash scripts/baseline.sh
-#   bash scripts/method.sh
+mkdir -p data outputs scoring
+
+python data/generate_synthetic.py --output data/riemanline_synthetic.json
+bash scripts/baseline.sh data/riemanline_synthetic.json outputs/orthline.json
+bash scripts/method.sh data/riemanline_synthetic.json outputs/struct_riemanline.json
+python validate.py --compare

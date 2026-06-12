@@ -13,8 +13,9 @@ set -e
 
 cd /home/user
 
-# Example: train a model
-python method/train.py --epochs 10 --lr 0.001
+mkdir -p data outputs scoring
 
-# Example: evaluate
-bash scripts/evaluate.sh checkpoints/best.pt
+python data/generate_synthetic.py --output data/riemanline_synthetic.json
+bash scripts/baseline.sh data/riemanline_synthetic.json outputs/orthline.json
+bash scripts/method.sh data/riemanline_synthetic.json outputs/struct_riemanline.json
+python validate.py --compare

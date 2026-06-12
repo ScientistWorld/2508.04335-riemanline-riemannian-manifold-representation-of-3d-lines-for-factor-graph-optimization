@@ -1,0 +1,292 @@
+#ifndef __VENOM_SRC_OPTIMIZER_COVISREIMAN_BUNDLEADJUSTMENT__
+#define __VENOM_SRC_OPTIMIZER_COVISREIMAN_BUNDLEADJUSTMENT__
+
+#include <ceres/ceres.h>
+
+#include "src/manager_env/EnvTrajectory.hpp"
+#include "src/optimizer/factor/LineProjectionFactor.hpp"
+#include "src/optimizer/factor/RiemanLineProjectionFactor.hpp"
+#include "src/optimizer/parametrization/line_parameterization.hpp"
+#include "src/optimizer/parametrization/pose_local_parameterization.hpp"
+#include "src/utils/UtilTransformer.hpp"
+
+namespace simulator
+{
+    namespace optimizer
+    {
+        class CovisPointRiemanLineBA
+        {
+        public:
+            static void optimizer(
+                simulator::Trajectory *ptr_robot_trajectory,
+                simulator::OptimizationManager &opti_para,
+                std::map<int, Eigen::Vector3d> &optimized_mappoints,
+                std::map<int, Eigen::Matrix<double, 3, 2>> &optimized_maplines,
+                std::map<int, Eigen::Matrix4d> &optimized_poses)
+            {
+                // ==== set parameters ====
+                constexpr size_t first_kf_id_in_map = 0;
+                constexpr int opmization_times = 1;
+                constexpr int max_iters = 5;
+                constexpr int min_obser_num = 3;
+                const float huber_thres = 1.5;
+                const float pixel_sigma = 1.5;
+
+                // ==== intrinsic ====
+                double fx, fy, cx, cy;
+                fx = ptr_robot_trajectory->cam_intri.fx;
+                fy = ptr_robot_trajectory->cam_intri.fy;
+                cx = ptr_robot_trajectory->cam_intri.cx;
+                cy = ptr_robot_trajectory->cam_intri.cy;
+
+                // ==== construct ceres optim parameters ====
+                ceres::Problem problem;
+                ceres::LossFunction *loss_function;
+                ceres::ParameterBlockOrdering *ordering = new ceres::ParameterBlockOrdering();
+                loss_function = new ceres::CauchyLoss(3.0 / fx);
+
+                // ====== 1. add mappoints ======
+                // double Para_Point_Landmark[opti_para.mappoints.size()][3];
+                // auto iteration_pt = opti_para.mappoints.rbegin();
+                // double Para_Point_Landmark[iteration_pt->first + 1][3];
+                // for (auto mp = opti_para.mappoints.begin(); mp != opti_para.mappoints.end(); mp++)
+                // {
+                //     int mp_id = mp->first;
+                //     if (opti_para.mappoints[mp_id] == Vec3::Zero())
+                //         continue;
+                //     Para_Point_Landmark[mp_id][0] = mp->second(0);
+                //     Para_Point_Landmark[mp_id][1] = mp->second(1);
+                //     Para_Point_Landmark[mp_id][2] = mp->second(2);
+                //     problem.AddParameterBlock(Para_Point_Landmark[mp_id], 3);
+                // }
+                std::map<int, double[3]> Para_Point_Landmark;
+                for (const auto &[mp_id, point] : opti_para.mappoints)
+                {
+                    if (point.norm() < 0.01)
+                        continue;
+
+                    Para_Point_Landmark[mp_id][0] = point.x();
+                    Para_Point_Landmark[mp_id][1] = point.y();
+                    Para_Point_Landmark[mp_id][2] = point.z();
+                    problem.AddParameterBlock(Para_Point_Landmark[mp_id], 3);
+                }
+
+                // ====== 2. add maplines ======
+                // double Para_Line_Feature[opti_para.maplines.size()][4];
+                std::map<int, Eigen::Matrix<double, 6, 1>> Para_Line_Feature;
+
+                for (const auto &ml : opti_para.maplines)
+                {
+                    int ml_id = ml.first;
+                    const Mat32 &line_endpoints = ml.second;
+
+                    // Skip uninitialized lines
+                    if (line_endpoints == Mat32::Zero())
+                        continue;
+
+                    // Check for invalid or too short line
+                    double line_length = (line_endpoints.col(0) - line_endpoints.col(1)).norm();
+                    if (line_length < 0.01)
+                    {
+                        std::cerr << "[Warning] Line " << ml_id << " too short.\n";
+                        continue;
+                    }
+
+                    // Compute PLK representation
+                    const Eigen::Vector3d &start = line_endpoints.col(0);
+                    const Eigen::Vector3d &end = line_endpoints.col(1);
+                    Eigen::Vector3d direction = (end - start).normalized();
+                    Eigen::Vector3d normal = start.cross(end).normalized();
+                    double d = (start.cross(end)).norm() / line_length;
+                    // consistency direction @Yanyan
+                    // if (normal.dot(direction) < 0)
+                    //     normal = -normal;
+                    Eigen::Matrix<double, 6, 1> LinePLK;
+                    LinePLK << d * normal, direction;
+                    // from plk to orth
+                    // Eigen::Vector4d LineOrth = UtiliLine::plk_to_orth(LinePLK);
+#if __VERBOSE__OFF
+                    // check plk_to_orth  and  orth_to_plk
+                    // maplines: 26.3424, 7.98188, 3.30027, 0.957031, 0.289986,3.30027, 27.5251, 27.5251
+                    Eigen::Matrix<double, 6, 1> opti_ml_endpoints = UtiliLine::orth_to_plk(LineOrth);
+                    Vector3d v = opti_ml_endpoints.head(3);
+                    Vector3d n = opti_ml_endpoints.tail(3);
+                    std::cout << "maplines: " << LinePLK.head(3)
+                              << ", " << LinePLK.tail(3)
+                              << ", " << LinePLK.head(3).norm() / LinePLK.tail(3).norm()
+                              << ", " << v
+                              << ", " << n
+                              << "," << v.norm() / n.norm()
+                              << ", " << LinePLK.head(3).norm() / v.norm()
+                              << ", " << LinePLK.tail(3).norm() / n.norm()
+                              << std::endl;
+#endif
+                    Para_Line_Feature[ml_id][0] = LinePLK(0);
+                    Para_Line_Feature[ml_id][1] = LinePLK(1);
+                    Para_Line_Feature[ml_id][2] = LinePLK(2);
+                    Para_Line_Feature[ml_id][3] = LinePLK(3);
+                    Para_Line_Feature[ml_id][4] = LinePLK(4);
+                    Para_Line_Feature[ml_id][5] = LinePLK(5);
+
+                    ceres::LocalParameterization *local_parameterization_line = new LineRiemanParameterization();
+                    problem.AddParameterBlock(Para_Line_Feature[ml_id].data(), 6, local_parameterization_line); // p,q
+                }
+
+                // std::cout<<"ssdsdfda"<<std::endl;
+
+                //  ====== 3. add camera pose  ======
+                double Para_Pose[opti_para.kfs.size()][7];
+                for (auto kf = opti_para.kfs.begin(); kf != opti_para.kfs.end(); kf++)
+                {
+                    int kf_id = kf->first;
+                    Eigen::Matrix4d Twc = kf->second;
+                    Eigen::Matrix3d Rot = Twc.block(0, 0, 3, 3);
+                    Eigen::Vector3d Tran = Twc.block(0, 3, 3, 1);
+                    Eigen::Quaterniond qua(Rot);
+
+                    Para_Pose[kf_id][0] = Tran(0);
+                    Para_Pose[kf_id][1] = Tran(1);
+                    Para_Pose[kf_id][2] = Tran(2);
+                    Para_Pose[kf_id][3] = qua.x();
+                    Para_Pose[kf_id][4] = qua.y();
+                    Para_Pose[kf_id][5] = qua.z();
+                    Para_Pose[kf_id][6] = qua.w();
+
+                    ceres::LocalParameterization *local_parameterization = new PoseLocalParameterization();
+                    problem.AddParameterBlock(Para_Pose[kf_id], 7, local_parameterization);
+                    if (kf_id == 0)
+                        problem.SetParameterBlockConstant(Para_Pose[kf_id]);
+                }
+
+                // ====== 4. add reprojection residuals ======
+                for (auto asso_mp_mea = opti_para.asso_mp_meas.begin(); asso_mp_mea != opti_para.asso_mp_meas.end(); asso_mp_mea++)
+                {
+                    int mp_id = asso_mp_mea->first;
+                    if (opti_para.mappoints[mp_id] == Vec3::Zero())
+                        continue;
+                    if (asso_mp_mea->second.size() < min_obser_num) // more than two frames detect this point
+                        continue;
+
+                    for (int i = 0; i < asso_mp_mea->second.size(); i++)
+                    {
+                        int kf_id_i = asso_mp_mea->second[i].first;
+                        Eigen::Vector2d mp_obser_i = asso_mp_mea->second[i].second;
+                        Eigen::Vector2d mp_obser_i_unit((mp_obser_i(0) - cx) / fx, (mp_obser_i(1) - cy) / fy);
+
+                        PointProjectionFactor *f = new PointProjectionFactor(mp_obser_i_unit);
+                        problem.AddResidualBlock(f, loss_function, Para_Pose[kf_id_i], Para_Point_Landmark[mp_id]);
+                    }
+                }
+
+                // ====== 4. add reprojection residuals ======
+                for (auto asso_ml_mea = opti_para.asso_ml_meas.begin(); asso_ml_mea != opti_para.asso_ml_meas.end(); asso_ml_mea++)
+                {
+                    int ml_id = asso_ml_mea->first;
+                    if (opti_para.maplines[ml_id] == Mat32::Zero())
+                        assert(1 == 0);
+                    if (asso_ml_mea->second.size() < min_obser_num) // more than two frames detect this point
+                        continue;
+
+                    for (int i = 0; i < asso_ml_mea->second.size(); i++)
+                    {
+                        int kf_id_i = asso_ml_mea->second[i].first;
+                        Eigen::Vector4d ml_obser_i = asso_ml_mea->second[i].second;
+
+                        Eigen::Vector4d mp_obser_i_unit(
+                            (ml_obser_i(0) - cx) / fx,
+                            (ml_obser_i(1) - cy) / fy,
+                            (ml_obser_i(2) - cx) / fx,
+                            (ml_obser_i(3) - cy) / fy);
+
+                        RiemanLineProjectionFactor *f = new RiemanLineProjectionFactor(mp_obser_i_unit);
+                        // RiemanGlobalLocalLineProjectionFactor *f = new RiemanGlobalLocalLineProjectionFactor(mp_obser_i_unit);
+
+                        problem.AddResidualBlock(f, loss_function, Para_Pose[kf_id_i], Para_Line_Feature[ml_id].data());
+                    }
+                }
+
+                // slove ceres problem
+                ceres::Solver::Options options;
+                options.linear_solver_type = ceres::SPARSE_SCHUR;
+                options.max_num_iterations = 100;
+                options.gradient_tolerance = 1e-6;
+                options.function_tolerance = 1e-7;
+                options.minimizer_progress_to_stdout = true;
+                // options.max_num_iterations = 5;
+                ceres::Solver::Summary summary;
+                ceres::Solve(options, &problem, &summary);
+#if __VERBOSE__
+                std::cout << summary.FullReport() << std::endl;
+#endif
+
+                // update ceres results
+                for (auto kf = opti_para.kfs.begin(); kf != opti_para.kfs.end(); kf++)
+                {
+                    int kf_id = kf->first;
+                    Eigen::Vector3d Tran(Para_Pose[kf_id][0], Para_Pose[kf_id][1], Para_Pose[kf_id][2]);
+                    Eigen::Quaterniond qua(Para_Pose[kf_id][6], Para_Pose[kf_id][3], Para_Pose[kf_id][4], Para_Pose[kf_id][5]);
+                    Eigen::Matrix3d Rot = qua.toRotationMatrix();
+                    Eigen::Matrix4d Twc = Eigen::Matrix4d::Identity();
+                    Twc.block(0, 0, 3, 3) = Rot;
+                    Twc.block(0, 3, 3, 1) = Tran;
+
+                    // std::cout<<"pose: "<< kf->second<<std::endl<<Twc<<std::endl;
+                    //  opti_para.kfs[kf_id] = Twc;
+                    optimized_poses[kf_id] = Twc;
+                }
+
+                // update mappoints
+                for (auto mp = opti_para.mappoints.begin(); mp != opti_para.mappoints.end(); mp++)
+                {
+                    int mp_id = mp->first;
+                    Vec3 optimized_mappoint;
+                    optimized_mappoint << Para_Point_Landmark[mp_id][0], //= mp->second(0);
+                        Para_Point_Landmark[mp_id][1],                   //= mp->second(1);
+                        Para_Point_Landmark[mp_id][2];                   //= mp->second(2);
+                    optimized_mappoints[mp_id] = optimized_mappoint;
+                    // std::cout<<"original: "<< mp->second(0)<<","<< mp->second(1)<< ","<< mp->second(2)<<std::endl;
+                    // std::cout << "optimized: " << optimized_mappoint(0) << "," << optimized_mappoint(1) << "," << optimized_mappoint(2) << std::endl;
+                }
+
+                // update maplines
+                for (auto asso_ml_mea = opti_para.asso_ml_meas.begin(); asso_ml_mea != opti_para.asso_ml_meas.end(); asso_ml_mea++)
+                {
+                    //
+
+                    int ml_id = asso_ml_mea->first;
+                    if (opti_para.maplines[ml_id] == Mat32::Zero())
+                        assert(1 == 0);
+                    if (asso_ml_mea->second.size() < min_obser_num) // more than two frames detect this point
+                        continue;
+
+                    // std::cout << "optimized_maplines_:" << std::endl;
+
+                    Eigen::Matrix<double, 6, 1> optimized_mapline;
+                    optimized_mapline << Para_Line_Feature[ml_id][0],
+                        Para_Line_Feature[ml_id][1],
+                        Para_Line_Feature[ml_id][2],
+                        Para_Line_Feature[ml_id][3],
+                        Para_Line_Feature[ml_id][4],
+                        Para_Line_Feature[ml_id][5];
+
+                    // Eigen::Vector3d endpoint_s = opti_para.maplines[ml_id].col(0);
+                    // Eigen::Vector3d endpoint_e = opti_para.maplines[ml_id].col(1);
+
+                    // Eigen::Matrix<double, 6, 1>
+                    //     opti_ml_plk = UtiliLine::orth_to_plk(optimized_mapline_orth);
+
+                    Vector6d endpoints = UtiliLine::plk_to_endpoints(optimized_mapline, opti_para.maplines[ml_id]);
+
+                    optimized_maplines[ml_id].block(0, 0, 3, 1) = endpoints.head(3);
+                    optimized_maplines[ml_id].block(0, 1, 3, 1) = endpoints.tail(3);
+
+                    // std::cout << "ml_id:" << ml_id << "optimized:" << optimized_maplines[ml_id] << std::endl;
+                }
+                return;
+            }
+        };
+    } // namespace optimizer
+
+} // namespace simulator
+
+#endif // __VENOM_SRC_OPTIMIZER_COVISREIMAN_BUNDLEADJUSTMENT__

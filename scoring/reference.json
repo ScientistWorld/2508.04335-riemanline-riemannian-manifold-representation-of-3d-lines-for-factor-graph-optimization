@@ -1,0 +1,34 @@
+{
+  "experiments": {
+    "scaled_synthetic_parallel_lines": {
+      "description": "Scaled synthetic parallel-line factor graph preserving the paper's line reprojection and shared-direction representation claims.",
+      "weight": 1.0,
+      "primary_metric": "median_direction_error_deg",
+      "metrics": {
+        "median_direction_error_deg": {"higher_is_better": false, "coefficient": -1.0},
+        "median_normal_error_deg": {"higher_is_better": false, "coefficient": -0.7},
+        "reprojection_rmse_px": {"higher_is_better": false, "coefficient": -0.5},
+        "effective_params": {"higher_is_better": false, "coefficient": -0.4},
+        "parallel_spread_deg": {"higher_is_better": false, "coefficient": -0.8}
+      },
+      "results": {
+        "orthline": {
+          "type": "baseline",
+          "median_direction_error_deg": 1.19,
+          "median_normal_error_deg": 1.19,
+          "reprojection_rmse_px": 0.0,
+          "effective_params": 48.0,
+          "parallel_spread_deg": 0.0
+        },
+        "struct_riemanline": {
+          "type": "proposed",
+          "median_direction_error_deg": 1.16,
+          "median_normal_error_deg": 1.16,
+          "reprojection_rmse_px": 0.0,
+          "effective_params": 26.0,
+          "parallel_spread_deg": 0.0
+        }
+      }
+    }
+  }
+}

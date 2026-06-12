@@ -26,5 +26,11 @@ cd /home/user
 
 mkdir -p scoring
 
-# TODO: implement evaluation using code in eval/
-# Must write scoring/scores.json at the end
+DATA_PATH="${1:-data/riemanline_synthetic.json}"
+OUTPUT_DIR="${2:-outputs}"
+SCORES_PATH="${3:-scoring/scores.json}"
+
+python eval/evaluate_outputs.py \
+  --data "$DATA_PATH" \
+  --outputs-dir "$OUTPUT_DIR" \
+  --scores "$SCORES_PATH"

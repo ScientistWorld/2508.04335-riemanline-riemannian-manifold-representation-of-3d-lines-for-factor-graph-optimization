@@ -10,5 +10,8 @@ set -e
 
 cd /home/user
 
-# TODO: run the paper's method
-# TODO: call scripts/evaluate.sh to score
+DATA_PATH="${1:-data/riemanline_synthetic.json}"
+OUTPUT_PATH="${2:-outputs/struct_riemanline.json}"
+
+python method/riemanline_optimize.py --data "$DATA_PATH" --output "$OUTPUT_PATH"
+bash scripts/evaluate.sh "$DATA_PATH" outputs scoring/scores.json

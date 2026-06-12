@@ -1,0 +1,48 @@
+%YAML:1.0
+
+#--------------------------------------------------------------------------------------------
+# Camera Parameters. Adjust them!
+#--------------------------------------------------------------------------------------------
+File.version: "1.0"
+
+Camera.type: "PinHole"
+
+# Camera calibration and distortion parameters (OpenCV) 
+Camera1.fx: 535.4 
+Camera1.fy: 539.2
+Camera1.cx: 320.1
+Camera1.cy: 247.6
+
+Camera1.k1: 0.0
+Camera1.k2: 0.0
+Camera1.p1: 0.0
+Camera1.p2: 0.0
+
+Camera.width: 640
+Camera.height: 480
+
+# Tracking parameters 
+Track.noise_input: 1
+
+Env.Trajectory.radius: 3
+Env.Map.env_width: 9    # 
+Env.Map.env_height: 4
+Env.Map.env_length: 9
+
+Env.ReadOpenStructure.bool: 0
+Env.Public.envtraj_path: "../../dataset/1002/datasets/box2/raw/camera_poses.txt"
+Env.Public.envpoint_path: "../../dataset/1002/datasets/box2/raw/point_landmarks.txt" #results/V103/3DMap_registered.txt"
+Env.Public.envline_path: "../../dataset/1002/datasets/box2/raw/line_landmarks.txt"
+Env.Public.associate_path: "../../dataset/1002/datasets/box2/raw/association.txt"
+
+Env.Record.envpoint_path: "gt_point_landmarks.txt"
+Env.Record.envline_path: "gt_line_landmarks.txt"
+Env.Public.envtraj_num: 633
+Env.Public.envpoint_num: 2560
+Env.Public.envline_num: 102
+
+# results_path 
+Evaluation.result_path: "../results/baseline_test/"
+
+# Camera frames per second 
+Camera.fps: 30

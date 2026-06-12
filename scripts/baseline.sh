@@ -17,4 +17,7 @@ set -e
 
 cd /home/user
 
-# TODO: run baseline
+DATA_PATH="${1:-data/riemanline_synthetic.json}"
+OUTPUT_PATH="${2:-outputs/orthline.json}"
+
+python baseline/orthline_optimize.py --data "$DATA_PATH" --output "$OUTPUT_PATH"
