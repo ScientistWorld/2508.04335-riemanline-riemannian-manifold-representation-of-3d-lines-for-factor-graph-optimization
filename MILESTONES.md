@@ -9,6 +9,9 @@
 - The StructRiemanLine implementation reduces effective line parameters from 48 to 26, enforces zero parallel spread, and improves median direction and normal errors relative to the independent-line baseline while keeping reprojection RMSE in the same range.
 - The evaluator is method-independent and reads the method output artifacts from `outputs/`.
 
+### [2026-06-12 16:30] - core_claim
+- Audited the inherited implementation after milestone reset. The method code implements the paper's shared-direction Riemannian line-group optimizer rather than a surrogate, and evaluation remains independent from `method/`.
+- Added a larger, noisier synthetic setting for a pending `core_claim_plus` run.
+
 ## Stop Justification
-- Completed at milestone `core_claim`.
-- Higher milestones would require reproducing the full C++/Ceres point-line-pose bundle adjustment on ICL-NUIM, TartanAir, or Open-Structure sequences, which is beyond the packaged scaled benchmark currently available in this workspace.
+- Not stopped: submitting the larger, noisier setting to test whether the core claim holds beyond the minimum experiment.

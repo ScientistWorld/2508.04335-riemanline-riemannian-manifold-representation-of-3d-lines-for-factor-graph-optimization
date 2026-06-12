@@ -14,7 +14,13 @@ from data.geometry import (
 )
 
 
-def generate(seed: int = 7, num_lines: int = 12, num_cameras: int = 8) -> dict:
+def generate(
+    seed: int = 7,
+    num_lines: int = 12,
+    num_cameras: int = 8,
+    noise_px: float = 1.2,
+    name: str = "scaled_synthetic_parallel_lines",
+) -> dict:
     rng = np.random.default_rng(seed)
     k = np.array([[520.0, 0.0, 320.0], [0.0, 520.0, 240.0], [0.0, 0.0, 1.0]])
     direction = normalize(np.array([0.28, 0.08, 0.96]))
@@ -63,7 +69,7 @@ def generate(seed: int = 7, num_lines: int = 12, num_cameras: int = 8) -> dict:
                 continue
             if not (-80 <= p0[0] <= 720 and -80 <= p0[1] <= 560 and -80 <= p1[0] <= 720 and -80 <= p1[1] <= 560):
                 continue
-            noise = rng.normal(0.0, 1.2, size=(2, 2))
+            noise = rng.normal(0.0, noise_px, size=(2, 2))
             observations.append(
                 {
                     "line_id": line_id,
@@ -74,8 +80,9 @@ def generate(seed: int = 7, num_lines: int = 12, num_cameras: int = 8) -> dict:
             )
 
     return {
-        "name": "scaled_synthetic_parallel_lines",
+        "name": name,
         "seed": seed,
+        "noise_px": noise_px,
         "cameras": cameras,
         "lines": lines,
         "parallel_groups": [list(range(num_lines))],
@@ -90,8 +97,10 @@ def main() -> None:
     parser.add_argument("--seed", type=int, default=7)
     parser.add_argument("--num-lines", type=int, default=12)
     parser.add_argument("--num-cameras", type=int, default=8)
+    parser.add_argument("--noise-px", type=float, default=1.2)
+    parser.add_argument("--name", default="scaled_synthetic_parallel_lines")
     args = parser.parse_args()
-    payload = generate(args.seed, args.num_lines, args.num_cameras)
+    payload = generate(args.seed, args.num_lines, args.num_cameras, args.noise_px, args.name)
     dump_json(args.output, payload)
     print(f"wrote {args.output} with {len(payload['lines'])} lines and {len(payload['observations'])} observations")
 

@@ -19,6 +19,7 @@ This supports the core claim in the scaled environment: the shared-direction Rie
 
 ## Remaining
 
+- A second fixed synthetic setting with 16 lines, 10 cameras, and higher pixel noise has been added and is pending a CPU job run. If it preserves the compactness and structure-consistency gains, the milestone can move to `core_claim_plus`.
 - Higher milestones would require reproducing more of the original benchmark suite, including point-line-pose bundle adjustment on the paper's ICL-NUIM, TartanAir, or Open-Structure sequences.
 - The reusable gym is ready for the current scaled benchmark: future agents can run `scripts/reproduce.sh` or improve the method and evaluate through `scripts/evaluate.sh`.
 

@@ -47,7 +47,7 @@ def evaluate(data_path: str, outputs_dir: str, scores_path: str) -> None:
         outputs[payload["method"]] = _score_one(dataset, payload)
     if not outputs:
         raise FileNotFoundError(f"no method output json files found in {outputs_dir}")
-    scores = {"experiments": {"scaled_synthetic_parallel_lines": {"results": outputs}}}
+    scores = {"experiments": {dataset.get("name", "scaled_synthetic_parallel_lines"): {"results": outputs}}}
     dump_json(scores_path, scores)
     print(f"wrote {scores_path}")
 
