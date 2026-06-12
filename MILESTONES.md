@@ -20,4 +20,3 @@
 
 ## Stop Justification
 - Completed at milestone `core_claim_plus`.
-- Higher milestones would require reproducing the full point-line-pose benchmark suite from the original C++/Ceres stack on ICL-NUIM, TartanAir, or Open-Structure sequences.
