@@ -28,5 +28,9 @@
 - Added and scored the paper's explicit parallel-constraint baseline family as `orthline_constr`.
 - StructRiemanLine preserved exact shared-direction consistency with 26/34 parameters, while explicit constrained OrthLine kept 48/64 independent-line parameters.
 
+### [2026-06-12 17:08] - secondary_claims
+- CPU job `556fa2ba-0ac` reran the full suite after the output metadata fix and passed `python validate.py --compare`.
+- Confirmed all six output artifacts now report the correct experiment names for default and harder settings.
+
 ## Stop Justification
 - Completed at milestone `secondary_claims` on the scaled reproduction suite.

@@ -10,6 +10,7 @@
 - Continuing audit found CPU test job `c6264d3c-cf0` failed before data generation due an import-path issue. The shell entrypoints now compute the workspace root from their own location and export that path explicitly.
 - Added an `orthline_constr` baseline that keeps independent line parameters but adds explicit parallel direction residuals, matching the paper's constrained OrthLine comparison more closely.
 - CPU job `fc48f35f-b33` completed successfully with the hardened scripts, regenerated both datasets, ran `orthline`, `orthline_constr`, and `struct_riemanline`, and passed `python validate.py --compare`.
+- CPU job `556fa2ba-0ac` reran the full two-setting suite after fixing output experiment metadata and passed `python validate.py --compare`.
 
 ## Results
 
@@ -46,6 +47,7 @@ This supports `core_claim_plus`: the shared-direction representation preserves t
 - The successful CPU job showed a slightly higher reprojection RMSE for StructRiemanLine than the independent baseline, which is expected for the stronger shared-direction constraint; the geometry accuracy, parallel consistency, and parameter-count metrics improved.
 - CPU test job `c6264d3c-cf0` failed with `ModuleNotFoundError: No module named 'data'`; scripts were hardened and a new job is being submitted.
 - CPU job `fc48f35f-b33` confirmed the script hardening fixed the import-path failure.
+- CPU job `556fa2ba-0ac` confirmed the output metadata fix: `orthline`, `orthline_constr`, and `struct_riemanline` artifacts now carry the correct default or harder experiment labels.
 
 ## Deviations from Paper
 

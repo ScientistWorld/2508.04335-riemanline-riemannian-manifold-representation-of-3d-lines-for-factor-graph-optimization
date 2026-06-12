@@ -1,8 +1,8 @@
 # IMPORTANT: Once you set action to 'submit' or 'done', STOP immediately.
 # Do NOT sleep, poll, or wait for jobs. The system reads this file
 # only after your turn ends. Sleeping blocks the entire pipeline.
-action: submit
+action: done
 gpus: 0
 test: true
 milestone: secondary_claims
-notes: "Final CPU test to regenerate artifacts after fixing experiment labels in orthline and StructRiemanLine outputs; previous job fc48f35f-b33 passed all scoring with the constrained baseline."
+notes: "Final CPU validation job 556fa2ba-0ac passed after the metadata fix; the scaled reproduction includes independent, explicit-constrained, and StructRiemanLine methods across two settings with validated scoring."
