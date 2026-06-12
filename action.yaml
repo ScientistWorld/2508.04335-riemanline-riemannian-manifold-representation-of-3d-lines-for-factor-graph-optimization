@@ -1,8 +1,8 @@
 # IMPORTANT: Once you set action to 'submit' or 'done', STOP immediately.
 # Do NOT sleep, poll, or wait for jobs. The system reads this file
 # only after your turn ends. Sleeping blocks the entire pipeline.
-action: submit
+action: done
 gpus: 0
 test: true
-milestone: none
-notes: "Retry CPU smoke test after fixing PYTHONPATH/module execution: generate synthetic factor graph, run OrthLine and StructRiemanLine, evaluate outputs, and validate scores."
+milestone: core_claim
+notes: "Core claim reproduced on the scaled synthetic parallel-line factor graph: StructRiemanLine improves line geometry and parallel consistency with fewer parameters, and the workspace validates with scores.json."

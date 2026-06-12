@@ -1,6 +1,6 @@
 # Reproduction Milestones
 
-**Current: none**
+**Current: core_claim**
 
 ## Progress Log
 
@@ -13,4 +13,10 @@
 - Reviewed failed CPU smoke job `c6264d3c-cf0`.
 - Fixed Python import path handling in all runnable scripts.
 
+### [2026-06-12 16:45] - core_claim
+- CPU reproduction job `5562538f-736` completed successfully.
+- Ran the synthetic multi-view parallel-line factor graph end to end: generated data, optimized the independent-line baseline, optimized the StructRiemanLine shared-direction method, and evaluated both outputs.
+- StructRiemanLine improved median direction error from 0.257 deg to 0.061 deg, improved median normal error from 0.262 deg to 0.151 deg, reduced effective parameters from 48 to 26, and enforced zero parallel-direction spread with comparable reprojection RMSE.
+
 ## Stop Justification
+- Stopping at `core_claim`: the implemented reproduction demonstrates the paper's central shared-direction Riemannian line representation on a scaled synthetic benchmark. Full benchmark reproduction remains outside this packaged run because the paper's public C++ repository does not include the full datasets and depends on a GUI-oriented SLAM stack.
