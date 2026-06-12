@@ -22,8 +22,9 @@
 
 set -e
 
-cd /home/user
-export PYTHONPATH="/home/user:${PYTHONPATH:-}"
+WORKSPACE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$WORKSPACE_DIR"
+export PYTHONPATH="$WORKSPACE_DIR:${PYTHONPATH:-}"
 
 mkdir -p scoring
 

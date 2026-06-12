@@ -16,7 +16,8 @@
 
 set -e
 
-cd /home/user
+WORKSPACE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$WORKSPACE_DIR"
 
 # Keep the public end-to-end reproduction identical to the submitted job path.
 bash scripts/run.sh

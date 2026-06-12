@@ -1,6 +1,6 @@
 # Reproduction Milestones
 
-**Current: core_claim_plus**
+**Current: core_claim**
 
 ## Progress Log
 
@@ -16,5 +16,9 @@
 - Added `scaled_synthetic_parallel_lines_harder` with more lines, more cameras, and higher pixel noise.
 - StructRiemanLine retained the compact `2n + 2` parameter count and lower line geometry errors than the independent baseline on the additional setting.
 
+### [2026-06-12 16:52] - core_claim
+- Continuing audit found the latest CPU packaging job failed before data generation with a Python import-path error.
+- Hardened all shell entrypoints to derive the workspace root from their script location and added an `orthline_constr` explicit parallel-residual baseline for the next validation job.
+
 ## Stop Justification
-- Completed at milestone `core_claim_plus`.
+- `core_claim_plus` restoration and secondary-claim scoring are pending the submitted container job.

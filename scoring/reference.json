@@ -16,6 +16,10 @@
           "type": "baseline",
           "effective_params": 48.0
         },
+        "orthline_constr": {
+          "type": "baseline",
+          "effective_params": 48.0
+        },
         "struct_riemanline": {
           "type": "proposed",
           "effective_params": 26.0
@@ -35,6 +39,10 @@
       },
       "results": {
         "orthline": {
+          "type": "baseline",
+          "effective_params": 64.0
+        },
+        "orthline_constr": {
           "type": "baseline",
           "effective_params": 64.0
         },

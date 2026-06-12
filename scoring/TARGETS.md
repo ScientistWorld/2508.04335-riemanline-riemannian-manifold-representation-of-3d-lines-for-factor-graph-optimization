@@ -8,6 +8,7 @@ Tests whether a submitted representation preserves the paper's compactness claim
 ## Constraint: scaled_synthetic_parallel_lines
 Tests that compactness does not come from ignoring the reconstruction task or breaking the known parallel structure.
 - **Metrics**: `median_direction_error_deg`, `median_normal_error_deg`, `reprojection_rmse_px`, and `parallel_spread_deg` (lower is better)
+- **Baselines**: `orthline` uses independent line directions; `orthline_constr` uses independent line directions plus explicit parallelism residuals.
 - **Run**: `bash scripts/reproduce.sh`
 
 ## Additional Setting: scaled_synthetic_parallel_lines_harder

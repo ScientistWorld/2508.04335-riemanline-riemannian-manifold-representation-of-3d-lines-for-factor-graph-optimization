@@ -7,6 +7,8 @@
 - `scripts/run.sh` completed on CPU in job `5562538f-736`, including data generation, both optimizers, evaluation, and `python validate.py --compare`.
 - CPU job `afdb62b0-9b7` completed the expanded two-setting evaluation and passed `python validate.py --compare`.
 - `scripts/reproduce.sh` now delegates to the same two-setting path as `scripts/run.sh`, so the public end-to-end script covers all documented targets.
+- Continuing audit found CPU test job `c6264d3c-cf0` failed before data generation due an import-path issue. The shell entrypoints now compute the workspace root from their own location and export that path explicitly.
+- Added an `orthline_constr` baseline that keeps independent line parameters but adds explicit parallel direction residuals, matching the paper's constrained OrthLine comparison more closely.
 
 ## Results
 
@@ -39,6 +41,7 @@ This supports `core_claim_plus`: the shared-direction representation preserves t
 - The paper's public repository depends on a C++/Ceres/Pangolin GUI stack and does not include the full benchmark datasets in the clone, so this reproduction uses a scaled procedural factor graph.
 - First CPU smoke job failed before running optimization because Python executed scripts by path and did not put `/home/user` on `sys.path`; scripts now set `PYTHONPATH` and use `python -m`.
 - The successful CPU job showed a slightly higher reprojection RMSE for StructRiemanLine than the independent baseline, which is expected for the stronger shared-direction constraint; the geometry accuracy, parallel consistency, and parameter-count metrics improved.
+- CPU test job `c6264d3c-cf0` failed with `ModuleNotFoundError: No module named 'data'`; scripts were hardened and a new job is being submitted.
 
 ## Deviations from Paper
 
