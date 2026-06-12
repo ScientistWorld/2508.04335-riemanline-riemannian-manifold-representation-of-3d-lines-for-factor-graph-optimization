@@ -3,4 +3,4 @@ action: submit
 gpus: 0
 test: false
 milestone: secondary_claims
-notes: "Run existing synthetic method/baseline outputs and populate scoring/scores_train.json plus scoring/scores_test.json with split metrics."
+notes: "Rerun split evaluation after switching primary metric to direction error and removing legacy scores.json side effect."

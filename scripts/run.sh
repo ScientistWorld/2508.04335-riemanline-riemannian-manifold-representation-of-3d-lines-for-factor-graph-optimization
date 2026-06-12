@@ -25,7 +25,7 @@ bash scripts/baseline.sh data/riemanline_synthetic.json outputs/orthline.json
 python -m baseline.orthline_constr_optimize \
   --data data/riemanline_synthetic.json \
   --output outputs/orthline_constr.json
-bash scripts/method.sh data/riemanline_synthetic.json outputs/struct_riemanline.json
+python -m method.riemanline_optimize --data data/riemanline_synthetic.json --output outputs/struct_riemanline.json
 
 python -m data.generate_synthetic \
   --output data/riemanline_synthetic_harder.json \
