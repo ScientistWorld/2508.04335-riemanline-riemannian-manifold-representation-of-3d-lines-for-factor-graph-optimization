@@ -14,4 +14,4 @@ Tests that compactness does not come from ignoring the reconstruction task or br
 Tests the same goals on a larger, noisier fixed-seed factor graph with 16 parallel lines and 10 cameras.
 - **Metric**: `effective_params` (lower is better; `4n = 64` for independent lines and `2n + 2 = 34` for StructRiemanLine)
 - **Constraint metrics**: `median_direction_error_deg`, `median_normal_error_deg`, `reprojection_rmse_px`, and `parallel_spread_deg` (lower is better)
-- **Run**: `bash scripts/run.sh`
+- **Run**: `bash scripts/reproduce.sh`

@@ -14,7 +14,8 @@ set -e
 cd /home/user
 export PYTHONPATH="/home/user:${PYTHONPATH:-}"
 
-mkdir -p data outputs scoring tmp/scoring
+mkdir -p data outputs scoring tmp/scoring outputs/harder
+rm -f outputs/*.json outputs/harder/*.json tmp/scoring/*.json
 
 python -m data.generate_synthetic \
   --output data/riemanline_synthetic.json \
@@ -29,7 +30,6 @@ python -m data.generate_synthetic \
   --num-cameras 10 \
   --noise-px 1.6 \
   --name scaled_synthetic_parallel_lines_harder
-mkdir -p outputs/harder
 bash scripts/baseline.sh data/riemanline_synthetic_harder.json outputs/harder/orthline.json
 python -m method.riemanline_optimize --data data/riemanline_synthetic_harder.json --output outputs/harder/struct_riemanline.json
 python -m eval.evaluate_outputs \

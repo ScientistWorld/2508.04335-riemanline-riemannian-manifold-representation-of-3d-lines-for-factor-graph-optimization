@@ -6,6 +6,7 @@
 - A self-contained scaled reproduction has been implemented: fixed-seed synthetic multi-view line observations, an independent-line baseline, the StructRiemanLine shared-direction optimizer, and an independent evaluator.
 - `scripts/run.sh` completed on CPU in job `5562538f-736`, including data generation, both optimizers, evaluation, and `python validate.py --compare`.
 - CPU job `afdb62b0-9b7` completed the expanded two-setting evaluation and passed `python validate.py --compare`.
+- `scripts/reproduce.sh` now delegates to the same two-setting path as `scripts/run.sh`, so the public end-to-end script covers all documented targets.
 
 ## Results
 
