@@ -9,6 +9,13 @@
           "parallel_spread_deg": 0.3202214892325834,
           "reprojection_rmse_px": 0.9851864013717765
         },
+        "orthline_constr": {
+          "effective_params": 48.0,
+          "median_direction_error_deg": 0.2505380305530148,
+          "median_normal_error_deg": 0.2601977745698726,
+          "parallel_spread_deg": 0.31356347575906857,
+          "reprojection_rmse_px": 0.9851810012629558
+        },
         "struct_riemanline": {
           "effective_params": 26.0,
           "median_direction_error_deg": 0.061115964743759264,
@@ -26,6 +33,13 @@
           "median_normal_error_deg": 0.3768292062530041,
           "parallel_spread_deg": 0.544337939605842,
           "reprojection_rmse_px": 1.289135952523518
+        },
+        "orthline_constr": {
+          "effective_params": 64.0,
+          "median_direction_error_deg": 0.3817419667762283,
+          "median_normal_error_deg": 0.3729822674074948,
+          "parallel_spread_deg": 0.533207076263154,
+          "reprojection_rmse_px": 1.2889764564810122
         },
         "struct_riemanline": {
           "effective_params": 34.0,
