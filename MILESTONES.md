@@ -1,6 +1,6 @@
 # Reproduction Milestones
 
-**Current: core_claim**
+**Current: secondary_claims**
 
 ## Progress Log
 
@@ -20,5 +20,13 @@
 - Continuing audit found the latest CPU packaging job failed before data generation with a Python import-path error.
 - Hardened all shell entrypoints to derive the workspace root from their script location and added an `orthline_constr` explicit parallel-residual baseline for the next validation job.
 
+### [2026-06-12 17:00] - core_claim_plus
+- CPU job `fc48f35f-b33` completed the full two-setting reproduction in the container and passed `python validate.py --compare`.
+- The additional harder setting again showed StructRiemanLine with lower line direction/normal errors and fewer parameters than independent-line baselines.
+
+### [2026-06-12 17:00] - secondary_claims
+- Added and scored the paper's explicit parallel-constraint baseline family as `orthline_constr`.
+- StructRiemanLine preserved exact shared-direction consistency with 26/34 parameters, while explicit constrained OrthLine kept 48/64 independent-line parameters.
+
 ## Stop Justification
-- `core_claim_plus` restoration and secondary-claim scoring are pending the submitted container job.
+- Completed at milestone `secondary_claims` on the scaled reproduction suite.

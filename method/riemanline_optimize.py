@@ -81,7 +81,7 @@ def run(data_path: str, output_path: str) -> None:
     decoded = _decode(result.x, len(dataset["lines"]))
     payload = {
         "method": "struct_riemanline",
-        "experiment": "scaled_synthetic_parallel_lines",
+        "experiment": dataset.get("name", "scaled_synthetic_parallel_lines"),
         "parameterization": "shared S2 direction plus one scaled S1 normal per line",
         "num_parameters": int(2 + 2 * len(dataset["lines"])),
         "num_observations": int(len(dataset["observations"])),
