@@ -1,6 +1,6 @@
 # Reproduction Milestones
 
-**Current: core_claim**
+**Current: core_claim_plus**
 
 ## Progress Log
 
@@ -13,5 +13,11 @@
 - Audited the inherited implementation after milestone reset. The method code implements the paper's shared-direction Riemannian line-group optimizer rather than a surrogate, and evaluation remains independent from `method/`.
 - Added a larger, noisier synthetic setting for a pending `core_claim_plus` run.
 
+### [2026-06-12 16:34] - core_claim_plus
+- CPU job `afdb62b0-9b7` completed successfully and reran the full packaged pipeline.
+- Added result coverage for `scaled_synthetic_parallel_lines_harder` with 16 lines, 10 cameras, and stronger pixel noise.
+- StructRiemanLine retained the core claim on the harder setting: 34 effective parameters versus 64 for independent lines, zero parallel spread, lower median direction error, and lower median normal error with comparable reprojection RMSE.
+
 ## Stop Justification
-- Not stopped: submitting the larger, noisier setting to test whether the core claim holds beyond the minimum experiment.
+- Completed at milestone `core_claim_plus`.
+- Higher milestones would require reproducing the full point-line-pose benchmark suite from the original C++/Ceres stack on ICL-NUIM, TartanAir, or Open-Structure sequences.

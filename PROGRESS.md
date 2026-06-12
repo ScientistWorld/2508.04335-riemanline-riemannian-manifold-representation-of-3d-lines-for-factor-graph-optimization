@@ -5,6 +5,7 @@
 - The paper has been analyzed and the upstream code release has been cloned under `method/upstream` for reference.
 - A self-contained scaled reproduction has been implemented: fixed-seed synthetic multi-view line observations, an independent-line baseline, the StructRiemanLine shared-direction optimizer, and an independent evaluator.
 - `scripts/run.sh` completed on CPU in job `5562538f-736`, including data generation, both optimizers, evaluation, and `python validate.py --compare`.
+- CPU job `afdb62b0-9b7` completed the expanded two-setting evaluation and passed `python validate.py --compare`.
 
 ## Results
 
@@ -17,9 +18,17 @@ The reproduced core-claim experiment is `scaled_synthetic_parallel_lines`.
 
 This supports the core claim in the scaled environment: the shared-direction Riemannian representation gives more accurate and consistent parallel-line geometry with fewer landmark parameters, while keeping reprojection fit in the same range as the independent-line baseline.
 
+The added `scaled_synthetic_parallel_lines_harder` experiment uses 16 lines, 10 cameras, and higher pixel noise.
+
+| Method | Median direction error (deg) | Median normal error (deg) | Reprojection RMSE (px) | Effective params | Parallel spread (deg) |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| `orthline` baseline | 0.386 | 0.377 | 1.289 | 64 | 0.544 |
+| `struct_riemanline` | 0.128 | 0.199 | 1.417 | 34 | 0.000 |
+
+This supports `core_claim_plus`: the shared-direction representation preserves the claim on an additional noisier setting, improving geometry and structural consistency while using fewer parameters.
+
 ## Remaining
 
-- A second fixed synthetic setting with 16 lines, 10 cameras, and higher pixel noise has been added and is pending a CPU job run. If it preserves the compactness and structure-consistency gains, the milestone can move to `core_claim_plus`.
 - Higher milestones would require reproducing more of the original benchmark suite, including point-line-pose bundle adjustment on the paper's ICL-NUIM, TartanAir, or Open-Structure sequences.
 - The reusable gym is ready for the current scaled benchmark: future agents can run `scripts/reproduce.sh` or improve the method and evaluate through `scripts/evaluate.sh`.
 
