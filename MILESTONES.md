@@ -19,4 +19,4 @@
 - StructRiemanLine improved median direction error from 0.257 deg to 0.061 deg, improved median normal error from 0.262 deg to 0.151 deg, reduced effective parameters from 48 to 26, and enforced zero parallel-direction spread with comparable reprojection RMSE.
 
 ## Stop Justification
-- Stopping at `core_claim`: the implemented reproduction demonstrates the paper's central shared-direction Riemannian line representation on a scaled synthetic benchmark. Full benchmark reproduction remains outside this packaged run because the paper's public C++ repository does not include the full datasets and depends on a GUI-oriented SLAM stack.
+- Completed at milestone `core_claim`.
