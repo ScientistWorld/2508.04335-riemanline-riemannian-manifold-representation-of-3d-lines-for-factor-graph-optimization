@@ -1,0 +1,22 @@
+{
+  "experiments": {
+    "scaled_synthetic_parallel_lines": {
+      "results": {
+        "orthline": {
+          "effective_params": 48.0,
+          "median_direction_error_deg": 0.2573257050999461,
+          "median_normal_error_deg": 0.26227540114032716,
+          "parallel_spread_deg": 0.3202214892325834,
+          "reprojection_rmse_px": 0.9851864013717765
+        },
+        "struct_riemanline": {
+          "effective_params": 26.0,
+          "median_direction_error_deg": 0.061115964743759264,
+          "median_normal_error_deg": 0.15099679258189785,
+          "parallel_spread_deg": 0.0,
+          "reprojection_rmse_px": 1.0472499908571395
+        }
+      }
+    }
+  }
+}

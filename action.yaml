@@ -5,4 +5,4 @@ action: submit
 gpus: 0
 test: true
 milestone: none
-notes: "CPU smoke test: generate the synthetic parallel-line factor graph, run independent OrthLine and StructRiemanLine optimizers, evaluate saved outputs, and validate scores."
+notes: "Retry CPU smoke test after fixing PYTHONPATH/module execution: generate synthetic factor graph, run OrthLine and StructRiemanLine, evaluate outputs, and validate scores."
