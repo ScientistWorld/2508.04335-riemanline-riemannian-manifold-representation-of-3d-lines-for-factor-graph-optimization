@@ -28,11 +28,16 @@ export PYTHONPATH="$WORKSPACE_DIR:${PYTHONPATH:-}"
 
 mkdir -p scoring
 
-DATA_PATH="${1:-data/riemanline_synthetic.json}"
-OUTPUT_DIR="${2:-outputs}"
-SCORES_PATH="${3:-scoring/scores.json}"
-
-python -m eval.evaluate_outputs \
-  --data "$DATA_PATH" \
-  --outputs-dir "$OUTPUT_DIR" \
-  --scores "$SCORES_PATH"
+if [[ "$#" -gt 0 ]]; then
+  DATA_PATH="${1:-data/riemanline_synthetic.json}"
+  OUTPUT_DIR="${2:-outputs}"
+  SCORES_PATH="${3:-scoring/scores.json}"
+  python -m eval.evaluate_outputs \
+    --pair "$DATA_PATH" "$OUTPUT_DIR" \
+    --scores "$SCORES_PATH"
+else
+  python -m eval.evaluate_outputs \
+    --pair data/riemanline_synthetic.json outputs \
+    --pair data/riemanline_synthetic_harder.json outputs/harder \
+    --scores scoring/scores.json
+fi

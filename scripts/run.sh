@@ -16,7 +16,7 @@ cd "$WORKSPACE_DIR"
 export PYTHONPATH="$WORKSPACE_DIR:${PYTHONPATH:-}"
 
 mkdir -p data outputs scoring outputs/harder
-rm -f outputs/*.json outputs/harder/*.json scoring/scores_train.json scoring/scores_test.json
+rm -f outputs/*.json outputs/harder/*.json scoring/scores.json scoring/scores_train.json scoring/scores_test.json
 
 python -m data.generate_synthetic \
   --output data/riemanline_synthetic.json \
@@ -42,17 +42,19 @@ python -m method.riemanline_optimize --data data/riemanline_synthetic_harder.jso
 
 bash scripts/evaluate_train.sh
 bash scripts/evaluate_test.sh
+bash scripts/evaluate.sh
 
 python - <<'PY'
 import json
 from pathlib import Path
 
 reference = json.loads(Path("scoring/reference.json").read_text())
+main = json.loads(Path("scoring/scores.json").read_text())
 train = json.loads(Path("scoring/scores_train.json").read_text())
 test = json.loads(Path("scoring/scores_test.json").read_text())
 
 expected_experiments = set(reference["experiments"])
-for label, scores in (("train", train), ("test", test)):
+for label, scores in (("scores", main), ("train", train), ("test", test)):
     experiments = {
         name: payload
         for name, payload in scores["experiments"].items()
@@ -85,7 +87,7 @@ for exp_name in expected_experiments:
     if train_methods != test_methods:
         raise SystemExit(f"{exp_name} train/test method mismatch")
 
-print("split score files match reference experiments, methods, and metrics")
+print("score files match reference experiments, methods, and metrics")
 PY
 
-python validate.py --reference-only
+python validate.py --compare

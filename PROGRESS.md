@@ -11,6 +11,7 @@
 - Added an `orthline_constr` baseline that keeps independent line parameters but adds explicit parallel direction residuals, matching the paper's constrained OrthLine comparison more closely.
 - CPU job `fc48f35f-b33` completed successfully with the hardened scripts, regenerated both datasets, ran `orthline`, `orthline_constr`, and `struct_riemanline`, and passed `python validate.py --compare`.
 - CPU job `556fa2ba-0ac` reran the full two-setting suite after fixing output experiment metadata and passed `python validate.py --compare`.
+- The default `scripts/evaluate.sh` path has been fixed to write both documented experiments and the full metric set into `scoring/scores.json`, rather than only the first dataset. `scripts/run.sh` now validates `scores.json`, `scores_train.json`, and `scores_test.json` against the reference contract.
 
 ## Results
 
@@ -48,6 +49,7 @@ This supports `core_claim_plus`: the shared-direction representation preserves t
 - CPU test job `c6264d3c-cf0` failed with `ModuleNotFoundError: No module named 'data'`; scripts were hardened and a new job is being submitted.
 - CPU job `fc48f35f-b33` confirmed the script hardening fixed the import-path failure.
 - CPU job `556fa2ba-0ac` confirmed the output metadata fix: `orthline`, `orthline_constr`, and `struct_riemanline` artifacts now carry the correct default or harder experiment labels.
+- A packaging audit found that the public `scoring/scores.json` was stale and incomplete even though split scores were complete. The evaluator has been patched and a CPU validation job is being submitted to regenerate scores in-container.
 
 ## Deviations from Paper
 

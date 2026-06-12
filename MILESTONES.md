@@ -32,5 +32,9 @@
 - CPU job `556fa2ba-0ac` reran the full suite after the output metadata fix and passed `python validate.py --compare`.
 - Confirmed all six output artifacts now report the correct experiment names for default and harder settings.
 
+### [2026-06-12 17:11] - secondary_claims
+- Patched the standard evaluator so `scoring/scores.json` covers both target experiments and all metrics, matching `TARGETS.md` and `reference.json`.
+- Removed generated job and trajectory artifacts from the git index; a CPU validation job is being submitted to regenerate scores with the fixed contract.
+
 ## Stop Justification
 - Completed at milestone `secondary_claims`.
