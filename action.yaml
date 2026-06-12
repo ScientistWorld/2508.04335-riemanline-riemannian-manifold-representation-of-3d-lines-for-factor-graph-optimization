@@ -1,6 +1,5 @@
-# Split evaluation completed successfully.
-action: done
+action: submit
 gpus: 0
-test: false
+test: true
 milestone: secondary_claims
-notes: "Audited fresh-clone packaging; no external downloads needed, tracked downloads marker, and removed generated job logs from git."
+notes: "CPU validation job after fixing the standard evaluator: regenerate datasets and outputs, write scores.json/scores_train.json/scores_test.json with both target experiments and full metrics, then run validate.py --compare."
