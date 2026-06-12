@@ -115,7 +115,7 @@ Run `scripts/reproduce.sh` or `scripts/run.sh` to generate the fixed-seed synthe
 
 # Reproduction Milestones
 
-**Current: core_claim**
+**Current: method_runs**
 
 ## Stop Justification
-- Completed at milestone `core_claim`.
+- Completed at milestone `method_runs`.
