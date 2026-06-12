@@ -1,5 +1,3 @@
-action: submit
-gpus: 0
-test: true
+action: done
 milestone: secondary_claims
-notes: "CPU validation job after fixing the standard evaluator: regenerate datasets and outputs, write scores.json/scores_train.json/scores_test.json with both target experiments and full metrics, then run validate.py --compare."
+notes: "Final verification passed after CPU validation regenerated complete score files; workspace ready as a scaled synthetic RiemanLine gym."

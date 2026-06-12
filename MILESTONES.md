@@ -36,5 +36,9 @@
 - Patched the standard evaluator so `scoring/scores.json` covers both target experiments and all metrics, matching `TARGETS.md` and `reference.json`.
 - Removed generated job and trajectory artifacts from the git index; a CPU validation job is being submitted to regenerate scores with the fixed contract.
 
+### [2026-06-12 17:18] - secondary_claims
+- CPU job `4b3ae4c3-066` completed the final validation run and regenerated `scores.json`, `scores_train.json`, and `scores_test.json` with both experiments and full metric coverage.
+- Final verification passed with the milestone unchanged; the gym is ready at scaled synthetic scope.
+
 ## Stop Justification
 - Completed at milestone `secondary_claims`.
