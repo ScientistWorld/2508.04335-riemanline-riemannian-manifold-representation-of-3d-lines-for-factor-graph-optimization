@@ -3,4 +3,4 @@ action: done
 gpus: 0
 test: false
 milestone: secondary_claims
-notes: "Deterministic even/odd line split; 42 train metrics and 42 test metrics across 2 experiments; geometric train/test values differ while effective_params remains a slice-constant compactness constraint; validation passes."
+notes: "Audited fresh-clone packaging; no external downloads needed, tracked downloads marker, and removed generated job logs from git."
