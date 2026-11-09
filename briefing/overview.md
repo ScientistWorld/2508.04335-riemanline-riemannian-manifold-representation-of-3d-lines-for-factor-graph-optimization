@@ -9,7 +9,7 @@
 
 The paper addresses line landmark representation in visual factor graph optimization. Its method decouples line geometry into global direction and local normal components, then shares the global direction across known parallel-line groups. Experiments on ICL-NUIM, TartanAir, and synthetic scenes report better pose and line reconstruction accuracy, especially in structured environments, along with lower parameter complexity.
 
-## Key Results
+## Key Results (paper)
 
 - TartanAir Hospital translation ATE drops from 7.29 cm for independent RiemanLine to 2.91 cm for StructRiemanLine.
 - TartanAir Hospital median line direction/normal errors drop to 1.60 and 0.91 degrees.

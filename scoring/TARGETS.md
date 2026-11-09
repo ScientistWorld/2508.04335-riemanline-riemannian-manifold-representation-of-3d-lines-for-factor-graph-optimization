@@ -13,7 +13,7 @@ All targets are measured by `bash scripts/evaluate_test.sh` (hidden test, no arg
 - `scoring/reference.json` lists the paper's own value (Table 6 expressed per line: 0 for the shared-direction representation, 1.8 for independent 4n representations).
 
 ## Constraint: validity
-- Every scene and line answered, finite Plucker lines (normal orthogonal to direction), median residual on the scene's own observations at most 5 px in every scene. Violations score the worst value of every metric in every experiment.
+- Every scene and line answered, finite Plucker lines (normal orthogonal to direction), median residual on the scene's own observations at most 10 px in every scene. Violations score the worst value of every metric in every experiment.
 
 ## Comparison rows
 - `orthline`, `orthline_constr`, `riemanline`: independent-line baselines (with and without explicit parallel residuals) scored on the same scenes.

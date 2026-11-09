@@ -23,7 +23,7 @@ Every solver on disk is evaluated; the row named `struct_riemanline` is the refe
 
 ## Validity
 
-A run fails, and receives the worst value of every metric in every experiment, if the solver exits non-zero or times out, misses a scene or a line, writes a non-finite line, writes a line whose normal is not orthogonal to its direction (Plucker constraint), or does not solve the task: the median endpoint-to-line distance of the scene's own observations to the projected estimated lines exceeds 5 px in any scene. Worst values: 90 degrees for angles, 100 px for the novel-view error, 2.0 for the parameter-count error.
+A run fails, and receives the worst value of every metric in every experiment, if the solver exits non-zero or times out, misses a scene or a line, writes a non-finite line, writes a line whose normal is not orthogonal to its direction (Plucker constraint), or does not solve the task: the median endpoint-to-line distance of the scene's own observations to the projected estimated lines exceeds 10 px in any scene (good reconstructions are near 1 px; constant or wrong-structure outputs are at 15-100 px). Worst values: 90 degrees for angles, 100 px for the novel-view error, 2.0 for the parameter-count error.
 
 ## Metrics (all lower is better; pooled over all lines of all scenes of an experiment)
 

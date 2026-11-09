@@ -5,4 +5,4 @@ action: submit
 gpus: 0
 test: false
 milestone: secondary_claims
-notes: "Resume hardening run (preemption-safe): remaining honest variants and shortcut cases through the no-argument hidden test (64 scenes/exp), then paired bootstrap analysis. Finished cases and the reference stage are reused."
+notes: "Gate 5->10 px: rerun reference stage (train/test scores, validate) and the reference + no_optimization hardening cases, then the paired analysis."

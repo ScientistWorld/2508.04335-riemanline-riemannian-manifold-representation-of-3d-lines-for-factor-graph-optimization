@@ -1,55 +1,23 @@
 # Progress
 
-## What Works
+## Current state (iteration 11, hardening)
 
-- The paper has been analyzed and the upstream code release has been cloned under `method/upstream` for reference.
-- A self-contained scaled reproduction has been implemented: fixed-seed synthetic multi-view line observations, an independent-line baseline, the StructRiemanLine shared-direction optimizer, and an independent evaluator.
-- `scripts/run.sh` completed on CPU in job `5562538f-736`, including data generation, both optimizers, evaluation, and `python validate.py --compare`.
-- CPU job `afdb62b0-9b7` completed the expanded two-setting evaluation and passed `python validate.py --compare`.
-- `scripts/reproduce.sh` now delegates to the same two-setting path as `scripts/run.sh`, so the public end-to-end script covers all documented targets.
-- Continuing audit found CPU test job `c6264d3c-cf0` failed before data generation due an import-path issue. The shell entrypoints now compute the workspace root from their own location and export that path explicitly.
-- Added an `orthline_constr` baseline that keeps independent line parameters but adds explicit parallel direction residuals, matching the paper's constrained OrthLine comparison more closely.
-- CPU job `fc48f35f-b33` completed successfully with the hardened scripts, regenerated both datasets, ran `orthline`, `orthline_constr`, and `struct_riemanline`, and passed `python validate.py --compare`.
-- CPU job `556fa2ba-0ac` reran the full two-setting suite after fixing output experiment metadata and passed `python validate.py --compare`.
-- The default `scripts/evaluate.sh` path has been fixed to write both documented experiments and the full metric set into `scoring/scores.json`, rather than only the first dataset. `scripts/run.sh` now validates `scores.json`, `scores_train.json`, and `scores_test.json` against the reference contract.
+- The gym was rebuilt around a hidden test: procedural line-landmark scenes (2-3 parallel groups with random directions, individual lines, random cameras, truncated noisy segments) generated inside `eval/test/` (64 per experiment, secret 128-bit seed) and `eval/train/` (24 per experiment, public seed, exported to `data/train_scenes/`).
+- Every solver `scripts/methods/<name>.sh INPUT_DIR OUTPUT_DIR` is run by both evaluators; all metrics are recomputed from raw line estimates; invalid or failed runs receive the worst value of every metric in every experiment.
+- The reference implements the paper's StructRiemanLine: linear triangulation initialisation, the authors' parallel-group inlier check, shared S^2 direction plus scaled S^1 normals, Eq. 4-7 retraction inside Levenberg-Marquardt, Eq. 10 reprojection factors, Cauchy 3 px loss. Baselines: OrthLine (Bartoli-Sturm SO(3)xSO(2) updates), OrthLine_Constr (Eq. 11), independent RiemanLine.
+- Three scored experiments: `parallel_lines` (0.40), `parallel_lines_harder` (0.35), `parallel_lines_mislabeled` (0.25, where the paper's method falls short).
+- Shortcut and variant checks: see `HARDENING.md` and `redteam/after_hardening/`.
 
-## Results
+## Results (hidden test, 64 scenes per experiment; median direction error deg / novel-view px / parameter-count error per line)
 
-The reproduced core-claim experiment is `scaled_synthetic_parallel_lines`.
+| Method | parallel_lines | parallel_lines_harder | parallel_lines_mislabeled |
+|---|---|---|---|
+| `orthline` | 0.352 / 0.94 / 1.413 | 1.495 / 4.28 / 1.484 | 0.426 / 1.15 / 1.266 |
+| `orthline_constr` | 0.351 / 0.92 / 1.413 | 1.255 / 3.70 / 1.484 | 0.415 / 1.12 / 1.266 |
+| `riemanline` | 0.352 / 0.94 / 1.413 | 1.495 / 4.53 / 1.484 | 0.426 / 1.15 / 1.266 |
+| `struct_riemanline` | **0.137 / 0.72 / 0.000** | **0.474 / 3.46 / 0.026** | 0.249 / 4.94 / 0.297 |
 
-| Method | Median direction error (deg) | Median normal error (deg) | Reprojection RMSE (px) | Effective params | Parallel spread (deg) |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| `orthline` baseline | 0.257 | 0.262 | 0.985 | 48 | 0.320 |
-| `orthline_constr` baseline | 0.251 | 0.260 | 0.985 | 48 | 0.314 |
-| `struct_riemanline` | 0.061 | 0.151 | 1.047 | 26 | 0.000 |
-
-This supports the core claim in the scaled environment: the shared-direction Riemannian representation gives more accurate and consistent parallel-line geometry with fewer landmark parameters, while keeping reprojection fit in the same range as the independent-line baseline.
-
-The added `scaled_synthetic_parallel_lines_harder` experiment uses 16 lines, 10 cameras, and higher pixel noise.
-
-| Method | Median direction error (deg) | Median normal error (deg) | Reprojection RMSE (px) | Effective params | Parallel spread (deg) |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| `orthline` baseline | 0.386 | 0.377 | 1.289 | 64 | 0.544 |
-| `orthline_constr` baseline | 0.382 | 0.373 | 1.289 | 64 | 0.533 |
-| `struct_riemanline` | 0.128 | 0.199 | 1.417 | 34 | 0.000 |
-
-This supports `core_claim_plus`: the shared-direction representation preserves the claim on an additional noisier setting, improving geometry and structural consistency while using fewer parameters. With the explicit-constrained baseline added, the scaled suite also covers a secondary comparison from the paper: explicit constraints can slightly tighten independent-line directions, but do not reduce the state dimension like StructRiemanLine.
-
-## Remaining
-
-- Higher milestones beyond `secondary_claims` would require reproducing more of the original benchmark suite, including point-line-pose bundle adjustment on the paper's ICL-NUIM, TartanAir, or Open-Structure sequences.
-- The reusable gym is ready for the current scaled benchmark: future agents can run `scripts/reproduce.sh` or improve the method and evaluate through `scripts/evaluate.sh`.
-
-## Issues
-
-- The inherited workspace was essentially empty despite previous files being present.
-- The paper's public repository depends on a C++/Ceres/Pangolin GUI stack and does not include the full benchmark datasets in the clone, so this reproduction uses a scaled procedural factor graph.
-- First CPU smoke job failed before running optimization because Python executed scripts by path and did not put `/home/user` on `sys.path`; scripts now set `PYTHONPATH` and use `python -m`.
-- The successful CPU job showed a slightly higher reprojection RMSE for StructRiemanLine than the independent baseline, which is expected for the stronger shared-direction constraint; the geometry accuracy, parallel consistency, and parameter-count metrics improved.
-- CPU test job `c6264d3c-cf0` failed with `ModuleNotFoundError: No module named 'data'`; scripts were hardened and a new job is being submitted.
-- CPU job `fc48f35f-b33` confirmed the script hardening fixed the import-path failure.
-- CPU job `556fa2ba-0ac` confirmed the output metadata fix: `orthline`, `orthline_constr`, and `struct_riemanline` artifacts now carry the correct default or harder experiment labels.
-- A packaging audit found that the public `scoring/scores.json` was stale and incomplete even though split scores were complete. The evaluator has been patched and a CPU validation job is being submitted to regenerate scores in-container.
+The shared-direction representation reproduces the paper's claim: lower direction and normal errors than every independent-line baseline (paired bootstrap far outside noise), with the minimal parameter count of the true structure. With wrong group declarations its error tail is worse than the baselines' (p90 direction 5.6 deg vs 1.0 deg), which is the headroom of the mislabeled experiment.
 
 ## Deviations from Paper
 
@@ -70,5 +38,6 @@ This supports `core_claim_plus`: the shared-direction representation preserves t
      The test: could someone reading your code identify which algorithm from
      the paper you implemented? If not, you replaced the method. -->
 
-- The paper evaluates on ICL-NUIM, TartanAir, and Open-Structure simulation sequences. This workspace currently uses a fixed-seed procedural synthetic parallel-line factor graph because the public clone did not include the full benchmark data and the original stack is a GUI-oriented C++ SLAM simulator.
-- The reproduction optimizes line landmarks with known camera poses rather than the full point-line-pose bundle adjustment. The retained core computation is the line reprojection factor and the Riemannian shared-direction parameterization for parallel lines.
+- The paper evaluates joint pose/point/line bundle adjustment on ICL-NUIM, TartanAir and Open-Structure and reports ATE. This gym optimises line landmarks only, with known camera poses, on procedural scenes; it reproduces the line-reconstruction (Table 4) and parameter-count (Table 6) claims, not the pose claims.
+- Jacobians are finite differences in the manifold's local coordinates and the solver is a Python Levenberg-Marquardt rather than Ceres; the parameterisation and on-manifold updates are the paper's.
+- The `parallel_lines_mislabeled` experiment (wrong group declarations) is an extension beyond the paper, added as the scored setting where the paper's method falls short.

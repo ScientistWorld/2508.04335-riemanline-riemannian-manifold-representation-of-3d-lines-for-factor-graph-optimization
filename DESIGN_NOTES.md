@@ -1,3 +1,5 @@
+> **Superseded (iteration 11).** This file describes the gym before hardening. The current evaluation, method and shortcut results are in `HARDENING.md`, `briefing/` and `scoring/`.
+
 # Train/Test Evaluation Design Notes
 
 ## Checked

@@ -44,5 +44,9 @@
 - Final verifier reran `python validate.py --compare`; scoring, import separation, train/test wiring, and shared-path checks passed.
 - Tightened method-agnostic evaluation and scoring documentation while keeping the milestone unchanged.
 
+### [2026-11-09] - secondary_claims
+- Hardening: hidden-test scenes generated only inside `eval/test/`, one solver interface for train and test, recomputed metrics with worst-value failures, reference restored to the paper's procedure (triangulation init, Eq. 4-7 updates, Cauchy loss, authors' group inlier check), Eq. 11 / Bartoli-Sturm baselines, and a new `parallel_lines_mislabeled` headroom experiment.
+- StructRiemanLine beats OrthLine, OrthLine_Constr and RiemanLine on the 64-scene hidden test of both correctly grouped experiments with paired bootstrap CIs far from zero; details in `HARDENING.md`.
+
 ## Stop Justification
 - Completed at milestone `secondary_claims`.

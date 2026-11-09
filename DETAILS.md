@@ -21,15 +21,21 @@ The paper addresses line landmark representation in visual factor graph optimiza
 
 ## Research Question
 
-How can a visual SLAM or structure-from-motion optimizer represent and refine 3D line landmarks, including groups of parallel lines, so that camera pose estimates and reconstructed line geometry improve under multi-view line observations?
+How should a visual mapping optimizer represent and refine 3D line landmarks, especially when many of them are known (or believed) to be parallel, so that the reconstructed line geometry is as accurate as possible while the map stays compact?
+
+## Setting
+
+Each scene is a small factor graph: a set of calibrated cameras with known poses, and noisy 2D line-segment detections of a set of 3D straight lines (several observations per line, from different cameras). Detected segments are noisy in pixel position and cover only part of the 3D segment, so endpoints do not correspond across views. Each scene also lists *declared parallel groups*: sets of line ids that an upstream module (e.g. vanishing-point clustering) believes to be parallel. Lines outside any group are individual lines. In some scenes these declarations contain mistakes.
+
+The task is to output, for every line of every scene, an infinite 3D line in Plucker form: a direction vector and a normal (moment) vector, expressed in the world frame (the frame of the first camera).
 
 ## Why It Matters
 
-Indoor and man-made environments contain many line structures. A good optimizer should use those geometric regularities to reduce drift, produce consistent maps, and avoid unnecessary optimization variables.
+Man-made environments are full of parallel line structures. A mapper that exploits them can reconstruct lines more accurately from the same images and store the map with fewer free parameters; a mapper that trusts wrong structure, or ignores structure, pays in accuracy.
 
 ## Success Criteria
 
-A successful system lowers line reconstruction errors and reprojection residuals while keeping the model compact and preserving known parallel relationships among line landmarks.
+A good method recovers line directions and positions more accurately (in 3D and when the lines are projected into views it never saw), represents the scene with no more and no fewer degrees of freedom than its true structure needs, and does so on unseen scenes, including scenes where the declared parallel groups are partly wrong.
 
 ---
 
@@ -39,35 +45,61 @@ How the paper approaches the problem, i.e. the paper's core contributions.
 
 ## Key Contribution
 
-The paper introduces RiemanLine, a minimal Riemannian representation for 3D line landmarks that extends naturally from independent lines to groups of parallel lines.
+RiemanLine: a minimal Riemannian representation of 3D line landmarks that extends from individual lines to groups of parallel lines (StructRiemanLine).
 
 ## Approach
 
-Each 3D line is represented by a unit direction vector on the sphere and a scaled normal vector on the circle orthogonal to that direction. For a parallel-line group, all lines share one global unit direction while each line keeps its own local scaled normal component. Reprojection residuals are built from the distance between observed 2D segment endpoints and the projected 3D line, and the factor graph optimizes camera/landmark variables on their manifolds.
+Each line is decoupled into a unit direction u2 on the sphere S^2 and a scaled normal lambda * u1, with u1 on the circle orthogonal to u2. A parallel group shares one u2 and keeps a per-line (u1, lambda): 2 + 2k degrees of freedom for k lines instead of 4k. Updates are on-manifold: the direction moves along the tangent plane of S^2 through the exponential map (Eq. 4-5), each normal is re-projected onto the plane orthogonal to the new direction and rotated by an angle about it, and its scale is updated (Eq. 7). Line reprojection factors (Eq. 10) measure the distance of both observed segment endpoints to the projected 3D line. The authors' optimiser uses a Cauchy loss (3 px) and keeps a declared group only for members that pass a coarse consensus check on their initial directions (|cos| > 0.9), with more than two inliers.
+
+## Implementation in this gym
+
+`method/struct_riemanline.py` (+ `method/line_ba.py`): linear multi-view triangulation as the initial factor graph, the authors' group consensus check, shared-direction initialization from the members' principal direction, and a Levenberg-Marquardt solver whose steps are applied through the Eq. 4-7 retraction (Jacobians in local coordinates by finite differences). Camera poses are known and fixed; the paper's joint pose/point optimisation and ATE evaluation are not reproduced.
 
 ## Main Claims
 
-The primary claim is that explicitly encoding parallel-line structure in a minimal manifold representation improves line-based factor graph optimization. Secondary claims are that the representation reduces dimensionality from `4n` independent line parameters to `2n + 2` for `n` parallel lines and improves convergence stability and solver efficiency.
+Encoding parallelism inside the minimal representation improves line reconstruction (lower direction and normal errors, Table 4) and pose accuracy, while reducing the line state from 4n to 2n + 2 per group (Table 6), compared with independent orthonormal lines with or without explicit parallelism residuals (Eq. 11).
 
 ---
 
 # Evaluation
 
-How success is measured for any method that outputs reconstructed 3D line landmarks. This file describes metrics and the evaluation procedure only.
+How success is measured for any method that reconstructs 3D lines from the scene files described in `briefing/problem.md`. This file describes the measurement only.
 
-## Metrics
+## Interface
 
-The original benchmark reports Absolute Trajectory Error for pose estimation and angular direction/normal errors for line reconstruction. This scaled gym evaluates line reconstruction directly: median and p90 direction error in degrees, median normal error in degrees, line reprojection RMSE and p90 endpoint-to-line error in pixels, number of effective line parameters, and average pairwise direction spread inside a known parallel group. Lower is better for all metrics.
+A method is a solver script `scripts/methods/<name>.sh` called as
 
-## Baselines and Targets
+    bash scripts/methods/<name>.sh INPUT_DIR OUTPUT_DIR
 
-This gym includes saved reference outputs on the same synthetic factor graph. The target behavior is to keep line reprojection accurate, reduce line direction/normal error, reduce direction spread within the parallel group, and use fewer effective line parameters.
+It must read every `INPUT_DIR/<scene_id>.json` and write `OUTPUT_DIR/<scene_id>.json` containing
 
-## Evaluation Protocol
+    {"lines": [{"id": <int>, "normal": [x, y, z], "direction": [x, y, z]}, ...]}
 
-A submitted method should write one JSON file per method variant under `outputs/` for `scaled_synthetic_parallel_lines` and under `outputs/harder/` for `scaled_synthetic_parallel_lines_harder`. Each file must include a `method` name, `num_parameters`, and a `lines` list containing `id`, `normal`, and `direction` for every scored 3D line.
+with one entry per line id of the scene. Any other field is ignored. Scene files contain `cameras` (`id`, `K`, `R_cw`, `t_cw`; a world point X maps to camera coordinates `R_cw X + t_cw`), `observations` (`line_id`, `camera_id`, segment endpoints `p0`, `p1` in pixels), `lines` (ids only), `parallel_groups` (declared groups of line ids) and `image_size`.
 
-Run `scripts/evaluate.sh` to score existing output JSON files. Run `scripts/reproduce.sh` or `scripts/run.sh` to regenerate the fixed-seed synthetic factor graphs, produce the current reference outputs, and call the evaluator. The standalone evaluator reads only saved output JSON files; it does not import or execute any method implementation.
+Every solver on disk is evaluated; the row named `struct_riemanline` is the reference row. A row listed in `scoring/reference.json` whose solver is missing is scored as a failed run.
+
+## Splits
+
+- **Train** (`scripts/evaluate_train.sh`, also `scripts/evaluate.sh`): 24 scenes per experiment generated by `eval/train/` with public seeds. Full scenes with ground truth are exported to `data/train_scenes/`; solver inputs and outputs are kept under `outputs/train/`.
+- **Hidden test** (`scripts/evaluate_test.sh`, no arguments): 64 unseen scenes per experiment from the same distribution, generated inside `eval/test/` at evaluation time. Solvers run once on their public inputs; ground truth and held-out cameras never leave the evaluator.
+
+## Validity
+
+A run fails, and receives the worst value of every metric in every experiment, if the solver exits non-zero or times out, misses a scene or a line, writes a non-finite line, writes a line whose normal is not orthogonal to its direction (Plucker constraint), or does not solve the task: the median endpoint-to-line distance of the scene's own observations to the projected estimated lines exceeds 10 px in any scene (good reconstructions are near 1 px; constant or wrong-structure outputs are at 15-100 px). Worst values: 90 degrees for angles, 100 px for the novel-view error, 2.0 for the parameter-count error.
+
+## Metrics (all lower is better; pooled over all lines of all scenes of an experiment)
+
+- `median_direction_error_deg`, `p90_direction_error_deg`: unsigned angle between estimated and true line directions.
+- `median_normal_error_deg`, `p90_normal_error_deg`: unsigned angle between estimated and true Plucker normal vectors (world frame at the first camera).
+- `novel_view_line_rmse_px`: the true 3D segments are projected (noise-free) into held-out cameras that the method never sees; RMS distance (each distance clipped at 100 px) of those projected endpoints to the projection of the estimated line.
+- `param_count_error_per_line`: the output's effective parameter count is 2 x (number of distinct estimated directions, exact equality up to 1e-7 rad) + 2 x (number of lines); the scene's minimal count is the same formula with the true distinct directions. The metric is |effective - minimal| summed over scenes, divided by the number of lines. Sharing directions that are truly parallel lowers it; sharing directions that are not parallel, or not sharing truly parallel ones, raises it.
+
+All numbers are recomputed by the evaluator from the line estimates; self-reported counts, costs or flags are not read.
+
+## Reference points
+
+`scoring/scores_train.json` and `scoring/scores_test.json` hold the current reference row and three baseline rows on each split. `scoring/reference.json` holds the metric directions, coefficients and experiment weights, and the source paper's own reported numbers.
 
 ---
 
