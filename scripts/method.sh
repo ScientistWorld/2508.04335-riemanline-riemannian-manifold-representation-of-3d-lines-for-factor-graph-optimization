@@ -1,19 +1,16 @@
 #!/bin/bash
-# Run the paper's proposed method.
-#
-# This script trains/runs the paper's method using code in method/.
+# Run the paper's proposed method (StructRiemanLine) on a directory of scenes.
 #
 # Usage:
-#   bash scripts/method.sh
+#   bash scripts/method.sh INPUT_DIR OUTPUT_DIR
+#
+# INPUT_DIR holds public scene JSON files (e.g. outputs/train/<experiment>/inputs
+# after scripts/evaluate_train.sh, or data/train_scenes/<experiment>).
+# Scoring is done by scripts/evaluate.sh, which runs this same solver through
+# scripts/methods/struct_riemanline.sh.
 
 set -e
 
 WORKSPACE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$WORKSPACE_DIR"
-export PYTHONPATH="$WORKSPACE_DIR:${PYTHONPATH:-}"
-
-DATA_PATH="${1:-data/riemanline_synthetic.json}"
-OUTPUT_PATH="${2:-outputs/struct_riemanline.json}"
-
-python -m method.riemanline_optimize --data "$DATA_PATH" --output "$OUTPUT_PATH"
-bash scripts/evaluate.sh "$DATA_PATH" outputs scoring/scores.json
+bash scripts/methods/struct_riemanline.sh "$1" "$2"

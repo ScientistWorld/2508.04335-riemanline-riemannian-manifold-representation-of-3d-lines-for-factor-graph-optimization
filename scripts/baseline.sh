@@ -1,25 +1,19 @@
 #!/bin/bash
-# Run a baseline method from the paper.
-#
-# Baselines are simple reference methods the paper compares against. 
-# Implement this only if applicable, i.e. the paper has baselines.
-# You do not need to implement all baselines to begin — 
-# just enough to validate that the evaluation pipeline works 
-# and provide a reference point. You can decide to expand more baselines later.
-# Each baseline must be actually run and scored through evaluate.sh
-# so the numbers are verified, not self-reported.
-# You can decide what this baseline script should do yourself.
+# Run one baseline solver on a directory of scenes.
 #
 # Usage:
-#   bash scripts/baseline.sh <name>
+#   bash scripts/baseline.sh <orthline|orthline_constr|riemanline> INPUT_DIR OUTPUT_DIR
+#
+# Baselines are scored together with every other solver by
+# scripts/evaluate.sh / evaluate_train.sh / evaluate_test.sh.
 
 set -e
 
 WORKSPACE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$WORKSPACE_DIR"
-export PYTHONPATH="$WORKSPACE_DIR:${PYTHONPATH:-}"
-
-DATA_PATH="${1:-data/riemanline_synthetic.json}"
-OUTPUT_PATH="${2:-outputs/orthline.json}"
-
-python -m baseline.orthline_optimize --data "$DATA_PATH" --output "$OUTPUT_PATH"
+NAME="$1"
+case "$NAME" in
+  orthline|orthline_constr|riemanline) ;;
+  *) echo "unknown baseline '$NAME' (orthline, orthline_constr, riemanline)" >&2; exit 2 ;;
+esac
+bash "scripts/methods/${NAME}.sh" "$2" "$3"

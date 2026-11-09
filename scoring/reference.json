@@ -1,118 +1,366 @@
 {
+  "_notes": "Scaled reproduction: line landmarks only, known camera poses, procedural scenes. The hidden test generates its scenes inside eval/test/ and runs every solver in scripts/methods/ on them. All coefficients are magnitudes; direction comes from higher_is_better.",
   "experiments": {
-    "scaled_synthetic_parallel_lines": {
-      "description": "Scaled synthetic parallel-line factor graph preserving the paper's line reprojection and shared-direction representation claims.",
-      "notes": "The paper reports full SLAM benchmark ATE and line angular errors on ICL-NUIM, TartanAir, and Open-Structure. This gym uses a scaled procedural line-only factor graph because the public repository does not ship those full benchmark inputs; paper-derived dimensionality targets are retained and reproduced metrics are computed on the synthetic graph.",
-      "weight": 0.55,
-      "primary_metric": "median_direction_error_deg",
+    "parallel_lines": {
+      "description": "Recover 3D line landmarks (2-3 declared parallel groups plus individual lines) from noisy multi-view segment observations with known poses; 8 cameras around the scene, 1.0 px noise, partial visibility and truncated segments.",
+      "notes": "Result values are the paper's Table 6 parameter counts expressed per line: StructRiemanLine uses the minimal count of the true structure (44 for 20 lines, error 0), independent 4n representations use 80, i.e. (80 - 44) / 20 = 1.8 excess parameters per line. The paper reports no number on this synthetic scale for the angular and novel-view metrics; its Table 4 values are kept under _paper_reported for context only.",
+      "weight": 0.4,
+      "primary_metric": "param_count_error_per_line",
       "metrics": {
         "median_direction_error_deg": {
           "higher_is_better": false,
-          "coefficient": -1.0,
-          "description": "Median angular error of recovered 3D line directions on the scored slice."
+          "coefficient": 1.0,
+          "description": "Median, over every line of every scene, of the unsigned angle (deg) between the estimated and the true 3D line direction (paper Table 4, 'Dir.')."
         },
         "p90_direction_error_deg": {
           "higher_is_better": false,
-          "coefficient": -0.6,
-          "description": "Ninetieth-percentile angular direction error, penalizing methods that sacrifice a tail of lines."
+          "coefficient": 0.6,
+          "description": "90th percentile of the same per-line direction errors (paper Fig. 5: tail of the error distribution)."
         },
         "median_normal_error_deg": {
           "higher_is_better": false,
-          "coefficient": -0.7,
-          "description": "Median angular error of recovered Plucker normal vectors on the scored slice."
+          "coefficient": 0.8,
+          "description": "Median unsigned angle (deg) between the estimated and true Plucker normal (moment) vectors, world frame at the first camera (paper Table 4, 'Norm.')."
         },
-        "reprojection_rmse_px": {
+        "p90_normal_error_deg": {
           "higher_is_better": false,
-          "coefficient": -0.6,
-          "description": "Root mean squared image-space endpoint-to-line reprojection error in pixels."
+          "coefficient": 0.4,
+          "description": "90th percentile of the per-line normal errors."
         },
-        "p90_reprojection_error_px": {
+        "novel_view_line_rmse_px": {
           "higher_is_better": false,
-          "coefficient": -0.3,
-          "description": "Ninetieth-percentile absolute endpoint reprojection error in pixels."
+          "coefficient": 0.6,
+          "description": "RMS distance (px, each distance clipped at 100) from noise-free projections of the true segment endpoints into held-out cameras, never given to the method, to the projected estimated line."
         },
-        "effective_params": {
+        "param_count_error_per_line": {
           "higher_is_better": false,
-          "coefficient": -0.25,
-          "description": "Machine-independent count of effective line parameters used by the submitted representation."
-        },
-        "parallel_spread_deg": {
-          "higher_is_better": false,
-          "coefficient": -0.8,
-          "description": "Average pairwise angular spread among recovered directions in the known parallel group."
+          "coefficient": 0.5,
+          "description": "|effective - minimal| line parameters per line. Effective = 2 x (distinct estimated directions) + 2 x (lines), counted from the output geometry; minimal = the same count for the true scene structure (paper Table 6: 2n + 2 for n parallel lines vs 4n)."
         }
       },
       "results": {
+        "struct_riemanline": {
+          "type": "proposed",
+          "param_count_error_per_line": 0.0
+        },
+        "riemanline": {
+          "type": "baseline",
+          "param_count_error_per_line": 1.8
+        },
         "orthline": {
           "type": "baseline",
-          "effective_params": 48.0
+          "param_count_error_per_line": 1.8
         },
         "orthline_constr": {
           "type": "baseline",
-          "effective_params": 48.0
+          "param_count_error_per_line": 1.8
+        }
+      },
+      "_paper_reported": {
+        "table4": {
+          "_source": "Paper Table 4 (TartanAir, median line errors in degrees, Dir./Norm.). Real SLAM sequences with joint pose optimisation; not on this gym's scale.",
+          "orthline": {
+            "carwelding": [
+              1.52,
+              1.42
+            ],
+            "hospital": [
+              5.16,
+              4.11
+            ],
+            "office": [
+              3.89,
+              4.49
+            ],
+            "japanese_alley": [
+              0.88,
+              0.86
+            ]
+          },
+          "orthline_constr": {
+            "carwelding": [
+              0.92,
+              0.93
+            ],
+            "hospital": [
+              5.05,
+              2.54
+            ],
+            "office": [
+              2.04,
+              2.28
+            ],
+            "japanese_alley": [
+              0.46,
+              0.42
+            ]
+          },
+          "riemanline": {
+            "carwelding": [
+              1.55,
+              1.43
+            ],
+            "hospital": [
+              5.38,
+              4.68
+            ],
+            "office": [
+              3.89,
+              4.48
+            ],
+            "japanese_alley": [
+              0.88,
+              0.73
+            ]
+          },
+          "struct_riemanline": {
+            "carwelding": [
+              0.82,
+              0.83
+            ],
+            "hospital": [
+              1.6,
+              0.91
+            ],
+            "office": [
+              0.04,
+              0.51
+            ],
+            "japanese_alley": [
+              0.07,
+              0.15
+            ]
+          }
         },
-        "struct_riemanline": {
-          "type": "proposed",
-          "effective_params": 26.0,
-          "median_direction_error_deg": 0.061115964743759264
+        "table6": {
+          "_source": "Paper Table 6 / Sec. 5 (box sequence): 20 line landmarks need 80 parameters with the 4n orthonormal form and 44 with StructRiemanLine (2n + 2 per parallel group).",
+          "line_parameters": {
+            "orthline_constr": 80,
+            "struct_riemanline": 44,
+            "num_lines": 20
+          },
+          "effective_parameters_total": {
+            "point_only": 3072,
+            "orthline_constr": 3152,
+            "struct_riemanline": 3116
+          }
         }
       }
     },
-    "scaled_synthetic_parallel_lines_harder": {
-      "description": "Harder scaled synthetic parallel-line factor graph with more lines, more cameras, and larger image noise.",
-      "notes": "Additional scaled synthetic setting used to test whether the same compactness and line-geometry behavior persists with more line landmarks and noisier observations; values are not copied from a paper table.",
-      "weight": 0.45,
-      "primary_metric": "median_direction_error_deg",
+    "parallel_lines_harder": {
+      "description": "Same task with three parallel groups and more individual lines, 6 cameras on a 110-degree arc (narrow baseline), 1.5 px noise, 70% visibility, shorter segments.",
+      "notes": "Result values are the paper's Table 6 parameter counts expressed per line: StructRiemanLine uses the minimal count of the true structure (44 for 20 lines, error 0), independent 4n representations use 80, i.e. (80 - 44) / 20 = 1.8 excess parameters per line. The paper reports no number on this synthetic scale for the angular and novel-view metrics; its Table 4 values are kept under _paper_reported for context only.",
+      "weight": 0.35,
+      "primary_metric": "param_count_error_per_line",
       "metrics": {
         "median_direction_error_deg": {
           "higher_is_better": false,
-          "coefficient": -1.0,
-          "description": "Median angular error of recovered 3D line directions on the scored slice."
+          "coefficient": 1.0,
+          "description": "Median, over every line of every scene, of the unsigned angle (deg) between the estimated and the true 3D line direction (paper Table 4, 'Dir.')."
         },
         "p90_direction_error_deg": {
           "higher_is_better": false,
-          "coefficient": -0.6,
-          "description": "Ninetieth-percentile angular direction error, penalizing methods that sacrifice a tail of lines."
+          "coefficient": 0.6,
+          "description": "90th percentile of the same per-line direction errors (paper Fig. 5: tail of the error distribution)."
         },
         "median_normal_error_deg": {
           "higher_is_better": false,
-          "coefficient": -0.7,
-          "description": "Median angular error of recovered Plucker normal vectors on the scored slice."
+          "coefficient": 0.8,
+          "description": "Median unsigned angle (deg) between the estimated and true Plucker normal (moment) vectors, world frame at the first camera (paper Table 4, 'Norm.')."
         },
-        "reprojection_rmse_px": {
+        "p90_normal_error_deg": {
           "higher_is_better": false,
-          "coefficient": -0.6,
-          "description": "Root mean squared image-space endpoint-to-line reprojection error in pixels."
+          "coefficient": 0.4,
+          "description": "90th percentile of the per-line normal errors."
         },
-        "p90_reprojection_error_px": {
+        "novel_view_line_rmse_px": {
           "higher_is_better": false,
-          "coefficient": -0.3,
-          "description": "Ninetieth-percentile absolute endpoint reprojection error in pixels."
+          "coefficient": 0.6,
+          "description": "RMS distance (px, each distance clipped at 100) from noise-free projections of the true segment endpoints into held-out cameras, never given to the method, to the projected estimated line."
         },
-        "effective_params": {
+        "param_count_error_per_line": {
           "higher_is_better": false,
-          "coefficient": -0.25,
-          "description": "Machine-independent count of effective line parameters used by the submitted representation."
-        },
-        "parallel_spread_deg": {
-          "higher_is_better": false,
-          "coefficient": -0.8,
-          "description": "Average pairwise angular spread among recovered directions in the known parallel group."
+          "coefficient": 0.5,
+          "description": "|effective - minimal| line parameters per line. Effective = 2 x (distinct estimated directions) + 2 x (lines), counted from the output geometry; minimal = the same count for the true scene structure (paper Table 6: 2n + 2 for n parallel lines vs 4n)."
         }
       },
       "results": {
+        "struct_riemanline": {
+          "type": "proposed",
+          "param_count_error_per_line": 0.0
+        },
+        "riemanline": {
+          "type": "baseline",
+          "param_count_error_per_line": 1.8
+        },
         "orthline": {
           "type": "baseline",
-          "effective_params": 64.0
+          "param_count_error_per_line": 1.8
         },
         "orthline_constr": {
           "type": "baseline",
-          "effective_params": 64.0
+          "param_count_error_per_line": 1.8
+        }
+      },
+      "_paper_reported": {
+        "table4": {
+          "_source": "Paper Table 4 (TartanAir, median line errors in degrees, Dir./Norm.). Real SLAM sequences with joint pose optimisation; not on this gym's scale.",
+          "orthline": {
+            "carwelding": [
+              1.52,
+              1.42
+            ],
+            "hospital": [
+              5.16,
+              4.11
+            ],
+            "office": [
+              3.89,
+              4.49
+            ],
+            "japanese_alley": [
+              0.88,
+              0.86
+            ]
+          },
+          "orthline_constr": {
+            "carwelding": [
+              0.92,
+              0.93
+            ],
+            "hospital": [
+              5.05,
+              2.54
+            ],
+            "office": [
+              2.04,
+              2.28
+            ],
+            "japanese_alley": [
+              0.46,
+              0.42
+            ]
+          },
+          "riemanline": {
+            "carwelding": [
+              1.55,
+              1.43
+            ],
+            "hospital": [
+              5.38,
+              4.68
+            ],
+            "office": [
+              3.89,
+              4.48
+            ],
+            "japanese_alley": [
+              0.88,
+              0.73
+            ]
+          },
+          "struct_riemanline": {
+            "carwelding": [
+              0.82,
+              0.83
+            ],
+            "hospital": [
+              1.6,
+              0.91
+            ],
+            "office": [
+              0.04,
+              0.51
+            ],
+            "japanese_alley": [
+              0.07,
+              0.15
+            ]
+          }
         },
+        "table6": {
+          "_source": "Paper Table 6 / Sec. 5 (box sequence): 20 line landmarks need 80 parameters with the 4n orthonormal form and 44 with StructRiemanLine (2n + 2 per parallel group).",
+          "line_parameters": {
+            "orthline_constr": 80,
+            "struct_riemanline": 44,
+            "num_lines": 20
+          },
+          "effective_parameters_total": {
+            "point_only": 3072,
+            "orthline_constr": 3152,
+            "struct_riemanline": 3116
+          }
+        }
+      }
+    },
+    "parallel_lines_mislabeled": {
+      "description": "Where the paper's method falls short: the declared parallel associations contain errors (1-2 members per group are 3-10 degrees off parallel, and half of the scenes contain one grossly wrong member), as produced by imperfect vanishing-point clustering. 8 cameras, 1.2 px noise.",
+      "notes": "Result values are the paper's Table 6 parameter counts expressed per line: StructRiemanLine uses the minimal count of the true structure (44 for 20 lines, error 0), independent 4n representations use 80, i.e. (80 - 44) / 20 = 1.8 excess parameters per line. The paper reports no number on this synthetic scale for the angular and novel-view metrics; its Table 4 values are kept under _paper_reported for context only. This setting is not in the paper; the paper assumes correct associations, so its Table 6 numbers describe the correctly grouped case only.",
+      "weight": 0.25,
+      "primary_metric": "param_count_error_per_line",
+      "metrics": {
+        "median_direction_error_deg": {
+          "higher_is_better": false,
+          "coefficient": 1.0,
+          "description": "Median, over every line of every scene, of the unsigned angle (deg) between the estimated and the true 3D line direction (paper Table 4, 'Dir.')."
+        },
+        "p90_direction_error_deg": {
+          "higher_is_better": false,
+          "coefficient": 0.6,
+          "description": "90th percentile of the same per-line direction errors (paper Fig. 5: tail of the error distribution)."
+        },
+        "median_normal_error_deg": {
+          "higher_is_better": false,
+          "coefficient": 0.8,
+          "description": "Median unsigned angle (deg) between the estimated and true Plucker normal (moment) vectors, world frame at the first camera (paper Table 4, 'Norm.')."
+        },
+        "p90_normal_error_deg": {
+          "higher_is_better": false,
+          "coefficient": 0.4,
+          "description": "90th percentile of the per-line normal errors."
+        },
+        "novel_view_line_rmse_px": {
+          "higher_is_better": false,
+          "coefficient": 0.6,
+          "description": "RMS distance (px, each distance clipped at 100) from noise-free projections of the true segment endpoints into held-out cameras, never given to the method, to the projected estimated line."
+        },
+        "param_count_error_per_line": {
+          "higher_is_better": false,
+          "coefficient": 0.5,
+          "description": "|effective - minimal| line parameters per line. Effective = 2 x (distinct estimated directions) + 2 x (lines), counted from the output geometry; minimal = the same count for the true scene structure (paper Table 6: 2n + 2 for n parallel lines vs 4n)."
+        }
+      },
+      "results": {
         "struct_riemanline": {
           "type": "proposed",
-          "effective_params": 34.0,
-          "median_direction_error_deg": 0.127620237742375
+          "param_count_error_per_line": 0.0
+        },
+        "riemanline": {
+          "type": "baseline",
+          "param_count_error_per_line": 1.8
+        },
+        "orthline": {
+          "type": "baseline",
+          "param_count_error_per_line": 1.8
+        },
+        "orthline_constr": {
+          "type": "baseline",
+          "param_count_error_per_line": 1.8
+        }
+      },
+      "_paper_reported": {
+        "table6": {
+          "_source": "Paper Table 6 / Sec. 5 (box sequence): 20 line landmarks need 80 parameters with the 4n orthonormal form and 44 with StructRiemanLine (2n + 2 per parallel group).",
+          "line_parameters": {
+            "orthline_constr": 80,
+            "struct_riemanline": 44,
+            "num_lines": 20
+          },
+          "effective_parameters_total": {
+            "point_only": 3072,
+            "orthline_constr": 3152,
+            "struct_riemanline": 3116
+          }
         }
       }
     }
