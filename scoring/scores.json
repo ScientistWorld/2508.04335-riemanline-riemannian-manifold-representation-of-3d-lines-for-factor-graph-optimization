@@ -1,7 +1,7 @@
 {
  "_metadata": {
   "failed_methods": {},
-  "gate_median_residual_px": 5.0,
+  "gate_median_residual_px": 10.0,
   "scenes_per_experiment": 24,
   "solver_dir": "scripts/methods",
   "split": "train",

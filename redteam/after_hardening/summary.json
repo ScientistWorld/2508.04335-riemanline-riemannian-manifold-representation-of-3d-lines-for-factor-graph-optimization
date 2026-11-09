@@ -29,7 +29,7 @@
     }
    },
    "proposed_failed": true,
-   "rank_delta_Q": -9.332296,
+   "rank_delta_Q": -12.071928,
    "returncode": 0,
    "seconds": 90.2
   },
@@ -62,7 +62,7 @@
     }
    },
    "proposed_failed": true,
-   "rank_delta_Q": -9.332296,
+   "rank_delta_Q": -12.071928,
    "returncode": 0,
    "seconds": 92.2
   },
@@ -128,7 +128,7 @@
     }
    },
    "proposed_failed": false,
-   "rank_delta_Q": 0.000825,
+   "rank_delta_Q": -0.938234,
    "returncode": 0,
    "seconds": 198.9
   },
@@ -194,7 +194,7 @@
     }
    },
    "proposed_failed": false,
-   "rank_delta_Q": 0.193678,
+   "rank_delta_Q": 4.291922,
    "returncode": 0,
    "seconds": 94.2
   },
@@ -227,7 +227,7 @@
     }
    },
    "proposed_failed": true,
-   "rank_delta_Q": -9.332296,
+   "rank_delta_Q": -12.071928,
    "returncode": 0,
    "seconds": 89.9
   },
@@ -260,7 +260,7 @@
     }
    },
    "proposed_failed": true,
-   "rank_delta_Q": -9.332296,
+   "rank_delta_Q": -12.071928,
    "returncode": 0,
    "seconds": 91.9
   },
@@ -293,7 +293,7 @@
     }
    },
    "proposed_failed": true,
-   "rank_delta_Q": -9.332296,
+   "rank_delta_Q": -12.071928,
    "returncode": 0,
    "seconds": 91.2
   },
@@ -331,37 +331,37 @@
    "seconds": 105.5
   },
   "no_optimization": {
-   "failure_reason": "parallel_lines_mislabeled: parallel_lines_mislabeled_036: median residual 5.05px on its own observations exceeds 5.0px (task not solved)",
+   "failure_reason": "",
    "metrics": {
     "parallel_lines": {
-     "median_direction_error_deg": 90.0,
-     "median_normal_error_deg": 90.0,
-     "novel_view_line_rmse_px": 100.0,
-     "p90_direction_error_deg": 90.0,
-     "p90_normal_error_deg": 90.0,
-     "param_count_error_per_line": 2.0
+     "median_direction_error_deg": 0.182969,
+     "median_normal_error_deg": 0.183077,
+     "novel_view_line_rmse_px": 2.3136948552412355,
+     "p90_direction_error_deg": 0.472321,
+     "p90_normal_error_deg": 0.7870153,
+     "param_count_error_per_line": 0.0
     },
     "parallel_lines_harder": {
-     "median_direction_error_deg": 90.0,
-     "median_normal_error_deg": 90.0,
-     "novel_view_line_rmse_px": 100.0,
-     "p90_direction_error_deg": 90.0,
-     "p90_normal_error_deg": 90.0,
-     "param_count_error_per_line": 2.0
+     "median_direction_error_deg": 0.861528,
+     "median_normal_error_deg": 0.705198,
+     "novel_view_line_rmse_px": 13.280481033431707,
+     "p90_direction_error_deg": 3.629129200000002,
+     "p90_normal_error_deg": 3.0803558000000026,
+     "param_count_error_per_line": 0.02592810842663524
     },
     "parallel_lines_mislabeled": {
-     "median_direction_error_deg": 90.0,
-     "median_normal_error_deg": 90.0,
-     "novel_view_line_rmse_px": 100.0,
-     "p90_direction_error_deg": 90.0,
-     "p90_normal_error_deg": 90.0,
-     "param_count_error_per_line": 2.0
+     "median_direction_error_deg": 0.937408,
+     "median_normal_error_deg": 0.6622295,
+     "novel_view_line_rmse_px": 10.599941102538038,
+     "p90_direction_error_deg": 4.9552321,
+     "p90_normal_error_deg": 2.6045079999999996,
+     "param_count_error_per_line": 0.2973300970873786
     }
    },
-   "proposed_failed": true,
-   "rank_delta_Q": -11.503009,
+   "proposed_failed": false,
+   "rank_delta_Q": -4.849073,
    "returncode": 0,
-   "seconds": 93.5
+   "seconds": 97.0
   },
   "non_plucker": {
    "failure_reason": "parallel_lines: parallel_lines_000.json: line 0 violates the Plucker constraint n.d = 0",
@@ -392,7 +392,7 @@
     }
    },
    "proposed_failed": true,
-   "rank_delta_Q": -9.332296,
+   "rank_delta_Q": -12.071928,
    "returncode": 0,
    "seconds": 93.2
   },
@@ -491,7 +491,7 @@
     }
    },
    "proposed_failed": true,
-   "rank_delta_Q": -9.332296,
+   "rank_delta_Q": -12.071928,
    "returncode": 0,
    "seconds": 90.7
   },
@@ -524,7 +524,7 @@
     }
    },
    "proposed_failed": true,
-   "rank_delta_Q": -9.332296,
+   "rank_delta_Q": -12.071928,
    "returncode": 0,
    "seconds": 93.5
   },
@@ -559,7 +559,7 @@
    "proposed_failed": false,
    "rank_delta_Q": 0.0,
    "returncode": 0,
-   "seconds": 212.8
+   "seconds": 107.8
   },
   "renamed_method": {
    "failure_reason": "no solver script scripts/methods/struct_riemanline.sh",
@@ -590,7 +590,7 @@
     }
    },
    "proposed_failed": true,
-   "rank_delta_Q": -9.332296,
+   "rank_delta_Q": -12.071928,
    "returncode": 0,
    "seconds": 108.6
   },
@@ -623,7 +623,7 @@
     }
    },
    "proposed_failed": true,
-   "rank_delta_Q": -9.332296,
+   "rank_delta_Q": -12.071928,
    "returncode": 0,
    "seconds": 92.5
   },
@@ -656,7 +656,7 @@
     }
    },
    "proposed_failed": false,
-   "rank_delta_Q": 0.108668,
+   "rank_delta_Q": 1.017204,
    "returncode": 0,
    "seconds": 122.6
   },
@@ -689,7 +689,7 @@
     }
    },
    "proposed_failed": false,
-   "rank_delta_Q": 0.104209,
+   "rank_delta_Q": 0.925853,
    "returncode": 0,
    "seconds": 305.0
   },
@@ -722,7 +722,7 @@
     }
    },
    "proposed_failed": true,
-   "rank_delta_Q": -9.332296,
+   "rank_delta_Q": -12.071928,
    "returncode": 0,
    "seconds": 90.3
   },
@@ -774,10 +774,10 @@
   "gaussian_loss_vs_reference/parallel_lines": {
    "experiment_rank_delta": {
     "ci95": [
-     -0.00029555760655057675,
-     0.001141836910172099
+     -0.053908904444057076,
+     0.2383636739067842
     ],
-    "mean": 0.0004134058278756679
+    "mean": 0.08537175549138577
    },
    "median_direction_error_deg": {
     "ci95": [
@@ -825,10 +825,10 @@
   "gaussian_loss_vs_reference/parallel_lines_harder": {
    "experiment_rank_delta": {
     "ci95": [
-     0.0001892375832122669,
-     0.018138606146428777
+     -0.05450023209003618,
+     0.2859421488656156
     ],
-    "mean": 0.00846692051029741
+    "mean": 0.11312867950606043
    },
    "median_direction_error_deg": {
     "ci95": [
@@ -876,10 +876,10 @@
   "gaussian_loss_vs_reference/parallel_lines_mislabeled": {
    "experiment_rank_delta": {
     "ci95": [
-     -0.022208319355304696,
-     -0.000681030316426145
+     -4.65583381062759,
+     -3.476138862852984
     ],
-    "mean": -0.011158324330480748
+    "mean": -4.04449132124611
    },
    "median_direction_error_deg": {
     "ci95": [
@@ -924,13 +924,166 @@
     "mean": 0.0
    }
   },
+  "no_optimization_vs_reference/parallel_lines": {
+   "experiment_rank_delta": {
+    "ci95": [
+     -5.179146507574854,
+     -3.653009971906594
+    ],
+    "mean": -4.402472259838181
+   },
+   "median_direction_error_deg": {
+    "ci95": [
+     0.020273487500000006,
+     0.07715997499999996
+    ],
+    "mean": 0.048848432750000004
+   },
+   "median_normal_error_deg": {
+    "ci95": [
+     0.05256882500000002,
+     0.09315172499999999
+    ],
+    "mean": 0.07267223525
+   },
+   "novel_view_line_rmse_px": {
+    "ci95": [
+     1.3134782989451546,
+     1.9050858773592314
+    ],
+    "mean": 1.596389426627471
+   },
+   "p90_direction_error_deg": {
+    "ci95": [
+     0.05277943750000008,
+     0.16862832499999988
+    ],
+    "mean": 0.11118275849999999
+   },
+   "p90_normal_error_deg": {
+    "ci95": [
+     0.29140213249999936,
+     0.46655193499999953
+    ],
+    "mean": 0.36837186730000004
+   },
+   "param_count_error_per_line": {
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "mean": 0.0
+   }
+  },
+  "no_optimization_vs_reference/parallel_lines_harder": {
+   "experiment_rank_delta": {
+    "ci95": [
+     -6.3305268246679836,
+     -4.330012720836592
+    ],
+    "mean": -5.288625117013712
+   },
+   "median_direction_error_deg": {
+    "ci95": [
+     0.269386,
+     0.5129447499999998
+    ],
+    "mean": 0.38086872325000004
+   },
+   "median_normal_error_deg": {
+    "ci95": [
+     0.333770825,
+     0.4821745875
+    ],
+    "mean": 0.40131322275000003
+   },
+   "novel_view_line_rmse_px": {
+    "ci95": [
+     8.284542034840271,
+     11.515716337236348
+    ],
+    "mean": 9.833821927886035
+   },
+   "p90_direction_error_deg": {
+    "ci95": [
+     0.9093979999999999,
+     2.7423149999999996
+    ],
+    "mean": 1.9010513759000005
+   },
+   "p90_normal_error_deg": {
+    "ci95": [
+     1.229565805,
+     2.2688551375
+    ],
+    "mean": 1.6908939262000005
+   },
+   "param_count_error_per_line": {
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "mean": 0.0
+   }
+  },
+  "no_optimization_vs_reference/parallel_lines_mislabeled": {
+   "experiment_rank_delta": {
+    "ci95": [
+     -5.4817573801611825,
+     -4.46880747424617
+    ],
+    "mean": -5.012748033155403
+   },
+   "median_direction_error_deg": {
+    "ci95": [
+     0.584328,
+     0.7725603000000001
+    ],
+    "mean": 0.6864214055
+   },
+   "median_normal_error_deg": {
+    "ci95": [
+     0.4049838875,
+     0.5303366375
+    ],
+    "mean": 0.4734129645
+   },
+   "novel_view_line_rmse_px": {
+    "ci95": [
+     4.881155196464732,
+     6.439839618720963
+    ],
+    "mean": 5.645635366342962
+   },
+   "p90_direction_error_deg": {
+    "ci95": [
+     -0.7874990000000004,
+     -0.28264142000000475
+    ],
+    "mean": -0.5602289684000004
+   },
+   "p90_normal_error_deg": {
+    "ci95": [
+     -0.7057059900000039,
+     -0.021712680000012134
+    ],
+    "mean": -0.36381716725000063
+   },
+   "param_count_error_per_line": {
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "mean": 0.0
+   }
+  },
   "reference_vs_orthline/parallel_lines": {
    "experiment_rank_delta": {
     "ci95": [
-     0.9001308431194328,
-     0.9268394727429188
+     6.762032280851879,
+     7.834834275371545
     ],
-    "mean": 0.9134203506357974
+    "mean": 7.280152322123491
    },
    "median_direction_error_deg": {
     "ci95": [
@@ -978,10 +1131,10 @@
   "reference_vs_orthline/parallel_lines_harder": {
    "experiment_rank_delta": {
     "ci95": [
-     1.0540531875197008,
-     1.114757877914011
+     7.041055892461221,
+     8.33318673617552
     ],
-    "mean": 1.081714214374853
+    "mean": 7.643283139804824
    },
    "median_direction_error_deg": {
     "ci95": [
@@ -1029,10 +1182,10 @@
   "reference_vs_orthline/parallel_lines_mislabeled": {
    "experiment_rank_delta": {
     "ci95": [
-     0.476740149244093,
-     0.5487407979351241
+     -1.2446953391581694,
+     -0.4335333792973054
     ],
-    "mean": 0.5130955597529452
+    "mean": -0.8527834307629744
    },
    "median_direction_error_deg": {
     "ci95": [
@@ -1080,10 +1233,10 @@
   "reference_vs_orthline_constr/parallel_lines": {
    "experiment_rank_delta": {
     "ci95": [
-     0.899138538989115,
-     0.9255960131830352
+     6.66112788730778,
+     7.646382921162045
     ],
-    "mean": 0.9124016998327837
+    "mean": 7.148105250269611
    },
    "median_direction_error_deg": {
     "ci95": [
@@ -1131,10 +1284,10 @@
   "reference_vs_orthline_constr/parallel_lines_harder": {
    "experiment_rank_delta": {
     "ci95": [
-     0.9698701689613693,
-     1.0035175326979584
+     4.923394477878172,
+     5.524215130204626
     ],
-    "mean": 0.987003196519939
+    "mean": 5.224927785305437
    },
    "median_direction_error_deg": {
     "ci95": [
@@ -1182,10 +1335,10 @@
   "reference_vs_orthline_constr/parallel_lines_mislabeled": {
    "experiment_rank_delta": {
     "ci95": [
-     0.47464600829100595,
-     0.5459151398464615
+     -1.3229198572676855,
+     -0.527186241065037
     ],
-    "mean": 0.5105743529437525
+    "mean": -0.9366386553050311
    },
    "median_direction_error_deg": {
     "ci95": [
@@ -1233,10 +1386,10 @@
   "reference_vs_riemanline/parallel_lines": {
    "experiment_rank_delta": {
     "ci95": [
-     0.9001309176894803,
-     0.926839332672391
+     6.761987466105245,
+     7.834832270535549
     ],
-    "mean": 0.9134203307506251
+    "mean": 7.280155289673909
    },
    "median_direction_error_deg": {
     "ci95": [
@@ -1284,10 +1437,10 @@
   "reference_vs_riemanline/parallel_lines_harder": {
    "experiment_rank_delta": {
     "ci95": [
-     1.0605284498941914,
-     1.11840503904518
+     7.097153472464751,
+     8.362307524553659
     ],
-    "mean": 1.0868619579048773
+    "mean": 7.688196451875668
    },
    "median_direction_error_deg": {
     "ci95": [
@@ -1335,10 +1488,10 @@
   "reference_vs_riemanline/parallel_lines_mislabeled": {
    "experiment_rank_delta": {
     "ci95": [
-     0.4767410902381703,
-     0.5487412689721872
+     -1.2447125502197678,
+     -0.4335180792683779
     ],
-    "mean": 0.5130957680924
+    "mean": -0.8527766234743304
    },
    "median_direction_error_deg": {
     "ci95": [
@@ -1386,10 +1539,10 @@
   "verified_gaussian_vs_reference/parallel_lines": {
    "experiment_rank_delta": {
     "ci95": [
-     -0.00029555760655057675,
-     0.001141836910172099
+     -0.053908904444057076,
+     0.2383636739067842
     ],
-    "mean": 0.0004134058278756679
+    "mean": 0.08537175549138577
    },
    "median_direction_error_deg": {
     "ci95": [
@@ -1437,10 +1590,10 @@
   "verified_gaussian_vs_reference/parallel_lines_harder": {
    "experiment_rank_delta": {
     "ci95": [
-     -0.011593902434888063,
-     0.01558898979719141
+     -0.10648679437978929,
+     0.2609691869791807
     ],
-    "mean": 0.002741130891358541
+    "mean": 0.0710300895021293
    },
    "median_direction_error_deg": {
     "ci95": [
@@ -1488,10 +1641,10 @@
   "verified_gaussian_vs_reference/parallel_lines_mislabeled": {
    "experiment_rank_delta": {
     "ci95": [
-     0.40198483241797706,
-     0.454908659524422
+     3.446598432868505,
+     4.138683690792369
     ],
-    "mean": 0.42756221004173955
+    "mean": 3.7960152506107048
    },
    "median_direction_error_deg": {
     "ci95": [
@@ -1539,10 +1692,10 @@
   "verified_groups_vs_reference/parallel_lines": {
    "experiment_rank_delta": {
     "ci95": [
-     -0.003561404151333009,
-     0.0
+     -0.08393197785568775,
+     0.01157894546011587
     ],
-    "mean": -0.0011431284409622634
+    "mean": -0.013704958953795233
    },
    "median_direction_error_deg": {
     "ci95": [
@@ -1590,10 +1743,10 @@
   "verified_groups_vs_reference/parallel_lines_harder": {
    "experiment_rank_delta": {
     "ci95": [
-     -0.016565016072168703,
-     -0.0011836012419860229
+     -0.11532402182174462,
+     0.0
     ],
-    "mean": -0.007919914487196637
+    "mean": -0.04709881759280618
    },
    "median_direction_error_deg": {
     "ci95": [
@@ -1641,10 +1794,10 @@
   "verified_groups_vs_reference/parallel_lines_mislabeled": {
    "experiment_rank_delta": {
     "ci95": [
-     0.40377371889817204,
-     0.45532852253024175
+     3.446429937392826,
+     4.121195101940959
     ],
-    "mean": 0.4285696522511463
+    "mean": 3.7766000629680327
    },
    "median_direction_error_deg": {
     "ci95": [
