@@ -5,4 +5,4 @@ action: submit
 gpus: 0
 test: false
 milestone: secondary_claims
-notes: "Gate 5->10 px: rerun reference stage (train/test scores, validate) and the reference + no_optimization hardening cases, then the paired analysis."
+notes: "Hide experiment identity (opaque scene ids, one interleaved solver call): rerun reference stage and all 22 hardening cases through the no-argument hidden test, then paired analysis (resumable)."

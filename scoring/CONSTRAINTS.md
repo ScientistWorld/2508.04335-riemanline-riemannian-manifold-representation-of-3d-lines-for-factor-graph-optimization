@@ -1,7 +1,7 @@
 # Scientist Constraints
 
 ## Data
-Use only what a scene file provides (cameras, segment observations, declared parallel groups) when solving a scene. The train scenes in `data/train_scenes/` and the train generator `eval/train/scenes.py` may be used freely for development, tuning and learning. A solver must not read, import or regenerate anything from `eval/test/`, and must not use ground truth at solve time.
+Use only what a scene file provides (cameras, segment observations, declared parallel groups) when solving a scene. The train scenes in `data/train_scenes/` and the train generator `eval/train/scenes.py` may be used freely for development, tuning and learning. A solver must not read, import or regenerate anything from `eval/test/`, must not use ground truth at solve time, and must not try to infer which experiment a test scene belongs to from anything but the scene's own observations.
 
 ## Interface
 A method is a solver script `scripts/methods/<name>.sh INPUT_DIR OUTPUT_DIR` that writes one JSON per scene with `{"lines": [{"id", "normal", "direction"}]}`. The scored row for your method is `struct_riemanline`: replace `scripts/methods/struct_riemanline.sh` (or the code it calls) with your method. Keep the baseline solvers unchanged.

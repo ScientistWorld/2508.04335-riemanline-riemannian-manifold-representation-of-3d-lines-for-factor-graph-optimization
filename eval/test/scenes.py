@@ -13,6 +13,7 @@ direction classes in memory; only the public part is shown to a method.
 """
 from __future__ import annotations
 
+import hashlib
 import math
 from typing import Any
 
@@ -284,10 +285,11 @@ def generate_scene(experiment: str, index: int) -> dict[str, Any]:
             "t_cw": (-r_cw @ (center - origin)).tolist(),
         }
 
-    scene_id = f"{experiment}_{index:03d}"
+    # Opaque id: neither the experiment nor the index is visible to a solver.
+    code = int(EXPERIMENTS[experiment]["code"])
+    scene_id = "scene_" + hashlib.sha256(f"{ROOT_SEED}|{code}|{index}".encode()).hexdigest()[:16]
     public = {
         "scene_id": scene_id,
-        "experiment": experiment,
         "image_size": [IMAGE_W, IMAGE_H],
         "cameras": [cam_payload(i, r, c) for i, (r, c) in enumerate(cams)],
         "lines": [{"id": i} for i in range(len(lines_gt))],
@@ -295,6 +297,8 @@ def generate_scene(experiment: str, index: int) -> dict[str, Any]:
         "observations": observations,
     }
     hidden = {
+        "experiment": experiment,
+        "index": int(index),
         "lines": lines_gt,
         "heldout_cameras": [cam_payload(1000 + i, r, c) for i, (r, c) in enumerate(held)],
     }

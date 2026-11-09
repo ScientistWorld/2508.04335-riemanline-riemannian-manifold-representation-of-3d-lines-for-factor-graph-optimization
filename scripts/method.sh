@@ -4,7 +4,7 @@
 # Usage:
 #   bash scripts/method.sh INPUT_DIR OUTPUT_DIR
 #
-# INPUT_DIR holds public scene JSON files (e.g. outputs/train/<experiment>/inputs
+# INPUT_DIR holds public scene JSON files (e.g. outputs/train/inputs
 # after scripts/evaluate_train.sh, or data/train_scenes/<experiment>).
 # Scoring is done by scripts/evaluate.sh, which runs this same solver through
 # scripts/methods/struct_riemanline.sh.

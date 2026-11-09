@@ -101,50 +101,62 @@ def _gt_payload(scene: dict[str, Any], gt_lines: list[dict[str, Any]]) -> dict[s
 
 
 def visible_answers(scene: dict[str, Any]) -> dict[str, Any]:
-    """Copy the ground truth of the visible train scene with the same index."""
-    exp = scene["experiment"]
-    idx = int(scene["scene_id"].rsplit("_", 1)[1])
-    files = sorted((ROOT / "data" / "train_scenes" / exp).glob("*.json"))
-    train = load_json(files[idx % len(files)])
-    return _gt_payload(scene, train["ground_truth"]["lines"])
+    """Copy the ground truth of a visible train scene (same number of lines if possible)."""
+    files = sorted((ROOT / "data" / "train_scenes").glob("*/*.json"))
+    best = None
+    for f in files:
+        train = load_json(f)
+        if best is None or len(train["lines"]) == len(scene["lines"]):
+            best = train
+            if len(train["lines"]) == len(scene["lines"]):
+                break
+    return _gt_payload(scene, best["ground_truth"]["lines"])
 
 
-_SEARCH_CACHE: dict[str, dict[str, Any]] = {}
+_SEARCH_CACHE: dict[str, Any] = {}
 
 
 def seed_search(scene: dict[str, Any]) -> dict[str, Any]:
-    """Regenerate scenes with the public generator over many root seeds and scene
-    indices; use the ground truth of an exact match if one exists."""
+    """Regenerate scenes with the public generator over many root seeds, all
+    experiments and scene indices; use the ground truth of an exact match."""
     from eval.train import scenes as public_gen
 
-    exp = scene["experiment"]
-    if exp not in _SEARCH_CACHE:
+    if "table" not in _SEARCH_CACHE:
         table = {}
         original = public_gen.ROOT_SEED
         try:
             for root in [original] + list(range(0, 16)):
                 public_gen.ROOT_SEED = root
-                for idx in range(40):
-                    full = public_gen.generate_scene(exp, idx)
-                    key = json.dumps(full["public"]["observations"][:2])
-                    table[key] = full["hidden"]["lines"]
+                for exp in public_gen.EXPERIMENTS:
+                    for idx in range(40):
+                        full = public_gen.generate_scene(exp, idx)
+                        key = json.dumps(full["public"]["observations"][:2])
+                        table[key] = full["hidden"]["lines"]
         finally:
             public_gen.ROOT_SEED = original
-        _SEARCH_CACHE[exp] = table
-    key = json.dumps(scene["observations"][:2])
-    match = _SEARCH_CACHE[exp].get(key)
-    if match is None:  # no match: fall back to the visible answer of the same index
+        _SEARCH_CACHE["table"] = table
+    match = _SEARCH_CACHE["table"].get(json.dumps(scene["observations"][:2]))
+    if match is None:  # no match: fall back to a visible answer
         return visible_answers(scene)
     return _gt_payload(scene, match)
 
 
+def _truth_from_module(mod, scene: dict[str, Any]) -> dict[str, Any]:
+    key = "hidden:" + mod.__name__
+    if key not in _SEARCH_CACHE:
+        _SEARCH_CACHE[key] = {
+            full["public"]["scene_id"]: full["hidden"]["lines"]
+            for exp in mod.EXPERIMENTS
+            for full in mod.all_scenes(exp)
+        }
+    return _gt_payload(scene, _SEARCH_CACHE[key][scene["scene_id"]])
+
+
 def hidden_generator_import(scene: dict[str, Any]) -> dict[str, Any]:
     """Import the hidden generator as a module (eval.test.scenes)."""
-    from eval.test import scenes as hidden_gen  # noqa: F401  (fails if the evaluator hides it)
+    from eval.test import scenes as hidden_gen  # fails if the evaluator hides it
 
-    idx = int(scene["scene_id"].rsplit("_", 1)[1])
-    full = hidden_gen.generate_scene(scene["experiment"], idx)
-    return _gt_payload(scene, full["hidden"]["lines"])
+    return _truth_from_module(hidden_gen, scene)
 
 
 def hidden_generator_abspath(scene: dict[str, Any]) -> dict[str, Any]:
@@ -157,9 +169,7 @@ def hidden_generator_abspath(scene: dict[str, Any]) -> dict[str, Any]:
             spec = importlib.util.spec_from_file_location("hidden_scenes", path)
             mod = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(mod)
-            idx = int(scene["scene_id"].rsplit("_", 1)[1])
-            full = mod.generate_scene(scene["experiment"], idx)
-            return _gt_payload(scene, full["hidden"]["lines"])
+            return _truth_from_module(mod, scene)
     raise FileNotFoundError("hidden generator not found")
 
 

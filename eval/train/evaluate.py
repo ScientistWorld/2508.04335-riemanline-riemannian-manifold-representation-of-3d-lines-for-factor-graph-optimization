@@ -36,7 +36,7 @@ ROOT = Path(__file__).resolve().parents[2]
 SOLVER_DIR = ROOT / "scripts" / "methods"
 REFERENCE = ROOT / "scoring" / "reference.json"
 
-SOLVER_TIMEOUT_S = 3600
+SOLVER_TIMEOUT_S = 3 * 3600
 GATE_MEDIAN_RESIDUAL_PX = 10.0
 PIXEL_CLIP = 100.0
 SAME_DIRECTION_RAD = 1e-7
@@ -321,30 +321,30 @@ def evaluate(scores_path: Path) -> None:
     try:
         all_scenes = {exp: scene_lib.all_scenes(exp) for exp in experiments}
         view = _solver_workspace(scratch)
+        # One solver call over the scenes of every experiment, interleaved under
+        # opaque ids: a solver cannot tell which experiment a scene belongs to.
+        in_dir = scratch / "inputs"
+        in_dir.mkdir(parents=True)
         for exp in experiments:
-            in_dir = scratch / exp / "inputs"
-            in_dir.mkdir(parents=True)
             for scene in all_scenes[exp]:
                 (in_dir / f"{scene['public']['scene_id']}.json").write_text(json.dumps(scene["public"]))
         for method in methods:
             if method not in solvers:
                 status[method].update(failed=True, reason="no solver script scripts/methods/%s.sh" % method)
                 continue
+            # Fresh copy of the public inputs for every solver, so no solver can
+            # alter what the next one (or the scorer) sees.
+            run_in = scratch / f"inputs_{method}"
+            shutil.copytree(in_dir, run_in)
+            out_dir = scratch / f"outputs_{method}"
+            out_dir.mkdir(parents=True)
+            ok, msg = _run_solver(view, solvers[method], run_in, out_dir, scratch / f"{method}.log")
+            status[method]["runs"]["all"] = msg[:300]
+            print(f"[train] {method}: {msg[:200]}", flush=True)
+            if not ok:
+                status[method].update(failed=True, reason=msg[:300])
+                continue
             for exp in experiments:
-                if status[method]["failed"]:
-                    break
-                # Fresh copy of the public inputs for every run, so no solver
-                # can alter what the next one (or the scorer) sees.
-                run_in = scratch / exp / f"inputs_{method}"
-                shutil.copytree(scratch / exp / "inputs", run_in)
-                out_dir = scratch / exp / f"outputs_{method}"
-                out_dir.mkdir(parents=True)
-                ok, msg = _run_solver(view, solvers[method], run_in, out_dir, scratch / f"{method}_{exp}.log")
-                status[method]["runs"][exp] = msg[:300]
-                print(f"[train] {method} / {exp}: {msg[:200]}", flush=True)
-                if not ok:
-                    status[method].update(failed=True, reason=f"{exp}: {msg[:300]}")
-                    break
                 rows = []
                 try:
                     for scene in all_scenes[exp]:
