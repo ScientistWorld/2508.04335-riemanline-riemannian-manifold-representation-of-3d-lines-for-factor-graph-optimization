@@ -9,7 +9,7 @@
 
 The paper addresses line landmark representation in visual factor graph optimization. Its method decouples line geometry into global direction and local normal components, then shares the global direction across known parallel-line groups. Experiments on ICL-NUIM, TartanAir, and synthetic scenes report better pose and line reconstruction accuracy, especially in structured environments, along with lower parameter complexity.
 
-## Key Results
+## Key Results (paper)
 
 - TartanAir Hospital translation ATE drops from 7.29 cm for independent RiemanLine to 2.91 cm for StructRiemanLine.
 - TartanAir Hospital median line direction/normal errors drop to 1.60 and 0.91 degrees.
@@ -71,11 +71,11 @@ A method is a solver script `scripts/methods/<name>.sh` called as
 
     bash scripts/methods/<name>.sh INPUT_DIR OUTPUT_DIR
 
-It must read every `INPUT_DIR/<scene_id>.json` and write `OUTPUT_DIR/<scene_id>.json` containing
+It is called once per split with the scenes of all experiments mixed in one directory under opaque ids (a scene file does not say which experiment it belongs to). It must read every `INPUT_DIR/<scene_id>.json` and write `OUTPUT_DIR/<scene_id>.json` containing
 
     {"lines": [{"id": <int>, "normal": [x, y, z], "direction": [x, y, z]}, ...]}
 
-with one entry per line id of the scene. Any other field is ignored. Scene files contain `cameras` (`id`, `K`, `R_cw`, `t_cw`; a world point X maps to camera coordinates `R_cw X + t_cw`), `observations` (`line_id`, `camera_id`, segment endpoints `p0`, `p1` in pixels), `lines` (ids only), `parallel_groups` (declared groups of line ids) and `image_size`.
+with one entry per line id of the scene. Any other field is ignored. Scene files contain `scene_id`, `cameras` (`id`, `K`, `R_cw`, `t_cw`; a world point X maps to camera coordinates `R_cw X + t_cw`), `observations` (`line_id`, `camera_id`, segment endpoints `p0`, `p1` in pixels), `lines` (ids only), `parallel_groups` (declared groups of line ids) and `image_size`.
 
 Every solver on disk is evaluated; the row named `struct_riemanline` is the reference row. A row listed in `scoring/reference.json` whose solver is missing is scored as a failed run.
 

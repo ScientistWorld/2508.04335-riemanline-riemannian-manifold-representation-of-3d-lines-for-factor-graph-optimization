@@ -2,7 +2,7 @@
 
 **Outcome.** Better methods now score higher and worse ones lower, measured on 64 hidden scenes per experiment that no solver has seen. Every shortcut listed in `REDTEAM.md` is now closed: it either fails (worst value of every metric in every experiment) or ties the reference exactly. One shortcut still pays: a solver that loads the hidden evaluator's source by its absolute path. It is listed under "left" below. The reference method now follows the paper's own procedure (initialisation from observations, Eq. 4-7 manifold updates, the authors' Cauchy loss and group inlier check) and shows the paper's effect far outside the test noise. A new scored experiment, `parallel_lines_mislabeled`, sits where the paper's method falls short and gives real headroom.
 
-All "after" numbers come from actual runs of the no-argument `bash scripts/evaluate_test.sh` (CPU jobs `049c272e-c91` and the follow-up gate run). Each case ran in its own copy of the workspace with only `scripts/methods/` changed. Per-case solver scripts, logs and scores are in `redteam/after_hardening/cases/<case>/`, and the full summary is in `redteam/after_hardening/summary.json`. "Before" numbers are copied from `REDTEAM.md` (the previous gym, its own rank cohorts).
+All "after" numbers come from actual runs of the no-argument `bash scripts/evaluate_test.sh` in the final configuration (CPU job `5f4a0c62-393`: reference stage plus all 22 cases). Each case ran in its own copy of the workspace with only `scripts/methods/` changed. Per-case solver scripts, logs and scores are in `redteam/after_hardening/cases/<case>/`, and the full summary is in `redteam/after_hardening/summary.json`. "Before" numbers are copied from `REDTEAM.md` (the previous gym, its own rank cohorts).
 
 ## 1. What was wrong and what changed
 
@@ -15,6 +15,7 @@ All "after" numbers come from actual runs of the no-argument `bash scripts/evalu
 | A constant line for every id outranked the reference in a pairwise cohort, because compactness compensated for broken geometry | The task gate makes such outputs failures (worst values everywhere), so compactness can no longer buy rank for a failed reconstruction. |
 | In-sample reprojection RMSE rewarded over-fitting: independent lines fit their own observations better and scored better | Replaced by `novel_view_line_rmse_px`: noise-free projections of the true segments into 4 held-out cameras the solver never sees. |
 | `parallel_spread_deg` was 0 for any shared-direction method and penalised correctly splitting a wrong group | Removed. Structural correctness is measured by `param_count_error_per_line`, which also penalises sharing a direction between lines that are not truly parallel. |
+| Scene files and solver calls named their experiment (`"experiment": "parallel_lines_mislabeled"`, ids like `parallel_lines_mislabeled_007`, one call per experiment), so a solver could switch strategy on the label, e.g. ignore the declared groups only where they are known to be wrong | Opaque scene ids (hashes), no experiment field in public files, and **one solver call over all scenes of all experiments, interleaved**; the evaluator regroups by experiment internally. Scores were byte-for-byte unchanged by this fix (the scenes are the same), confirming determinism. |
 | Coefficients were negative, and their sign was ambiguous | All coefficients are positive magnitudes; direction comes from `higher_is_better: false`. |
 
 **Restored to the paper's method.** These were departures of earlier iterations (see `REDTEAM.md`):
@@ -39,7 +40,7 @@ All "after" numbers come from actual runs of the no-argument `bash scripts/evalu
 - Novel-view error 0.6.
 - Parameter-count error 0.5. It is the paper's constraint (Table 6) and is weighted so it can neither be ignored nor buy back lost accuracy.
 
-**Task gate.** The gate was first set at 5 px. The weak no-optimisation control failed it on one mislabeled scene at 5.05 px. That is a poor but real reconstruction, while garbage sits at 15-100 px, so the gate was raised to 10 px to keep weak honest methods on a graded scale. Every other case's outcome provably cannot change: all valid cases stay below 2.1 px, and all other failures are invalid output, a missing solver, a crash, or at least 50 px. Only `reference` and `no_optimization` were rerun.
+**Task gate.** The gate was first set at 5 px. The weak no-optimisation control failed it on one mislabeled scene at 5.05 px. That is a poor but real reconstruction, while garbage sits at 15-100 px, so the gate was raised to 10 px to keep weak honest methods on a graded scale. All cases were then rerun in the final configuration.
 
 ## 2. Does a better result score higher?
 
@@ -58,38 +59,41 @@ The future production cohort is unknown, so absolute values are illustrative; si
 | Variant | Rank ΔQ | parallel_lines | parallel_lines_harder | parallel_lines_mislabeled |
 |---|---:|---|---|---|
 | Reference (StructRiemanLine) | 0 | 0.137 / 0.72 / 0.000 | 0.474 / 3.46 / 0.026 | 0.249 / 4.94 / 0.297 |
-| Verified groups + Gaussian loss (better) | **+0.109** | 0.139 / 0.71 / 0.000 | 0.462 / 3.26 / 0.031 | **0.165 / 0.89 / 0.004** |
-| Verified groups (better) | **+0.104** | 0.138 / 0.72 / 0.002 | 0.474 / 3.51 / 0.035 | **0.171 / 0.88 / 0.002** |
-| Gaussian loss (honest trade-off) | +0.001 | 0.139 / 0.71 / 0.000 | 0.462 / 3.11 / 0.026 | 0.950 / 3.83 / 0.297 |
-| No optimisation (weaker) | NO_OPT_RANK | NO_OPT_E1 | NO_OPT_E2 | NO_OPT_E3 |
+| Verified groups + Gaussian loss (better) | **+1.017** | 0.139 / 0.71 / 0.000 | 0.462 / 3.26 / 0.031 | **0.165 / 0.89 / 0.004** |
+| Verified groups (better) | **+0.926** | 0.138 / 0.72 / 0.002 | 0.474 / 3.51 / 0.035 | **0.171 / 0.88 / 0.002** |
+| Gaussian loss (honest trade-off) | −0.938 | 0.139 / 0.71 / 0.000 | 0.462 / 3.11 / 0.026 | 0.950 / 3.83 / 0.297 |
+| No optimisation (weaker control) | **−4.849** | 0.183 / 2.31 / 0.000 | 0.862 / 13.28 / 0.026 | 0.937 / 10.60 / 0.297 |
 | Independent RiemanLine (ablation: no shared direction; baseline row) | lower (paired below) | 0.352 / 0.94 / 1.413 | 1.495 / 4.53 / 1.484 | 0.426 / 1.15 / 1.266 |
 
 "Verified groups" adds a χ²(2) membership test to StructRiemanLine. A declared member is split off as an individual RiemanLine when freeing its direction lowers its squared residuals by more than the 10⁻⁴ quantile, one line per group per round. The code is in `redteam/after_hardening/candidates.py`.
 
-**Paired comparisons.** Every method sees the same 64 scenes per experiment. The table gives a bootstrap over scenes (2000 resamples) of the unweighted per-experiment rank delta, with 95% CIs:
+**Paired comparisons.** Every method sees the same 64 scenes per experiment. The table gives a bootstrap over scenes (2000 resamples) of the unweighted per-experiment rank delta (cohort-Q standard deviations), with 95% CIs:
 
 | Comparison | parallel_lines | parallel_lines_harder | parallel_lines_mislabeled |
 |---|---|---|---|
-| Verified groups vs reference | −0.001 [−0.004, 0.000] | −0.008 [−0.017, −0.001] | **+0.429 [+0.404, +0.455]** |
-| Verified + Gaussian vs reference | +0.000 [−0.000, +0.001] | +0.003 [−0.012, +0.016] | **+0.428 [+0.402, +0.455]** |
-| Gaussian loss vs reference | +0.000 [−0.000, +0.001] | +0.009 [+0.000, +0.018] | −0.011 [−0.022, −0.001] |
-| Reference vs OrthLine (paper's effect) | **+0.913 [+0.900, +0.927]** | **+1.082 [+1.054, +1.115]** | **+0.513 [+0.477, +0.549]** |
-| Reference vs OrthLine_Constr | **+0.912 [+0.899, +0.926]** | **+0.987 [+0.970, +1.004]** | **+0.511 [+0.475, +0.546]** |
-| Reference vs RiemanLine (independent) | **+0.913 [+0.900, +0.927]** | **+1.087 [+1.061, +1.118]** | **+0.513 [+0.477, +0.549]** |
+| Verified groups vs reference | −0.014 [−0.084, +0.012] | −0.047 [−0.115, 0.000] | **+3.777 [+3.446, +4.121]** |
+| Verified + Gaussian vs reference | +0.085 [−0.054, +0.238] | +0.071 [−0.106, +0.261] | **+3.796 [+3.447, +4.139]** |
+| Gaussian loss vs reference | +0.085 [−0.054, +0.238] | +0.113 [−0.055, +0.286] | −4.044 [−4.656, −3.476] |
+| No optimisation vs reference | **−4.402 [−5.179, −3.653]** | **−5.289 [−6.331, −4.330]** | **−5.013 [−5.482, −4.469]** |
+| Reference vs OrthLine (paper's effect) | **+7.280 [+6.762, +7.835]** | **+7.643 [+7.041, +8.333]** | −0.853 [−1.245, −0.434] |
+| Reference vs OrthLine_Constr | **+7.148 [+6.661, +7.646]** | **+5.225 [+4.923, +5.524]** | −0.937 [−1.323, −0.527] |
+| Reference vs RiemanLine (independent) | **+7.280 [+6.762, +7.835]** | **+7.688 [+7.097, +8.362]** | −0.853 [−1.245, −0.434] |
 
 What the paired comparisons show:
-- **The paper's effect.** The median direction error falls 0.212° [0.189, 0.231] on `parallel_lines` and 1.020° [0.947, 1.093] on `parallel_lines_harder` relative to independent lines. That is far outside the noise. The method is deterministic, so repeated runs are byte-identical: the reference rerun in an isolated copy reproduced `scoring/scores_test.json` exactly.
-- **Genuinely better variants.** On `parallel_lines_mislabeled` the verified-group variants cut the p90 direction error by 5.02° [4.52, 5.52] and the novel-view error by 4.05 px [3.62, 4.50]. The gain is far beyond the test noise, and it carries the overall rank.
-- **Gaussian loss is a real trade-off.** It is slightly better on the harder experiment and clearly worse on the mislabeled medians (+0.69° median direction error), and it nets out at about zero.
+- **The paper's effect.** On the correctly grouped experiments, the median direction error falls 0.212° [0.189, 0.231] (`parallel_lines`) and 1.020° [0.947, 1.093] (`parallel_lines_harder`) relative to independent lines. That is far outside the noise. The method is deterministic: the reference rerun in an isolated copy reproduces `scoring/scores_test.json` byte for byte, and so did the rerun after the opaque-id change.
+- **Genuinely better variants.** On `parallel_lines_mislabeled` the verified-group variants cut the p90 direction error by 5.02° [4.52, 5.52] and the novel-view error by 4.05 px [3.62, 4.50]. The gain is far beyond the test noise, and it carries the overall rank. On the clean experiments they are statistically tied with the reference.
+- **Gaussian loss is a real trade-off.** Its gains on the clean experiments are not significant, and it is clearly worse on the mislabeled medians (+0.69° median direction error).
+- **The weaker control loses everywhere.** No optimisation is significantly below the reference in every experiment.
+- **Baselines beat the reference on `parallel_lines_mislabeled`.** Its trust in wrong group members gives it much heavier error tails, although its median errors and parameter-count error are better. That gap is the headroom of this experiment. It cannot be copied by switching strategy per experiment, because scenes no longer reveal their experiment; ignoring the groups everywhere costs ≈7 rank units on each clean experiment. Weighted over all experiments the reference stays far above every baseline.
 
 ## 3. Shortcuts: before and after
 
-"After" is the hidden-test outcome for the proposed row. "Worst" means the run failed and every metric of every experiment is the worst value; rank ΔQ for those is −9.33.
+"After" is the hidden-test outcome for the proposed row. "Worst" means the run failed and every metric of every experiment is the worst value; rank ΔQ for those is −12.07.
 
 | Shortcut | Before (`REDTEAM.md`) | After | Why |
 |---|---|---|---|
-| Copy visible answers (train ground truth of the same index) | **pays** ΔA +0.119 | worst (median residual 100 px) | Test truth is not visible; train scenes are different scenes |
-| Rebuild with the public generator / seed search (17 root seeds × 40 indices) | **pays** ΔA +0.119 | worst (100 px) | 128-bit seed held only in `eval/test/` |
+| Copy visible answers (train ground truth of a train scene) | **pays** ΔA +0.119 | worst (median residual 100 px) | Test truth is not visible; train scenes are different scenes |
+| Rebuild with the public generator / seed search (17 root seeds × 3 experiments × 40 indices) | **pays** ΔA +0.119 | worst (100 px) | 128-bit seed held only in `eval/test/` |
 | Import the hidden generator (`from eval.test import scenes`) | not tested | worst (solver crashes: module hidden) | Solvers run from a workspace view without `eval/test/` |
 | Zero parameters reported | **pays** ΔP +0.5 | tie (ΔQ 0) | Self-reports ignored |
 | Negative parameters (−10^12) | **pays** ΔA +1.12 | tie (ΔQ 0) | Self-reports ignored |
@@ -105,7 +109,7 @@ What the paired comparisons show:
 | Empty output | evaluator crashed | worst | Line-id check |
 | Partial output (half the scenes) | not tested | worst | Scene check |
 | Non-Plucker lines (n·d ≠ 0) | not tested | worst | Plucker check |
-| **Load the hidden generator by absolute path** | not tested | **pays: ΔQ +0.194, perfect geometry** | **Left**, see below |
+| **Load the hidden generator by absolute path** | not tested | **pays: ΔQ +4.29, perfect geometry** | **Left**, see below |
 
 ## 4. Shortcuts left
 
@@ -132,7 +136,7 @@ The two sets are not comparable: the old numbers came from a ground-truth-initia
 - **At the bound:** `param_count_error_per_line` = 0 on `parallel_lines` (and 0.026 on `parallel_lines_harder`, from lines whose initial triangulation fails the authors' inlier check). The paper's 2n+2 representation is already minimal for correct groups.
 - **Not at the bound:** no angular or novel-view metric is near its bound.
 - **Where the room is:** on `parallel_lines` no variant tried beats the reference beyond noise; the reference is close to the efficient estimate there, and that experiment mainly checks the core claim and the constraint. On `parallel_lines_harder`, Gaussian loss gives a small significant gain. The added `parallel_lines_mislabeled` experiment holds most of the headroom: the reference trusts wrong group members (p90 direction error 5.6° against 0.54° for verified groups), and verified groups also bring the parameter-count error from 0.297 to 0.002.
-- **Baseline sanity:** the simple baselines score clearly below the reference (paired rank +0.51 to +1.09) on a scale with room above.
+- **Baseline sanity:** the simple baselines score clearly below the reference on the correctly grouped experiments (paired rank +5.2 to +7.7), on a scale with room above. On the mislabeled experiment they are above it (−0.85), which is the room the paper's method leaves there.
 - **Brute force:** does not solve the test.
 
 ## 7. What I could not fix (stated plainly)
