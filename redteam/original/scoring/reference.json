@@ -1,0 +1,120 @@
+{
+  "experiments": {
+    "scaled_synthetic_parallel_lines": {
+      "description": "Scaled synthetic parallel-line factor graph preserving the paper's line reprojection and shared-direction representation claims.",
+      "notes": "The paper reports full SLAM benchmark ATE and line angular errors on ICL-NUIM, TartanAir, and Open-Structure. This gym uses a scaled procedural line-only factor graph because the public repository does not ship those full benchmark inputs; paper-derived dimensionality targets are retained and reproduced metrics are computed on the synthetic graph.",
+      "weight": 0.55,
+      "primary_metric": "median_direction_error_deg",
+      "metrics": {
+        "median_direction_error_deg": {
+          "higher_is_better": false,
+          "coefficient": -1.0,
+          "description": "Median angular error of recovered 3D line directions on the scored slice."
+        },
+        "p90_direction_error_deg": {
+          "higher_is_better": false,
+          "coefficient": -0.6,
+          "description": "Ninetieth-percentile angular direction error, penalizing methods that sacrifice a tail of lines."
+        },
+        "median_normal_error_deg": {
+          "higher_is_better": false,
+          "coefficient": -0.7,
+          "description": "Median angular error of recovered Plucker normal vectors on the scored slice."
+        },
+        "reprojection_rmse_px": {
+          "higher_is_better": false,
+          "coefficient": -0.6,
+          "description": "Root mean squared image-space endpoint-to-line reprojection error in pixels."
+        },
+        "p90_reprojection_error_px": {
+          "higher_is_better": false,
+          "coefficient": -0.3,
+          "description": "Ninetieth-percentile absolute endpoint reprojection error in pixels."
+        },
+        "effective_params": {
+          "higher_is_better": false,
+          "coefficient": -0.25,
+          "description": "Machine-independent count of effective line parameters used by the submitted representation."
+        },
+        "parallel_spread_deg": {
+          "higher_is_better": false,
+          "coefficient": -0.8,
+          "description": "Average pairwise angular spread among recovered directions in the known parallel group."
+        }
+      },
+      "results": {
+        "orthline": {
+          "type": "baseline",
+          "effective_params": 48.0
+        },
+        "orthline_constr": {
+          "type": "baseline",
+          "effective_params": 48.0
+        },
+        "struct_riemanline": {
+          "type": "proposed",
+          "effective_params": 26.0,
+          "median_direction_error_deg": 0.061115964743759264
+        }
+      }
+    },
+    "scaled_synthetic_parallel_lines_harder": {
+      "description": "Harder scaled synthetic parallel-line factor graph with more lines, more cameras, and larger image noise.",
+      "notes": "Additional scaled synthetic setting used to test whether the same compactness and line-geometry behavior persists with more line landmarks and noisier observations; values are not copied from a paper table.",
+      "weight": 0.45,
+      "primary_metric": "median_direction_error_deg",
+      "metrics": {
+        "median_direction_error_deg": {
+          "higher_is_better": false,
+          "coefficient": -1.0,
+          "description": "Median angular error of recovered 3D line directions on the scored slice."
+        },
+        "p90_direction_error_deg": {
+          "higher_is_better": false,
+          "coefficient": -0.6,
+          "description": "Ninetieth-percentile angular direction error, penalizing methods that sacrifice a tail of lines."
+        },
+        "median_normal_error_deg": {
+          "higher_is_better": false,
+          "coefficient": -0.7,
+          "description": "Median angular error of recovered Plucker normal vectors on the scored slice."
+        },
+        "reprojection_rmse_px": {
+          "higher_is_better": false,
+          "coefficient": -0.6,
+          "description": "Root mean squared image-space endpoint-to-line reprojection error in pixels."
+        },
+        "p90_reprojection_error_px": {
+          "higher_is_better": false,
+          "coefficient": -0.3,
+          "description": "Ninetieth-percentile absolute endpoint reprojection error in pixels."
+        },
+        "effective_params": {
+          "higher_is_better": false,
+          "coefficient": -0.25,
+          "description": "Machine-independent count of effective line parameters used by the submitted representation."
+        },
+        "parallel_spread_deg": {
+          "higher_is_better": false,
+          "coefficient": -0.8,
+          "description": "Average pairwise angular spread among recovered directions in the known parallel group."
+        }
+      },
+      "results": {
+        "orthline": {
+          "type": "baseline",
+          "effective_params": 64.0
+        },
+        "orthline_constr": {
+          "type": "baseline",
+          "effective_params": 64.0
+        },
+        "struct_riemanline": {
+          "type": "proposed",
+          "effective_params": 34.0,
+          "median_direction_error_deg": 0.127620237742375
+        }
+      }
+    }
+  }
+}

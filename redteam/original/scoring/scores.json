@@ -1,0 +1,66 @@
+{
+  "experiments": {
+    "scaled_synthetic_parallel_lines": {
+      "results": {
+        "orthline": {
+          "effective_params": 48.0,
+          "median_direction_error_deg": 0.2573257050999461,
+          "median_normal_error_deg": 0.26227540114032716,
+          "p90_direction_error_deg": 0.30034063434676045,
+          "p90_reprojection_error_px": 1.5829732383937047,
+          "parallel_spread_deg": 0.3202214892325834,
+          "reprojection_rmse_px": 0.9851864013717789
+        },
+        "orthline_constr": {
+          "effective_params": 48.0,
+          "median_direction_error_deg": 0.2505380305530148,
+          "median_normal_error_deg": 0.2601977745698726,
+          "p90_direction_error_deg": 0.2856047747199485,
+          "p90_reprojection_error_px": 1.5814780729324518,
+          "parallel_spread_deg": 0.31356347575906857,
+          "reprojection_rmse_px": 0.9851810012629544
+        },
+        "struct_riemanline": {
+          "effective_params": 26.0,
+          "median_direction_error_deg": 0.061115964743759264,
+          "median_normal_error_deg": 0.15099679258189785,
+          "p90_direction_error_deg": 0.061115964743759264,
+          "p90_reprojection_error_px": 1.6618388338877632,
+          "parallel_spread_deg": 0.0,
+          "reprojection_rmse_px": 1.0472499908571395
+        }
+      }
+    },
+    "scaled_synthetic_parallel_lines_harder": {
+      "results": {
+        "orthline": {
+          "effective_params": 64.0,
+          "median_direction_error_deg": 0.3860429381704586,
+          "median_normal_error_deg": 0.3768292062530041,
+          "p90_direction_error_deg": 0.6348127647117776,
+          "p90_reprojection_error_px": 2.072723500082118,
+          "parallel_spread_deg": 0.544337939605842,
+          "reprojection_rmse_px": 1.2891359525235162
+        },
+        "orthline_constr": {
+          "effective_params": 64.0,
+          "median_direction_error_deg": 0.3817419667762283,
+          "median_normal_error_deg": 0.3729822674074948,
+          "p90_direction_error_deg": 0.6264105959539352,
+          "p90_reprojection_error_px": 2.0545064942668745,
+          "parallel_spread_deg": 0.533207076263154,
+          "reprojection_rmse_px": 1.2889764564810082
+        },
+        "struct_riemanline": {
+          "effective_params": 34.0,
+          "median_direction_error_deg": 0.127620237742375,
+          "median_normal_error_deg": 0.19912214404599304,
+          "p90_direction_error_deg": 0.127620237742375,
+          "p90_reprojection_error_px": 2.343601118678677,
+          "parallel_spread_deg": 0.0,
+          "reprojection_rmse_px": 1.4172014398375243
+        }
+      }
+    }
+  }
+}
