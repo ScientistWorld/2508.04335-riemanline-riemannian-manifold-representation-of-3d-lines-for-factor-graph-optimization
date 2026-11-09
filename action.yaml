@@ -1,8 +1,8 @@
 # Once you set action to 'submit' or 'done', STOP immediately.
 # Do NOT sleep, poll, or wait for jobs. The system reads this file
 # only after your turn ends.
-action: pending
+action: done
 gpus: 0
 test: false
 milestone: secondary_claims
-notes: ""
+notes: "Audit complete: 22 runs; honest quality controls pass, but visible answers, fabricated parameter counts, mutable data, and missing results admit paying shortcuts. Report and evidence committed as 603e6e8."
