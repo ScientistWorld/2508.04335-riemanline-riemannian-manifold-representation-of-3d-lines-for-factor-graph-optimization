@@ -1,0 +1,15 @@
+{
+  "saved_runs": 22,
+  "successful_tests": 20,
+  "expected_evaluation_failures": [
+    "empty_output_shortcut",
+    "null_params_shortcut"
+  ],
+  "evaluator_hashes_identical_and_current": true,
+  "three_seed_results_equal_frozen_reference": true,
+  "rank_direction_and_shortcut_claims_checked": true,
+  "tracked_scientific_files_restored_to": "709a56067c3b5aef99c5a57c4264c38e0a43ed1e",
+  "python_sources_parsed": 28,
+  "shell_sources_parsed": 25,
+  "report_links_exist": true
+}

@@ -28,9 +28,9 @@
     "skipped_metrics": [],
     "contributions": {
       "scaled_synthetic_parallel_lines": {
-        "median_direction_error_deg": 0.0003978628272581457,
+        "median_direction_error_deg": 0.00039786282725814563,
         "p90_direction_error_deg": 0.00023892656406155079,
-        "median_normal_error_deg": 3.3988835266718964e-05,
+        "median_normal_error_deg": 3.398883526671897e-05,
         "reprojection_rmse_px": 0.00012021334342568842,
         "p90_reprojection_error_px": -0.0008213036794202628,
         "effective_params": -0.0,
@@ -53,9 +53,9 @@
     "contributions": {
       "scaled_synthetic_parallel_lines": {
         "median_direction_error_deg": 0.0005435524874040257,
-        "p90_direction_error_deg": 0.00032621210958222685,
-        "median_normal_error_deg": 9.745925605387242e-06,
-        "reprojection_rmse_px": 2.097471942686027e-05,
+        "p90_direction_error_deg": 0.0003262121095822269,
+        "median_normal_error_deg": 9.745925605387244e-06,
+        "reprojection_rmse_px": 2.0974719426860275e-05,
         "p90_reprojection_error_px": -0.00013200312135692126,
         "effective_params": -0.0,
         "parallel_spread_deg": -0.0
@@ -63,9 +63,9 @@
       "scaled_synthetic_parallel_lines_harder": {
         "median_direction_error_deg": 0.004449336433492227,
         "p90_direction_error_deg": 0.00266740489443283,
-        "median_normal_error_deg": 0.0011261081595918539,
+        "median_normal_error_deg": 0.0011261081595918536,
         "reprojection_rmse_px": 3.250574067355934e-05,
-        "p90_reprojection_error_px": -2.8226605368239187e-05,
+        "p90_reprojection_error_px": -2.822660536823918e-05,
         "effective_params": -0.0,
         "parallel_spread_deg": -0.0
       }

@@ -7,8 +7,9 @@ cohort. Never pretend a cohort-dependent score is a universal final rank.
 from __future__ import annotations
 
 import json
+import math
 from pathlib import Path
-import numpy as np
+import statistics
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -22,7 +23,7 @@ def proposed(scores, exp):
 
 
 def finite(value):
-    return isinstance(value, (float, int)) and np.isfinite(value)
+    return isinstance(value, (float, int)) and math.isfinite(value)
 
 
 def improvement(scores, reference, definition, cohort):
@@ -39,7 +40,7 @@ def improvement(scores, reference, definition, cohort):
                 continue
             values = [proposed(x, exp).get(metric) for x in cohort]
             values = [float(x) for x in values if finite(x)]
-            spread = float(np.std(values)) if values else 0.0
+            spread = statistics.pstdev(values) if values else 0.0
             if spread == 0.0:
                 parts[metric] = 0.0
                 continue
@@ -70,16 +71,22 @@ def main():
     summary = {"normalization": "population std per experiment/metric; proposed row; abs coefficients",
                "reference": "frozen original scoring/scores_test.json, not partial reference.json result values",
                "production_cohort_available": False,
+               "honest_scale_definition": "honest cohort plus the candidate if not already present; candidate always contributes to its normalization",
+               "nonfinite_policy": "NaN is skipped only for diagnostic calculations; production handling is unknown, so NaN success is conditional",
                "honest_cohort": ["frozen_reference"] + [n for n in honest_names if n in cases],
                "all_cohort": ["frozen_reference"] + list(cases), "cases": {}}
     for name, scores in cases.items():
+        quality_cohort = honest_cohort if name in honest_names else honest_cohort + [scores]
         entry = {"pairwise": improvement(scores, frozen, definition, [frozen, scores]),
-                 "honest_scale": improvement(scores, frozen, definition, honest_cohort),
+                 "honest_scale": improvement(scores, frozen, definition, quality_cohort),
                  "audit_cohort": improvement(scores, frozen, definition, all_cohort),
                  "proposed": {e: proposed(scores, e) for e in definition["experiments"]}}
         (ROOT / "redteam" / name / "rank.json").write_text(json.dumps(entry, indent=2, allow_nan=True) + "\n")
         summary["cases"][name] = entry
     summary["seed_spread"] = {}
+    seed_ranks = [summary["cases"][f"reference_seed{i}"]["honest_scale"]["rank_delta"] for i in range(3)]
+    summary["seed_rank_spread"] = {"seeds": [0, 1, 2], "values": seed_ranks,
+                                     "range": max(seed_ranks) - min(seed_ranks)}
     for exp, spec in definition["experiments"].items():
         summary["seed_spread"][exp] = {}
         for metric in spec["metrics"]:

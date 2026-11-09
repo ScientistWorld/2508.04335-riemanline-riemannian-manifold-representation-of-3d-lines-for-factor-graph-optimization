@@ -1,4 +1,8 @@
-action: submit
+# Once you set action to 'submit' or 'done', STOP immediately.
+# Do NOT sleep, poll, or wait for jobs. The system reads this file
+# only after your turn ends.
+action: pending
 gpus: 0
 test: false
-notes: "Run bundled CPU audit: reference seeds, stronger/weaker geometry variants, exhaustive hypotheses, and artifact/scoring shortcuts; restore inputs after every case."
+milestone: secondary_claims
+notes: ""

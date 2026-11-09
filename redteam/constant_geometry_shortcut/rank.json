@@ -1,13 +1,13 @@
 {
   "pairwise": {
-    "rank_delta": 0.5,
+    "rank_delta": 0.5000000000000003,
     "skipped_metrics": [],
     "contributions": {
       "scaled_synthetic_parallel_lines": {
         "median_direction_error_deg": 1.1,
         "p90_direction_error_deg": 0.66,
-        "median_normal_error_deg": -0.7700000000000001,
-        "reprojection_rmse_px": -0.6600000000000001,
+        "median_normal_error_deg": -0.77,
+        "reprojection_rmse_px": -0.66,
         "p90_reprojection_error_px": -0.33,
         "effective_params": 0.275,
         "parallel_spread_deg": 0.0
@@ -15,57 +15,57 @@
       "scaled_synthetic_parallel_lines_harder": {
         "median_direction_error_deg": 0.9,
         "p90_direction_error_deg": 0.54,
-        "median_normal_error_deg": -0.6300000000000001,
+        "median_normal_error_deg": -0.63,
         "reprojection_rmse_px": -0.54,
-        "p90_reprojection_error_px": -0.26999999999999996,
+        "p90_reprojection_error_px": -0.27,
         "effective_params": 0.225,
         "parallel_spread_deg": 0.0
       }
     }
   },
   "honest_scale": {
-    "rank_delta": -33.282234005612715,
+    "rank_delta": -4.816700332977419,
     "skipped_metrics": [],
     "contributions": {
       "scaled_synthetic_parallel_lines": {
-        "median_direction_error_deg": 0.018519728149315892,
-        "p90_direction_error_deg": 0.01112155926846377,
-        "median_normal_error_deg": -5.804050870985898,
-        "reprojection_rmse_px": -8.248079986304594,
-        "p90_reprojection_error_px": -4.480550338200194,
-        "effective_params": 0.31597222386688983,
+        "median_direction_error_deg": 0.019366094370830284,
+        "p90_direction_error_deg": 0.011628015963000282,
+        "median_normal_error_deg": -1.2852963767163137,
+        "reprojection_rmse_px": -1.1066477979164482,
+        "p90_reprojection_error_px": -0.5534341690609961,
+        "effective_params": 0.248117576580935,
         "parallel_spread_deg": -0.0
       },
       "scaled_synthetic_parallel_lines_harder": {
-        "median_direction_error_deg": 0.03196838191017685,
-        "p90_direction_error_deg": 0.019203152517662657,
-        "median_normal_error_deg": -4.49407468864512,
-        "reprojection_rmse_px": -7.336935021502488,
-        "p90_reprojection_error_px": -3.5770260528452504,
-        "effective_params": 0.2616979071583209,
+        "median_direction_error_deg": 0.033382382287895127,
+        "p90_direction_error_deg": 0.020047570842852063,
+        "median_normal_error_deg": -1.0501331713497881,
+        "reprojection_rmse_px": -0.9055397753829396,
+        "p90_reprojection_error_px": -0.45276995469268905,
+        "effective_params": 0.20457927209624285,
         "parallel_spread_deg": -0.0
       }
     }
   },
   "audit_cohort": {
-    "rank_delta": -6.839088723669409,
+    "rank_delta": -6.83908872366941,
     "skipped_metrics": [],
     "contributions": {
       "scaled_synthetic_parallel_lines": {
         "median_direction_error_deg": 0.025301293842854,
-        "p90_direction_error_deg": 0.015184528874213895,
-        "median_normal_error_deg": -1.6642479083094524,
-        "reprojection_rmse_px": -1.4391178099957223,
+        "p90_direction_error_deg": 0.015184528874213897,
+        "median_normal_error_deg": -1.6642479083094528,
+        "reprojection_rmse_px": -1.4391178099957225,
         "p90_reprojection_error_px": -0.7201314749456886,
-        "effective_params": 1.354698741588457e-11,
+        "effective_params": 1.3546987415884568e-11,
         "parallel_spread_deg": -0.0
       },
       "scaled_synthetic_parallel_lines_harder": {
         "median_direction_error_deg": 0.04349987811976538,
         "p90_direction_error_deg": 0.026078447772676493,
-        "median_normal_error_deg": -1.3584934339654715,
+        "median_normal_error_deg": -1.3584934339654713,
         "reprojection_rmse_px": -1.178144573044235,
-        "p90_reprojection_error_px": -0.5890176720470114,
+        "p90_reprojection_error_px": -0.5890176720470113,
         "effective_params": 1.51144074473536e-11,
         "parallel_spread_deg": -0.0
       }

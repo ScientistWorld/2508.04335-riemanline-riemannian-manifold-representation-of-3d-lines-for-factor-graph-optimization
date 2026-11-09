@@ -34,11 +34,20 @@ or Python configuration.
 The rank is a weighted sum of direction-aware improvements using **absolute**
 coefficient magnitudes, divided by per-metric standard deviations. Production
 standard deviations depend on future attempts and are unavailable here.
-`summary.json` therefore reports a declared honest audit cohort, a full audit
-cohort, and reference-versus-candidate pairwise normalization. A rank delta of 0
+`summary.json` therefore reports a declared honest audit cohort (adding the
+tested candidate when necessary), a full audit cohort, and
+reference-versus-candidate pairwise normalization. Every candidate contributes
+to its own normalization. A rank delta of 0
 is the reference. Raw metric vectors are retained for any future normalization.
 NaN handling is explicitly conditional because the supplied rank description
 only promises skipping missing values, not handling non-standard JSON numbers.
+
+The archived job stdout contains preliminary scalar calculations. After the job,
+the honest-cohort normalization was corrected to include the tested shortcut in
+its own denominator, and the calculator was made standard-library-only. The
+final `summary.json` and per-case `rank.json` files supersede those preliminary
+stdout scalars; all method artifacts and evaluator-produced metric files are
+unchanged. This recalculation requires no training or evaluation reruns.
 
 All transient changes outside `redteam/` are restored after each case and at
 job exit. The submission-only `scripts/run.sh` is restored before final delivery.

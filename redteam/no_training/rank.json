@@ -5,9 +5,9 @@
     "contributions": {
       "scaled_synthetic_parallel_lines": {
         "median_direction_error_deg": -1.1,
-        "p90_direction_error_deg": -0.6599999999999999,
+        "p90_direction_error_deg": -0.66,
         "median_normal_error_deg": -0.77,
-        "reprojection_rmse_px": -0.6600000000000001,
+        "reprojection_rmse_px": -0.66,
         "p90_reprojection_error_px": -0.33,
         "effective_params": 0.0,
         "parallel_spread_deg": 0.0
@@ -28,9 +28,9 @@
     "skipped_metrics": [],
     "contributions": {
       "scaled_synthetic_parallel_lines": {
-        "median_direction_error_deg": -1.757027611773098,
+        "median_direction_error_deg": -1.7570276117730979,
         "p90_direction_error_deg": -1.0551389611722615,
-        "median_normal_error_deg": -1.227000992044189,
+        "median_normal_error_deg": -1.2270009920441893,
         "reprojection_rmse_px": -1.049608823945873,
         "p90_reprojection_error_px": -0.5251633168828149,
         "effective_params": -0.0,
@@ -53,19 +53,19 @@
     "contributions": {
       "scaled_synthetic_parallel_lines": {
         "median_direction_error_deg": -2.4004170869603882,
-        "p90_direction_error_deg": -1.4406062707105782,
-        "median_normal_error_deg": -0.3518290724692248,
-        "reprojection_rmse_px": -0.18313483314629297,
-        "p90_reprojection_error_px": -0.08440629061788568,
+        "p90_direction_error_deg": -1.4406062707105785,
+        "median_normal_error_deg": -0.3518290724692249,
+        "reprojection_rmse_px": -0.183134833146293,
+        "p90_reprojection_error_px": -0.0844062906178857,
         "effective_params": -0.0,
         "parallel_spread_deg": -0.0
       },
       "scaled_synthetic_parallel_lines_harder": {
         "median_direction_error_deg": -1.9536966900003432,
         "p90_direction_error_deg": -1.1712533298035752,
-        "median_normal_error_deg": -0.30321855876475173,
+        "median_normal_error_deg": -0.3032185587647517,
         "reprojection_rmse_px": -0.13788951834071672,
-        "p90_reprojection_error_px": -0.07071479415934336,
+        "p90_reprojection_error_px": -0.07071479415934334,
         "effective_params": -0.0,
         "parallel_spread_deg": -0.0
       }

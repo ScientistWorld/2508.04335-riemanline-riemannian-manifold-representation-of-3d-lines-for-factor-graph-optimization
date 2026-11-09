@@ -24,22 +24,22 @@
     }
   },
   "honest_scale": {
-    "rank_delta": 0.11595721666036994,
+    "rank_delta": 0.12116419788490783,
     "skipped_metrics": [],
     "contributions": {
       "scaled_synthetic_parallel_lines": {
-        "median_direction_error_deg": 0.018519728149315892,
-        "p90_direction_error_deg": 0.01112155926846377,
-        "median_normal_error_deg": 0.017662198132250857,
+        "median_direction_error_deg": 0.019366094370830284,
+        "p90_direction_error_deg": 0.011628015963000282,
+        "median_normal_error_deg": 0.018466888531443917,
         "reprojection_rmse_px": -0.0,
         "p90_reprojection_error_px": -0.0,
         "effective_params": -0.0,
         "parallel_spread_deg": -0.0
       },
       "scaled_synthetic_parallel_lines_harder": {
-        "median_direction_error_deg": 0.03196838191017685,
-        "p90_direction_error_deg": 0.019203152517662657,
-        "median_normal_error_deg": 0.017482196682499906,
+        "median_direction_error_deg": 0.033382382287895127,
+        "p90_direction_error_deg": 0.020047570842852063,
+        "median_normal_error_deg": 0.018273245888886153,
         "reprojection_rmse_px": -0.0,
         "p90_reprojection_error_px": -0.0,
         "effective_params": -0.0,
@@ -53,8 +53,8 @@
     "contributions": {
       "scaled_synthetic_parallel_lines": {
         "median_direction_error_deg": 0.025301293842854,
-        "p90_direction_error_deg": 0.015184528874213895,
-        "median_normal_error_deg": 0.005064441534219803,
+        "p90_direction_error_deg": 0.015184528874213897,
+        "median_normal_error_deg": 0.005064441534219804,
         "reprojection_rmse_px": -0.0,
         "p90_reprojection_error_px": -0.0,
         "effective_params": -0.0,
@@ -63,7 +63,7 @@
       "scaled_synthetic_parallel_lines_harder": {
         "median_direction_error_deg": 0.04349987811976538,
         "p90_direction_error_deg": 0.026078447772676493,
-        "median_normal_error_deg": 0.005284613863778284,
+        "median_normal_error_deg": 0.005284613863778282,
         "reprojection_rmse_px": -0.0,
         "p90_reprojection_error_px": -0.0,
         "effective_params": -0.0,

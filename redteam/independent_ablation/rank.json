@@ -24,17 +24,17 @@
     }
   },
   "honest_scale": {
-    "rank_delta": -3.3597518330441143,
+    "rank_delta": -3.359751833044114,
     "skipped_metrics": [],
     "contributions": {
       "scaled_synthetic_parallel_lines": {
-        "median_direction_error_deg": -0.05947838829940446,
+        "median_direction_error_deg": -0.05947838829940445,
         "p90_direction_error_deg": -0.04630433503983004,
-        "median_normal_error_deg": -0.019136576110583194,
+        "median_normal_error_deg": -0.019136576110583198,
         "reprojection_rmse_px": 0.0034965487544734108,
         "p90_reprojection_error_px": 0.0016116077170798629,
         "effective_params": -0.31597222386688983,
-        "parallel_spread_deg": -1.4000714267493646
+        "parallel_spread_deg": -1.4000714267493644
       },
       "scaled_synthetic_parallel_lines_harder": {
         "median_direction_error_deg": -0.055783962242910046,
@@ -42,7 +42,7 @@
         "median_normal_error_deg": -0.020120921693419825,
         "reprojection_rmse_px": 0.003611601919258143,
         "p90_reprojection_error_px": 0.0018691052017348903,
-        "effective_params": -0.2616979071583209,
+        "effective_params": -0.26169790715832086,
         "parallel_spread_deg": -1.145512985522207
       }
     }
@@ -53,21 +53,21 @@
     "contributions": {
       "scaled_synthetic_parallel_lines": {
         "median_direction_error_deg": -0.08125822190960136,
-        "p90_direction_error_deg": -0.06322040780804061,
-        "median_normal_error_deg": -0.005487203243419005,
-        "reprojection_rmse_px": 0.0006100747803654022,
-        "p90_reprojection_error_px": 0.0002590238597343308,
-        "effective_params": -1.354698741588457e-11,
+        "p90_direction_error_deg": -0.06322040780804063,
+        "median_normal_error_deg": -0.005487203243419006,
+        "reprojection_rmse_px": 0.0006100747803654023,
+        "p90_reprojection_error_px": 0.00025902385973433086,
+        "effective_params": -1.3546987415884568e-11,
         "parallel_spread_deg": -1.0868441738518602
       },
       "scaled_synthetic_parallel_lines_harder": {
         "median_direction_error_deg": -0.07590611140164388,
         "p90_direction_error_deg": -0.06282512031239859,
-        "median_normal_error_deg": -0.006082262067185399,
+        "median_normal_error_deg": -0.0060822620671853985,
         "reprojection_rmse_px": 0.0005799409683607598,
-        "p90_reprojection_error_px": 0.00030777969700867413,
+        "p90_reprojection_error_px": 0.0003077796970086741,
         "effective_params": -1.51144074473536e-11,
-        "parallel_spread_deg": -0.8994419080785827
+        "parallel_spread_deg": -0.8994419080785828
       }
     }
   },

@@ -25,7 +25,7 @@
     }
   },
   "honest_scale": {
-    "rank_delta": 0.6700126805615123,
+    "rank_delta": 0.49529074211817303,
     "skipped_metrics": [
       "scaled_synthetic_parallel_lines/median_direction_error_deg",
       "scaled_synthetic_parallel_lines/p90_direction_error_deg",
@@ -42,10 +42,10 @@
     ],
     "contributions": {
       "scaled_synthetic_parallel_lines": {
-        "effective_params": 0.3734217191154153
+        "effective_params": 0.27451313033517194
       },
       "scaled_synthetic_parallel_lines_harder": {
-        "effective_params": 0.29659096144609703
+        "effective_params": 0.2207776117830011
       }
     }
   },
@@ -67,7 +67,7 @@
     ],
     "contributions": {
       "scaled_synthetic_parallel_lines": {
-        "effective_params": 1.601007603695449e-11
+        "effective_params": 1.6010076036954488e-11
       },
       "scaled_synthetic_parallel_lines_harder": {
         "effective_params": 1.7129661773667415e-11
