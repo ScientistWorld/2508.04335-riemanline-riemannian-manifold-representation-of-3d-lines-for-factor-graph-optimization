@@ -1,0 +1,64 @@
+{
+  "_metadata": {
+    "slice": "train",
+    "split_style": "deterministic 50/50 split over sorted line ids"
+  },
+  "experiments": {
+    "scaled_synthetic_parallel_lines": {
+      "_metadata": {
+        "data": "data/riemanline_synthetic.json",
+        "line_ids": [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10
+        ],
+        "outputs_dir": "outputs",
+        "slice": "train",
+        "split_rule": "sorted line ids at even zero-based positions"
+      },
+      "results": {
+        "unmatched_method_shortcut": {
+          "effective_params": 4.0,
+          "median_direction_error_deg": 0.0,
+          "median_normal_error_deg": 34.900196711767904,
+          "p90_direction_error_deg": 0.0,
+          "p90_reprojection_error_px": 260.0806894323741,
+          "parallel_spread_deg": 0.0,
+          "reprojection_rmse_px": 145.55913613452034
+        }
+      }
+    },
+    "scaled_synthetic_parallel_lines_harder": {
+      "_metadata": {
+        "data": "data/riemanline_synthetic_harder.json",
+        "line_ids": [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14
+        ],
+        "outputs_dir": "outputs/harder",
+        "slice": "train",
+        "split_rule": "sorted line ids at even zero-based positions"
+      },
+      "results": {
+        "unmatched_method_shortcut": {
+          "effective_params": 4.0,
+          "median_direction_error_deg": 0.0,
+          "median_normal_error_deg": 46.40307378640685,
+          "p90_direction_error_deg": 0.0,
+          "p90_reprojection_error_px": 303.65222105432446,
+          "parallel_spread_deg": 0.0,
+          "reprojection_rmse_px": 161.6161914801997
+        }
+      }
+    }
+  }
+}

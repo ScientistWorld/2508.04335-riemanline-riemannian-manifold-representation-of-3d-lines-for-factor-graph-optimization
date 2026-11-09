@@ -1,0 +1,67 @@
+{
+  "_metadata": {
+    "required_methods_source": "scoring/scores_train.json",
+    "slice": "test",
+    "split_style": "deterministic 50/50 split over sorted line ids"
+  },
+  "experiments": {
+    "scaled_synthetic_parallel_lines": {
+      "_metadata": {
+        "data": "data/riemanline_synthetic.json",
+        "line_ids": [
+          1,
+          3,
+          5,
+          7,
+          9,
+          11
+        ],
+        "outputs_dir": "outputs",
+        "required_methods_from_train": true,
+        "slice": "test",
+        "split_rule": "sorted line ids at odd zero-based positions"
+      },
+      "results": {
+        "unmatched_method_shortcut": {
+          "effective_params": 4.0,
+          "median_direction_error_deg": 0.0,
+          "median_normal_error_deg": 39.44654460297666,
+          "p90_direction_error_deg": 0.0,
+          "p90_reprojection_error_px": 250.17560412984915,
+          "parallel_spread_deg": 0.0,
+          "reprojection_rmse_px": 144.6929834905511
+        }
+      }
+    },
+    "scaled_synthetic_parallel_lines_harder": {
+      "_metadata": {
+        "data": "data/riemanline_synthetic_harder.json",
+        "line_ids": [
+          1,
+          3,
+          5,
+          7,
+          9,
+          11,
+          13,
+          15
+        ],
+        "outputs_dir": "outputs/harder",
+        "required_methods_from_train": true,
+        "slice": "test",
+        "split_rule": "sorted line ids at odd zero-based positions"
+      },
+      "results": {
+        "unmatched_method_shortcut": {
+          "effective_params": 4.0,
+          "median_direction_error_deg": 0.0,
+          "median_normal_error_deg": 40.19853352779673,
+          "p90_direction_error_deg": 0.0,
+          "p90_reprojection_error_px": 308.2927804516689,
+          "parallel_spread_deg": 0.0,
+          "reprojection_rmse_px": 172.60948280132328
+        }
+      }
+    }
+  }
+}

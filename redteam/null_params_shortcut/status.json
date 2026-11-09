@@ -1,0 +1,20 @@
+{
+  "method_exit": 0,
+  "train_exit": 1,
+  "test_exit": 1,
+  "test_called_with_arguments": false,
+  "test_fresh_process": true,
+  "test_score_exists": false,
+  "method_log_tail": "",
+  "train_log_tail": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/home/user/eval/train/evaluate.py\", line 163, in <module>\n    main()\n  File \"/home/user/eval/train/evaluate.py\", line 159, in main\n    evaluate([(data, outputs) for data, outputs in args.pair], args.scores)\n  File \"/home/user/eval/train/evaluate.py\", line 141, in evaluate\n    experiment, payload = _score_dataset(data_path, outputs_dir)\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/user/eval/train/evaluate.py\", line 115, in _score_dataset\n    results = {\n              ^\n  File \"/home/user/eval/train/evaluate.py\", line 116, in <dictcomp>\n    method: _score_one(dataset, payload, selected_ids)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/user/eval/train/evaluate.py\", line 93, in _score_one\n    \"effective_params\": float(output[\"num_parameters\"]),\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: float() argument must be a string or a real number, not 'NoneType'\n",
+  "test_log_tail": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/home/user/eval/test/evaluate.py\", line 209, in <module>\n    main()\n  File \"/home/user/eval/test/evaluate.py\", line 205, in main\n    evaluate([(data, outputs) for data, outputs in args.pair], args.scores, args.train_scores)\n  File \"/home/user/eval/test/evaluate.py\", line 182, in evaluate\n    experiment, payload = _score_dataset(\n                          ^^^^^^^^^^^^^^^\n  File \"/home/user/eval/test/evaluate.py\", line 152, in _score_dataset\n    results = {\n              ^\n  File \"/home/user/eval/test/evaluate.py\", line 153, in <dictcomp>\n    method: _score_one(dataset, outputs[method], selected_ids)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/user/eval/test/evaluate.py\", line 93, in _score_one\n    \"effective_params\": float(output[\"num_parameters\"]),\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: float() argument must be a string or a real number, not 'NoneType'\n",
+  "evaluator_sha256": {
+    "scripts/evaluate_test.sh": "66b7ab0395d70b0c5f2031c27feecbaaada878c07462f6078a024a27790ccfbc",
+    "eval/evaluate_outputs.py": "54a9a855812efffbd98ea7e2e724831b6809ca8235c9c572ae6b9f8d1a855cdb",
+    "eval/__init__.py": "d62e738aba90238041291a72290718ab344e573f2b2e1b2723eb3ea1cc74f403",
+    "eval/train/__init__.py": "5cf9ed0d38232d7c692614f957356294e592ed1f2a2278dba3d5e2459d452497",
+    "eval/train/evaluate.py": "a15ce090d7ec523894b0b1fd547937958b218634b276779e0200599baf204f47",
+    "eval/test/__init__.py": "18d0c897ddbc13c32270cd3f2054b165b0a8dd5203c3e887cbf44374cdf99512",
+    "eval/test/evaluate.py": "d230abe234ccc631e5e59576b6d2f3ccf89975ad57eeadb8a4bb94de29ebd5c2"
+  }
+}

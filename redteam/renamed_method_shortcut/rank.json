@@ -1,0 +1,75 @@
+{
+  "pairwise": {
+    "rank_delta": 0.0,
+    "skipped_metrics": [
+      "scaled_synthetic_parallel_lines/median_direction_error_deg",
+      "scaled_synthetic_parallel_lines/p90_direction_error_deg",
+      "scaled_synthetic_parallel_lines/median_normal_error_deg",
+      "scaled_synthetic_parallel_lines/reprojection_rmse_px",
+      "scaled_synthetic_parallel_lines/p90_reprojection_error_px",
+      "scaled_synthetic_parallel_lines/effective_params",
+      "scaled_synthetic_parallel_lines/parallel_spread_deg",
+      "scaled_synthetic_parallel_lines_harder/median_direction_error_deg",
+      "scaled_synthetic_parallel_lines_harder/p90_direction_error_deg",
+      "scaled_synthetic_parallel_lines_harder/median_normal_error_deg",
+      "scaled_synthetic_parallel_lines_harder/reprojection_rmse_px",
+      "scaled_synthetic_parallel_lines_harder/p90_reprojection_error_px",
+      "scaled_synthetic_parallel_lines_harder/effective_params",
+      "scaled_synthetic_parallel_lines_harder/parallel_spread_deg"
+    ],
+    "contributions": {
+      "scaled_synthetic_parallel_lines": {},
+      "scaled_synthetic_parallel_lines_harder": {}
+    }
+  },
+  "honest_scale": {
+    "rank_delta": 0.0,
+    "skipped_metrics": [
+      "scaled_synthetic_parallel_lines/median_direction_error_deg",
+      "scaled_synthetic_parallel_lines/p90_direction_error_deg",
+      "scaled_synthetic_parallel_lines/median_normal_error_deg",
+      "scaled_synthetic_parallel_lines/reprojection_rmse_px",
+      "scaled_synthetic_parallel_lines/p90_reprojection_error_px",
+      "scaled_synthetic_parallel_lines/effective_params",
+      "scaled_synthetic_parallel_lines/parallel_spread_deg",
+      "scaled_synthetic_parallel_lines_harder/median_direction_error_deg",
+      "scaled_synthetic_parallel_lines_harder/p90_direction_error_deg",
+      "scaled_synthetic_parallel_lines_harder/median_normal_error_deg",
+      "scaled_synthetic_parallel_lines_harder/reprojection_rmse_px",
+      "scaled_synthetic_parallel_lines_harder/p90_reprojection_error_px",
+      "scaled_synthetic_parallel_lines_harder/effective_params",
+      "scaled_synthetic_parallel_lines_harder/parallel_spread_deg"
+    ],
+    "contributions": {
+      "scaled_synthetic_parallel_lines": {},
+      "scaled_synthetic_parallel_lines_harder": {}
+    }
+  },
+  "audit_cohort": {
+    "rank_delta": 0.0,
+    "skipped_metrics": [
+      "scaled_synthetic_parallel_lines/median_direction_error_deg",
+      "scaled_synthetic_parallel_lines/p90_direction_error_deg",
+      "scaled_synthetic_parallel_lines/median_normal_error_deg",
+      "scaled_synthetic_parallel_lines/reprojection_rmse_px",
+      "scaled_synthetic_parallel_lines/p90_reprojection_error_px",
+      "scaled_synthetic_parallel_lines/effective_params",
+      "scaled_synthetic_parallel_lines/parallel_spread_deg",
+      "scaled_synthetic_parallel_lines_harder/median_direction_error_deg",
+      "scaled_synthetic_parallel_lines_harder/p90_direction_error_deg",
+      "scaled_synthetic_parallel_lines_harder/median_normal_error_deg",
+      "scaled_synthetic_parallel_lines_harder/reprojection_rmse_px",
+      "scaled_synthetic_parallel_lines_harder/p90_reprojection_error_px",
+      "scaled_synthetic_parallel_lines_harder/effective_params",
+      "scaled_synthetic_parallel_lines_harder/parallel_spread_deg"
+    ],
+    "contributions": {
+      "scaled_synthetic_parallel_lines": {},
+      "scaled_synthetic_parallel_lines_harder": {}
+    }
+  },
+  "proposed": {
+    "scaled_synthetic_parallel_lines": {},
+    "scaled_synthetic_parallel_lines_harder": {}
+  }
+}

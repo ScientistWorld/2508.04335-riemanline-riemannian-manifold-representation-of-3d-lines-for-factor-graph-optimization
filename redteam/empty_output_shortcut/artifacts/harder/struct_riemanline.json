@@ -1,0 +1,13 @@
+{
+  "experiment": "scaled_synthetic_parallel_lines_harder",
+  "final_reprojection_rmse_px": 1.4172014398375243,
+  "initial_reprojection_rmse_px": 21.268939910183942,
+  "lines": [],
+  "method": "struct_riemanline",
+  "num_observations": 130,
+  "num_parameters": 34,
+  "parameterization": "shared S2 direction plus one scaled S1 normal per line",
+  "solver_cost": 243.24412101274208,
+  "solver_nfev": 19,
+  "success": true
+}

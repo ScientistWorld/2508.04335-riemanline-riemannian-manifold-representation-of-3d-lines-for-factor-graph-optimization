@@ -1,0 +1,97 @@
+{
+  "pairwise": {
+    "rank_delta": 0.5,
+    "skipped_metrics": [
+      "scaled_synthetic_parallel_lines/median_direction_error_deg",
+      "scaled_synthetic_parallel_lines/p90_direction_error_deg",
+      "scaled_synthetic_parallel_lines/median_normal_error_deg",
+      "scaled_synthetic_parallel_lines/reprojection_rmse_px",
+      "scaled_synthetic_parallel_lines/p90_reprojection_error_px",
+      "scaled_synthetic_parallel_lines/parallel_spread_deg",
+      "scaled_synthetic_parallel_lines_harder/median_direction_error_deg",
+      "scaled_synthetic_parallel_lines_harder/p90_direction_error_deg",
+      "scaled_synthetic_parallel_lines_harder/median_normal_error_deg",
+      "scaled_synthetic_parallel_lines_harder/reprojection_rmse_px",
+      "scaled_synthetic_parallel_lines_harder/p90_reprojection_error_px",
+      "scaled_synthetic_parallel_lines_harder/parallel_spread_deg"
+    ],
+    "contributions": {
+      "scaled_synthetic_parallel_lines": {
+        "effective_params": 0.275
+      },
+      "scaled_synthetic_parallel_lines_harder": {
+        "effective_params": 0.225
+      }
+    }
+  },
+  "honest_scale": {
+    "rank_delta": 0.6700126805615123,
+    "skipped_metrics": [
+      "scaled_synthetic_parallel_lines/median_direction_error_deg",
+      "scaled_synthetic_parallel_lines/p90_direction_error_deg",
+      "scaled_synthetic_parallel_lines/median_normal_error_deg",
+      "scaled_synthetic_parallel_lines/reprojection_rmse_px",
+      "scaled_synthetic_parallel_lines/p90_reprojection_error_px",
+      "scaled_synthetic_parallel_lines/parallel_spread_deg",
+      "scaled_synthetic_parallel_lines_harder/median_direction_error_deg",
+      "scaled_synthetic_parallel_lines_harder/p90_direction_error_deg",
+      "scaled_synthetic_parallel_lines_harder/median_normal_error_deg",
+      "scaled_synthetic_parallel_lines_harder/reprojection_rmse_px",
+      "scaled_synthetic_parallel_lines_harder/p90_reprojection_error_px",
+      "scaled_synthetic_parallel_lines_harder/parallel_spread_deg"
+    ],
+    "contributions": {
+      "scaled_synthetic_parallel_lines": {
+        "effective_params": 0.3734217191154153
+      },
+      "scaled_synthetic_parallel_lines_harder": {
+        "effective_params": 0.29659096144609703
+      }
+    }
+  },
+  "audit_cohort": {
+    "rank_delta": 3.31397378106219e-11,
+    "skipped_metrics": [
+      "scaled_synthetic_parallel_lines/median_direction_error_deg",
+      "scaled_synthetic_parallel_lines/p90_direction_error_deg",
+      "scaled_synthetic_parallel_lines/median_normal_error_deg",
+      "scaled_synthetic_parallel_lines/reprojection_rmse_px",
+      "scaled_synthetic_parallel_lines/p90_reprojection_error_px",
+      "scaled_synthetic_parallel_lines/parallel_spread_deg",
+      "scaled_synthetic_parallel_lines_harder/median_direction_error_deg",
+      "scaled_synthetic_parallel_lines_harder/p90_direction_error_deg",
+      "scaled_synthetic_parallel_lines_harder/median_normal_error_deg",
+      "scaled_synthetic_parallel_lines_harder/reprojection_rmse_px",
+      "scaled_synthetic_parallel_lines_harder/p90_reprojection_error_px",
+      "scaled_synthetic_parallel_lines_harder/parallel_spread_deg"
+    ],
+    "contributions": {
+      "scaled_synthetic_parallel_lines": {
+        "effective_params": 1.601007603695449e-11
+      },
+      "scaled_synthetic_parallel_lines_harder": {
+        "effective_params": 1.7129661773667415e-11
+      }
+    }
+  },
+  "proposed": {
+    "scaled_synthetic_parallel_lines": {
+      "effective_params": 0.0,
+      "median_direction_error_deg": NaN,
+      "median_normal_error_deg": NaN,
+      "p90_direction_error_deg": NaN,
+      "p90_reprojection_error_px": NaN,
+      "parallel_spread_deg": NaN,
+      "reprojection_rmse_px": NaN
+    },
+    "scaled_synthetic_parallel_lines_harder": {
+      "effective_params": 0.0,
+      "median_direction_error_deg": NaN,
+      "median_normal_error_deg": NaN,
+      "p90_direction_error_deg": NaN,
+      "p90_reprojection_error_px": NaN,
+      "parallel_spread_deg": NaN,
+      "reprojection_rmse_px": NaN
+    }
+  }
+}

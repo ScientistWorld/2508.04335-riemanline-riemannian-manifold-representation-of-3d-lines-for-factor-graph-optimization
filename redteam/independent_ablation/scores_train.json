@@ -1,0 +1,100 @@
+{
+  "_metadata": {
+    "slice": "train",
+    "split_style": "deterministic 50/50 split over sorted line ids"
+  },
+  "experiments": {
+    "scaled_synthetic_parallel_lines": {
+      "_metadata": {
+        "data": "data/riemanline_synthetic.json",
+        "line_ids": [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10
+        ],
+        "outputs_dir": "outputs",
+        "slice": "train",
+        "split_rule": "sorted line ids at even zero-based positions"
+      },
+      "results": {
+        "orthline": {
+          "effective_params": 48.0,
+          "median_direction_error_deg": 0.22499304822543037,
+          "median_normal_error_deg": 0.2711786791614823,
+          "p90_direction_error_deg": 0.2947913347998996,
+          "p90_reprojection_error_px": 1.564996198724025,
+          "parallel_spread_deg": 0.3048555138869638,
+          "reprojection_rmse_px": 0.9535817102251452
+        },
+        "orthline_constr": {
+          "effective_params": 48.0,
+          "median_direction_error_deg": 0.2206752718343875,
+          "median_normal_error_deg": 0.2696642519102521,
+          "p90_direction_error_deg": 0.2838230524692795,
+          "p90_reprojection_error_px": 1.5739864982257072,
+          "parallel_spread_deg": 0.29576301672710503,
+          "reprojection_rmse_px": 0.9537090581585352
+        },
+        "struct_riemanline": {
+          "effective_params": 48.0,
+          "median_direction_error_deg": 0.22499304822543037,
+          "median_normal_error_deg": 0.2711786791614823,
+          "p90_direction_error_deg": 0.2947913347998996,
+          "p90_reprojection_error_px": 1.564996198724025,
+          "parallel_spread_deg": 0.3048555138869638,
+          "reprojection_rmse_px": 0.9535817102251452
+        }
+      }
+    },
+    "scaled_synthetic_parallel_lines_harder": {
+      "_metadata": {
+        "data": "data/riemanline_synthetic_harder.json",
+        "line_ids": [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14
+        ],
+        "outputs_dir": "outputs/harder",
+        "slice": "train",
+        "split_rule": "sorted line ids at even zero-based positions"
+      },
+      "results": {
+        "orthline": {
+          "effective_params": 64.0,
+          "median_direction_error_deg": 0.5039454350410871,
+          "median_normal_error_deg": 0.6076590132480217,
+          "p90_direction_error_deg": 0.7074228677747404,
+          "p90_reprojection_error_px": 2.0275780296000683,
+          "parallel_spread_deg": 0.6518774249605774,
+          "reprojection_rmse_px": 1.2508182960346979
+        },
+        "orthline_constr": {
+          "effective_params": 64.0,
+          "median_direction_error_deg": 0.4927994721638749,
+          "median_normal_error_deg": 0.5953234463463783,
+          "p90_direction_error_deg": 0.6970496324708415,
+          "p90_reprojection_error_px": 1.9966657206462675,
+          "parallel_spread_deg": 0.6365053184607812,
+          "reprojection_rmse_px": 1.250662271202661
+        },
+        "struct_riemanline": {
+          "effective_params": 64.0,
+          "median_direction_error_deg": 0.5039454350410871,
+          "median_normal_error_deg": 0.6076590132480217,
+          "p90_direction_error_deg": 0.7074228677747404,
+          "p90_reprojection_error_px": 2.0275780296000683,
+          "parallel_spread_deg": 0.6518774249605774,
+          "reprojection_rmse_px": 1.2508182960346979
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "_metadata": {
+    "slice": "train",
+    "split_style": "deterministic 50/50 split over sorted line ids"
+  },
+  "experiments": {
+    "scaled_synthetic_parallel_lines": {
+      "_metadata": {
+        "data": "data/riemanline_synthetic.json",
+        "line_ids": [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10
+        ],
+        "outputs_dir": "outputs",
+        "slice": "train",
+        "split_rule": "sorted line ids at even zero-based positions"
+      },
+      "results": {
+        "orthline": {
+          "effective_params": 48.0,
+          "median_direction_error_deg": 0.23940167216795621,
+          "median_normal_error_deg": 0.17502234080846935,
+          "p90_direction_error_deg": 0.2884881599757287,
+          "p90_reprojection_error_px": 1.564996198724025,
+          "parallel_spread_deg": 0.3048555138869638,
+          "reprojection_rmse_px": 0.9535817102251452
+        },
+        "orthline_constr": {
+          "effective_params": 48.0,
+          "median_direction_error_deg": 0.22716531442745652,
+          "median_normal_error_deg": 0.16818820632586828,
+          "p90_direction_error_deg": 0.28509134926351803,
+          "p90_reprojection_error_px": 1.5739864982257072,
+          "parallel_spread_deg": 0.29576301672710503,
+          "reprojection_rmse_px": 0.9537090581585352
+        },
+        "struct_riemanline": {
+          "effective_params": 26.0,
+          "median_direction_error_deg": 0.0,
+          "median_normal_error_deg": 0.0,
+          "p90_direction_error_deg": 0.0,
+          "p90_reprojection_error_px": 1.6569229201825346,
+          "parallel_spread_deg": 0.0,
+          "reprojection_rmse_px": 1.0169289440313123
+        }
+      }
+    },
+    "scaled_synthetic_parallel_lines_harder": {
+      "_metadata": {
+        "data": "data/riemanline_synthetic_harder.json",
+        "line_ids": [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14
+        ],
+        "outputs_dir": "outputs/harder",
+        "slice": "train",
+        "split_rule": "sorted line ids at even zero-based positions"
+      },
+      "results": {
+        "orthline": {
+          "effective_params": 64.0,
+          "median_direction_error_deg": 0.504529993940616,
+          "median_normal_error_deg": 0.3045559891970464,
+          "p90_direction_error_deg": 0.7000530342643395,
+          "p90_reprojection_error_px": 2.0275780296000683,
+          "parallel_spread_deg": 0.6518774249605774,
+          "reprojection_rmse_px": 1.2508182960346979
+        },
+        "orthline_constr": {
+          "effective_params": 64.0,
+          "median_direction_error_deg": 0.4934471398072554,
+          "median_normal_error_deg": 0.2949051617758718,
+          "p90_direction_error_deg": 0.6842077169372828,
+          "p90_reprojection_error_px": 1.9966657206462675,
+          "parallel_spread_deg": 0.6365053184607812,
+          "reprojection_rmse_px": 1.250662271202661
+        },
+        "struct_riemanline": {
+          "effective_params": 34.0,
+          "median_direction_error_deg": 0.0,
+          "median_normal_error_deg": 0.0,
+          "p90_direction_error_deg": 0.0,
+          "p90_reprojection_error_px": 2.3597378396134907,
+          "parallel_spread_deg": 0.0,
+          "reprojection_rmse_px": 1.4237528259400594
+        }
+      }
+    }
+  }
+}

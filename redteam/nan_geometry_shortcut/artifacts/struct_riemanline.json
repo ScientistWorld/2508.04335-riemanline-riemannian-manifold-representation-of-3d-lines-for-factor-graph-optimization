@@ -1,0 +1,170 @@
+{
+  "experiment": "scaled_synthetic_parallel_lines",
+  "final_reprojection_rmse_px": 1.0472499908571395,
+  "initial_reprojection_rmse_px": 18.793536704611956,
+  "lines": [
+    {
+      "direction": [
+        NaN,
+        NaN,
+        NaN
+      ],
+      "id": 0,
+      "normal": [
+        NaN,
+        NaN,
+        NaN
+      ]
+    },
+    {
+      "direction": [
+        NaN,
+        NaN,
+        NaN
+      ],
+      "id": 1,
+      "normal": [
+        NaN,
+        NaN,
+        NaN
+      ]
+    },
+    {
+      "direction": [
+        NaN,
+        NaN,
+        NaN
+      ],
+      "id": 2,
+      "normal": [
+        NaN,
+        NaN,
+        NaN
+      ]
+    },
+    {
+      "direction": [
+        NaN,
+        NaN,
+        NaN
+      ],
+      "id": 3,
+      "normal": [
+        NaN,
+        NaN,
+        NaN
+      ]
+    },
+    {
+      "direction": [
+        NaN,
+        NaN,
+        NaN
+      ],
+      "id": 4,
+      "normal": [
+        NaN,
+        NaN,
+        NaN
+      ]
+    },
+    {
+      "direction": [
+        NaN,
+        NaN,
+        NaN
+      ],
+      "id": 5,
+      "normal": [
+        NaN,
+        NaN,
+        NaN
+      ]
+    },
+    {
+      "direction": [
+        NaN,
+        NaN,
+        NaN
+      ],
+      "id": 6,
+      "normal": [
+        NaN,
+        NaN,
+        NaN
+      ]
+    },
+    {
+      "direction": [
+        NaN,
+        NaN,
+        NaN
+      ],
+      "id": 7,
+      "normal": [
+        NaN,
+        NaN,
+        NaN
+      ]
+    },
+    {
+      "direction": [
+        NaN,
+        NaN,
+        NaN
+      ],
+      "id": 8,
+      "normal": [
+        NaN,
+        NaN,
+        NaN
+      ]
+    },
+    {
+      "direction": [
+        NaN,
+        NaN,
+        NaN
+      ],
+      "id": 9,
+      "normal": [
+        NaN,
+        NaN,
+        NaN
+      ]
+    },
+    {
+      "direction": [
+        NaN,
+        NaN,
+        NaN
+      ],
+      "id": 10,
+      "normal": [
+        NaN,
+        NaN,
+        NaN
+      ]
+    },
+    {
+      "direction": [
+        NaN,
+        NaN,
+        NaN
+      ],
+      "id": 11,
+      "normal": [
+        NaN,
+        NaN,
+        NaN
+      ]
+    }
+  ],
+  "method": "struct_riemanline",
+  "num_observations": 81,
+  "num_parameters": 0,
+  "parameterization": "shared S2 direction plus one scaled S1 normal per line",
+  "solver_cost": 87.24755548263494,
+  "solver_nfev": 22,
+  "success": true
+}
