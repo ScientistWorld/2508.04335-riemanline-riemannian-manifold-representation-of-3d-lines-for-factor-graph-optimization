@@ -1,0 +1,14 @@
+solver scripts on disk: orthline.sh, orthline_constr.sh, riemanline.sh, struct_riemanline.sh
+
+struct_riemanline.sh:
+#!/bin/bash
+# Solver interface used by scripts/evaluate_{train,test}.sh:
+#   bash scripts/methods/struct_riemanline.sh INPUT_DIR OUTPUT_DIR
+# reads every public scene INPUT_DIR/<scene>.json and writes OUTPUT_DIR/<scene>.json
+# with {"lines": [{"id", "normal", "direction"}, ...]}.
+# Paper's method: StructRiemanLine (shared S2 direction per parallel group, Eq. 4-10).
+set -e
+WORKSPACE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+cd "$WORKSPACE_DIR"
+export PYTHONPATH="$WORKSPACE_DIR:${PYTHONPATH:-}"
+python -m method.struct_riemanline "$1" "$2"
