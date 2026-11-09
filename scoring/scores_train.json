@@ -74,7 +74,7 @@
       "novel_view_count": 184,
       "novel_view_sq_sum": 77.1714854027494,
       "num_lines": 23,
-      "scene_id": "parallel_lines_000",
+      "scene_id": "scene_77bee4dec90de8fe",
       "true_direction_classes": 7
      },
      {
@@ -131,7 +131,7 @@
       "novel_view_count": 176,
       "novel_view_sq_sum": 86.5484633422974,
       "num_lines": 22,
-      "scene_id": "parallel_lines_001",
+      "scene_id": "scene_866319e6edd78df1",
       "true_direction_classes": 7
      },
      {
@@ -170,7 +170,7 @@
       "novel_view_count": 104,
       "novel_view_sq_sum": 57.494621840649295,
       "num_lines": 13,
-      "scene_id": "parallel_lines_002",
+      "scene_id": "scene_ca228400504d3249",
       "true_direction_classes": 4
      },
      {
@@ -231,7 +231,7 @@
       "novel_view_count": 192,
       "novel_view_sq_sum": 129.51135189130633,
       "num_lines": 24,
-      "scene_id": "parallel_lines_003",
+      "scene_id": "scene_66456a150ad558e1",
       "true_direction_classes": 7
      },
      {
@@ -290,7 +290,7 @@
       "novel_view_count": 182,
       "novel_view_sq_sum": 181.87980234115753,
       "num_lines": 23,
-      "scene_id": "parallel_lines_004",
+      "scene_id": "scene_bf648f2822a7962e",
       "true_direction_classes": 7
      },
      {
@@ -353,7 +353,7 @@
       "novel_view_count": 192,
       "novel_view_sq_sum": 212.84027922908933,
       "num_lines": 25,
-      "scene_id": "parallel_lines_005",
+      "scene_id": "scene_d545cc16bb145780",
       "true_direction_classes": 7
      },
      {
@@ -400,7 +400,7 @@
       "novel_view_count": 136,
       "novel_view_sq_sum": 117.09835088939296,
       "num_lines": 17,
-      "scene_id": "parallel_lines_006",
+      "scene_id": "scene_79c93340876393a4",
       "true_direction_classes": 6
      },
      {
@@ -443,7 +443,7 @@
       "novel_view_count": 120,
       "novel_view_sq_sum": 52.92192279283461,
       "num_lines": 15,
-      "scene_id": "parallel_lines_007",
+      "scene_id": "scene_481cc313ed782643",
       "true_direction_classes": 6
      },
      {
@@ -490,7 +490,7 @@
       "novel_view_count": 136,
       "novel_view_sq_sum": 104.21483324342199,
       "num_lines": 17,
-      "scene_id": "parallel_lines_008",
+      "scene_id": "scene_5f164ba449769816",
       "true_direction_classes": 6
      },
      {
@@ -551,7 +551,7 @@
       "novel_view_count": 192,
       "novel_view_sq_sum": 96.75984610242175,
       "num_lines": 24,
-      "scene_id": "parallel_lines_009",
+      "scene_id": "scene_955538dc14a1e9d5",
       "true_direction_classes": 7
      },
      {
@@ -610,7 +610,7 @@
       "novel_view_count": 184,
       "novel_view_sq_sum": 79.19223371131585,
       "num_lines": 23,
-      "scene_id": "parallel_lines_010",
+      "scene_id": "scene_3bf618b758a91b06",
       "true_direction_classes": 6
      },
      {
@@ -661,7 +661,7 @@
       "novel_view_count": 150,
       "novel_view_sq_sum": 216.25675927862568,
       "num_lines": 19,
-      "scene_id": "parallel_lines_011",
+      "scene_id": "scene_e34df8c345b6e6cd",
       "true_direction_classes": 5
      },
      {
@@ -706,7 +706,7 @@
       "novel_view_count": 126,
       "novel_view_sq_sum": 96.73341585908075,
       "num_lines": 16,
-      "scene_id": "parallel_lines_012",
+      "scene_id": "scene_63394c25aac3b5d0",
       "true_direction_classes": 5
      },
      {
@@ -747,7 +747,7 @@
       "novel_view_count": 112,
       "novel_view_sq_sum": 49.878831559235444,
       "num_lines": 14,
-      "scene_id": "parallel_lines_013",
+      "scene_id": "scene_b7c03d025897a7cf",
       "true_direction_classes": 4
      },
      {
@@ -810,7 +810,7 @@
       "novel_view_count": 198,
       "novel_view_sq_sum": 247.44133153484495,
       "num_lines": 25,
-      "scene_id": "parallel_lines_014",
+      "scene_id": "scene_ac8d4ae25c08ecb1",
       "true_direction_classes": 7
      },
      {
@@ -865,7 +865,7 @@
       "novel_view_count": 168,
       "novel_view_sq_sum": 44.65096233614908,
       "num_lines": 21,
-      "scene_id": "parallel_lines_015",
+      "scene_id": "scene_b8017e9f83838164",
       "true_direction_classes": 6
      },
      {
@@ -924,7 +924,7 @@
       "novel_view_count": 184,
       "novel_view_sq_sum": 86.53872999371272,
       "num_lines": 23,
-      "scene_id": "parallel_lines_016",
+      "scene_id": "scene_c3f47bcf106afc5a",
       "true_direction_classes": 7
      },
      {
@@ -979,7 +979,7 @@
       "novel_view_count": 168,
       "novel_view_sq_sum": 115.26276313909237,
       "num_lines": 21,
-      "scene_id": "parallel_lines_017",
+      "scene_id": "scene_6104efd7dce8f6c4",
       "true_direction_classes": 5
      },
      {
@@ -1036,7 +1036,7 @@
       "novel_view_count": 174,
       "novel_view_sq_sum": 84.67277899703844,
       "num_lines": 22,
-      "scene_id": "parallel_lines_018",
+      "scene_id": "scene_121437da94774133",
       "true_direction_classes": 7
      },
      {
@@ -1079,7 +1079,7 @@
       "novel_view_count": 120,
       "novel_view_sq_sum": 57.56331748422211,
       "num_lines": 15,
-      "scene_id": "parallel_lines_019",
+      "scene_id": "scene_9d7b6e53b5871e23",
       "true_direction_classes": 5
      },
      {
@@ -1126,7 +1126,7 @@
       "novel_view_count": 136,
       "novel_view_sq_sum": 75.60113688634968,
       "num_lines": 17,
-      "scene_id": "parallel_lines_020",
+      "scene_id": "scene_0d7b89eabfb4ca2b",
       "true_direction_classes": 6
      },
      {
@@ -1167,7 +1167,7 @@
       "novel_view_count": 112,
       "novel_view_sq_sum": 107.74289033070087,
       "num_lines": 14,
-      "scene_id": "parallel_lines_021",
+      "scene_id": "scene_964d13cf8ad814fd",
       "true_direction_classes": 4
      },
      {
@@ -1208,7 +1208,7 @@
       "novel_view_count": 112,
       "novel_view_sq_sum": 272.01494556106,
       "num_lines": 14,
-      "scene_id": "parallel_lines_022",
+      "scene_id": "scene_52232658616ce8d7",
       "true_direction_classes": 6
      },
      {
@@ -1253,7 +1253,7 @@
       "novel_view_count": 128,
       "novel_view_sq_sum": 142.7309401306361,
       "num_lines": 16,
-      "scene_id": "parallel_lines_023",
+      "scene_id": "scene_534ee45617e34b5b",
       "true_direction_classes": 4
      }
     ],
@@ -1314,7 +1314,7 @@
       "novel_view_count": 184,
       "novel_view_sq_sum": 76.12125182105987,
       "num_lines": 23,
-      "scene_id": "parallel_lines_000",
+      "scene_id": "scene_77bee4dec90de8fe",
       "true_direction_classes": 7
      },
      {
@@ -1371,7 +1371,7 @@
       "novel_view_count": 176,
       "novel_view_sq_sum": 86.27355577927153,
       "num_lines": 22,
-      "scene_id": "parallel_lines_001",
+      "scene_id": "scene_866319e6edd78df1",
       "true_direction_classes": 7
      },
      {
@@ -1410,7 +1410,7 @@
       "novel_view_count": 104,
       "novel_view_sq_sum": 57.474452814302886,
       "num_lines": 13,
-      "scene_id": "parallel_lines_002",
+      "scene_id": "scene_ca228400504d3249",
       "true_direction_classes": 4
      },
      {
@@ -1471,7 +1471,7 @@
       "novel_view_count": 192,
       "novel_view_sq_sum": 122.6152180641383,
       "num_lines": 24,
-      "scene_id": "parallel_lines_003",
+      "scene_id": "scene_66456a150ad558e1",
       "true_direction_classes": 7
      },
      {
@@ -1530,7 +1530,7 @@
       "novel_view_count": 182,
       "novel_view_sq_sum": 181.15928608711314,
       "num_lines": 23,
-      "scene_id": "parallel_lines_004",
+      "scene_id": "scene_bf648f2822a7962e",
       "true_direction_classes": 7
      },
      {
@@ -1593,7 +1593,7 @@
       "novel_view_count": 192,
       "novel_view_sq_sum": 206.50670320586633,
       "num_lines": 25,
-      "scene_id": "parallel_lines_005",
+      "scene_id": "scene_d545cc16bb145780",
       "true_direction_classes": 7
      },
      {
@@ -1640,7 +1640,7 @@
       "novel_view_count": 136,
       "novel_view_sq_sum": 96.22333607823215,
       "num_lines": 17,
-      "scene_id": "parallel_lines_006",
+      "scene_id": "scene_79c93340876393a4",
       "true_direction_classes": 6
      },
      {
@@ -1683,7 +1683,7 @@
       "novel_view_count": 120,
       "novel_view_sq_sum": 52.850637417388555,
       "num_lines": 15,
-      "scene_id": "parallel_lines_007",
+      "scene_id": "scene_481cc313ed782643",
       "true_direction_classes": 6
      },
      {
@@ -1730,7 +1730,7 @@
       "novel_view_count": 136,
       "novel_view_sq_sum": 101.4557993230907,
       "num_lines": 17,
-      "scene_id": "parallel_lines_008",
+      "scene_id": "scene_5f164ba449769816",
       "true_direction_classes": 6
      },
      {
@@ -1791,7 +1791,7 @@
       "novel_view_count": 192,
       "novel_view_sq_sum": 96.5943380673647,
       "num_lines": 24,
-      "scene_id": "parallel_lines_009",
+      "scene_id": "scene_955538dc14a1e9d5",
       "true_direction_classes": 7
      },
      {
@@ -1850,7 +1850,7 @@
       "novel_view_count": 184,
       "novel_view_sq_sum": 77.67258456916085,
       "num_lines": 23,
-      "scene_id": "parallel_lines_010",
+      "scene_id": "scene_3bf618b758a91b06",
       "true_direction_classes": 6
      },
      {
@@ -1901,7 +1901,7 @@
       "novel_view_count": 150,
       "novel_view_sq_sum": 215.27434510569032,
       "num_lines": 19,
-      "scene_id": "parallel_lines_011",
+      "scene_id": "scene_e34df8c345b6e6cd",
       "true_direction_classes": 5
      },
      {
@@ -1946,7 +1946,7 @@
       "novel_view_count": 126,
       "novel_view_sq_sum": 92.71157296884503,
       "num_lines": 16,
-      "scene_id": "parallel_lines_012",
+      "scene_id": "scene_63394c25aac3b5d0",
       "true_direction_classes": 5
      },
      {
@@ -1987,7 +1987,7 @@
       "novel_view_count": 112,
       "novel_view_sq_sum": 49.86899494968329,
       "num_lines": 14,
-      "scene_id": "parallel_lines_013",
+      "scene_id": "scene_b7c03d025897a7cf",
       "true_direction_classes": 4
      },
      {
@@ -2050,7 +2050,7 @@
       "novel_view_count": 198,
       "novel_view_sq_sum": 240.58209753442372,
       "num_lines": 25,
-      "scene_id": "parallel_lines_014",
+      "scene_id": "scene_ac8d4ae25c08ecb1",
       "true_direction_classes": 7
      },
      {
@@ -2105,7 +2105,7 @@
       "novel_view_count": 168,
       "novel_view_sq_sum": 44.54202174363756,
       "num_lines": 21,
-      "scene_id": "parallel_lines_015",
+      "scene_id": "scene_b8017e9f83838164",
       "true_direction_classes": 6
      },
      {
@@ -2164,7 +2164,7 @@
       "novel_view_count": 184,
       "novel_view_sq_sum": 86.36160748215289,
       "num_lines": 23,
-      "scene_id": "parallel_lines_016",
+      "scene_id": "scene_c3f47bcf106afc5a",
       "true_direction_classes": 7
      },
      {
@@ -2219,7 +2219,7 @@
       "novel_view_count": 168,
       "novel_view_sq_sum": 105.41406346199874,
       "num_lines": 21,
-      "scene_id": "parallel_lines_017",
+      "scene_id": "scene_6104efd7dce8f6c4",
       "true_direction_classes": 5
      },
      {
@@ -2276,7 +2276,7 @@
       "novel_view_count": 174,
       "novel_view_sq_sum": 84.59721413731657,
       "num_lines": 22,
-      "scene_id": "parallel_lines_018",
+      "scene_id": "scene_121437da94774133",
       "true_direction_classes": 7
      },
      {
@@ -2319,7 +2319,7 @@
       "novel_view_count": 120,
       "novel_view_sq_sum": 57.419827204666184,
       "num_lines": 15,
-      "scene_id": "parallel_lines_019",
+      "scene_id": "scene_9d7b6e53b5871e23",
       "true_direction_classes": 5
      },
      {
@@ -2366,7 +2366,7 @@
       "novel_view_count": 136,
       "novel_view_sq_sum": 75.59140418309325,
       "num_lines": 17,
-      "scene_id": "parallel_lines_020",
+      "scene_id": "scene_0d7b89eabfb4ca2b",
       "true_direction_classes": 6
      },
      {
@@ -2407,7 +2407,7 @@
       "novel_view_count": 112,
       "novel_view_sq_sum": 55.04289340991022,
       "num_lines": 14,
-      "scene_id": "parallel_lines_021",
+      "scene_id": "scene_964d13cf8ad814fd",
       "true_direction_classes": 4
      },
      {
@@ -2448,7 +2448,7 @@
       "novel_view_count": 112,
       "novel_view_sq_sum": 240.36895033597142,
       "num_lines": 14,
-      "scene_id": "parallel_lines_022",
+      "scene_id": "scene_52232658616ce8d7",
       "true_direction_classes": 6
      },
      {
@@ -2493,7 +2493,7 @@
       "novel_view_count": 128,
       "novel_view_sq_sum": 139.999677334993,
       "num_lines": 16,
-      "scene_id": "parallel_lines_023",
+      "scene_id": "scene_534ee45617e34b5b",
       "true_direction_classes": 4
      }
     ],
@@ -2554,7 +2554,7 @@
       "novel_view_count": 184,
       "novel_view_sq_sum": 77.17059671632188,
       "num_lines": 23,
-      "scene_id": "parallel_lines_000",
+      "scene_id": "scene_77bee4dec90de8fe",
       "true_direction_classes": 7
      },
      {
@@ -2611,7 +2611,7 @@
       "novel_view_count": 176,
       "novel_view_sq_sum": 86.54809887029205,
       "num_lines": 22,
-      "scene_id": "parallel_lines_001",
+      "scene_id": "scene_866319e6edd78df1",
       "true_direction_classes": 7
      },
      {
@@ -2650,7 +2650,7 @@
       "novel_view_count": 104,
       "novel_view_sq_sum": 57.49462112073353,
       "num_lines": 13,
-      "scene_id": "parallel_lines_002",
+      "scene_id": "scene_ca228400504d3249",
       "true_direction_classes": 4
      },
      {
@@ -2711,7 +2711,7 @@
       "novel_view_count": 192,
       "novel_view_sq_sum": 129.51361618179277,
       "num_lines": 24,
-      "scene_id": "parallel_lines_003",
+      "scene_id": "scene_66456a150ad558e1",
       "true_direction_classes": 7
      },
      {
@@ -2770,7 +2770,7 @@
       "novel_view_count": 182,
       "novel_view_sq_sum": 181.8790318181744,
       "num_lines": 23,
-      "scene_id": "parallel_lines_004",
+      "scene_id": "scene_bf648f2822a7962e",
       "true_direction_classes": 7
      },
      {
@@ -2833,7 +2833,7 @@
       "novel_view_count": 192,
       "novel_view_sq_sum": 212.83880471061536,
       "num_lines": 25,
-      "scene_id": "parallel_lines_005",
+      "scene_id": "scene_d545cc16bb145780",
       "true_direction_classes": 7
      },
      {
@@ -2880,7 +2880,7 @@
       "novel_view_count": 136,
       "novel_view_sq_sum": 117.09694023700308,
       "num_lines": 17,
-      "scene_id": "parallel_lines_006",
+      "scene_id": "scene_79c93340876393a4",
       "true_direction_classes": 6
      },
      {
@@ -2923,7 +2923,7 @@
       "novel_view_count": 120,
       "novel_view_sq_sum": 52.92196578886758,
       "num_lines": 15,
-      "scene_id": "parallel_lines_007",
+      "scene_id": "scene_481cc313ed782643",
       "true_direction_classes": 6
      },
      {
@@ -2970,7 +2970,7 @@
       "novel_view_count": 136,
       "novel_view_sq_sum": 104.21456992862656,
       "num_lines": 17,
-      "scene_id": "parallel_lines_008",
+      "scene_id": "scene_5f164ba449769816",
       "true_direction_classes": 6
      },
      {
@@ -3031,7 +3031,7 @@
       "novel_view_count": 192,
       "novel_view_sq_sum": 96.75993940297451,
       "num_lines": 24,
-      "scene_id": "parallel_lines_009",
+      "scene_id": "scene_955538dc14a1e9d5",
       "true_direction_classes": 7
      },
      {
@@ -3090,7 +3090,7 @@
       "novel_view_count": 184,
       "novel_view_sq_sum": 79.19235491712392,
       "num_lines": 23,
-      "scene_id": "parallel_lines_010",
+      "scene_id": "scene_3bf618b758a91b06",
       "true_direction_classes": 6
      },
      {
@@ -3141,7 +3141,7 @@
       "novel_view_count": 150,
       "novel_view_sq_sum": 216.25643417823977,
       "num_lines": 19,
-      "scene_id": "parallel_lines_011",
+      "scene_id": "scene_e34df8c345b6e6cd",
       "true_direction_classes": 5
      },
      {
@@ -3186,7 +3186,7 @@
       "novel_view_count": 126,
       "novel_view_sq_sum": 96.7329943933738,
       "num_lines": 16,
-      "scene_id": "parallel_lines_012",
+      "scene_id": "scene_63394c25aac3b5d0",
       "true_direction_classes": 5
      },
      {
@@ -3227,7 +3227,7 @@
       "novel_view_count": 112,
       "novel_view_sq_sum": 49.87891356398718,
       "num_lines": 14,
-      "scene_id": "parallel_lines_013",
+      "scene_id": "scene_b7c03d025897a7cf",
       "true_direction_classes": 4
      },
      {
@@ -3290,7 +3290,7 @@
       "novel_view_count": 198,
       "novel_view_sq_sum": 247.44100548187038,
       "num_lines": 25,
-      "scene_id": "parallel_lines_014",
+      "scene_id": "scene_ac8d4ae25c08ecb1",
       "true_direction_classes": 7
      },
      {
@@ -3345,7 +3345,7 @@
       "novel_view_count": 168,
       "novel_view_sq_sum": 44.65095500899451,
       "num_lines": 21,
-      "scene_id": "parallel_lines_015",
+      "scene_id": "scene_b8017e9f83838164",
       "true_direction_classes": 6
      },
      {
@@ -3404,7 +3404,7 @@
       "novel_view_count": 184,
       "novel_view_sq_sum": 86.53879343766371,
       "num_lines": 23,
-      "scene_id": "parallel_lines_016",
+      "scene_id": "scene_c3f47bcf106afc5a",
       "true_direction_classes": 7
      },
      {
@@ -3459,7 +3459,7 @@
       "novel_view_count": 168,
       "novel_view_sq_sum": 115.26320007817282,
       "num_lines": 21,
-      "scene_id": "parallel_lines_017",
+      "scene_id": "scene_6104efd7dce8f6c4",
       "true_direction_classes": 5
      },
      {
@@ -3516,7 +3516,7 @@
       "novel_view_count": 174,
       "novel_view_sq_sum": 84.67280312827074,
       "num_lines": 22,
-      "scene_id": "parallel_lines_018",
+      "scene_id": "scene_121437da94774133",
       "true_direction_classes": 7
      },
      {
@@ -3559,7 +3559,7 @@
       "novel_view_count": 120,
       "novel_view_sq_sum": 57.563526946931276,
       "num_lines": 15,
-      "scene_id": "parallel_lines_019",
+      "scene_id": "scene_9d7b6e53b5871e23",
       "true_direction_classes": 5
      },
      {
@@ -3606,7 +3606,7 @@
       "novel_view_count": 136,
       "novel_view_sq_sum": 75.60117587275874,
       "num_lines": 17,
-      "scene_id": "parallel_lines_020",
+      "scene_id": "scene_0d7b89eabfb4ca2b",
       "true_direction_classes": 6
      },
      {
@@ -3647,7 +3647,7 @@
       "novel_view_count": 112,
       "novel_view_sq_sum": 107.73906231918276,
       "num_lines": 14,
-      "scene_id": "parallel_lines_021",
+      "scene_id": "scene_964d13cf8ad814fd",
       "true_direction_classes": 4
      },
      {
@@ -3688,7 +3688,7 @@
       "novel_view_count": 112,
       "novel_view_sq_sum": 272.01589133495975,
       "num_lines": 14,
-      "scene_id": "parallel_lines_022",
+      "scene_id": "scene_52232658616ce8d7",
       "true_direction_classes": 6
      },
      {
@@ -3733,7 +3733,7 @@
       "novel_view_count": 128,
       "novel_view_sq_sum": 142.7300798233222,
       "num_lines": 16,
-      "scene_id": "parallel_lines_023",
+      "scene_id": "scene_534ee45617e34b5b",
       "true_direction_classes": 4
      }
     ],
@@ -3794,7 +3794,7 @@
       "novel_view_count": 184,
       "novel_view_sq_sum": 44.21366643978672,
       "num_lines": 23,
-      "scene_id": "parallel_lines_000",
+      "scene_id": "scene_77bee4dec90de8fe",
       "true_direction_classes": 7
      },
      {
@@ -3851,7 +3851,7 @@
       "novel_view_count": 176,
       "novel_view_sq_sum": 54.29783964233478,
       "num_lines": 22,
-      "scene_id": "parallel_lines_001",
+      "scene_id": "scene_866319e6edd78df1",
       "true_direction_classes": 7
      },
      {
@@ -3890,7 +3890,7 @@
       "novel_view_count": 104,
       "novel_view_sq_sum": 45.03658251132884,
       "num_lines": 13,
-      "scene_id": "parallel_lines_002",
+      "scene_id": "scene_ca228400504d3249",
       "true_direction_classes": 4
      },
      {
@@ -3951,7 +3951,7 @@
       "novel_view_count": 192,
       "novel_view_sq_sum": 58.67529943955991,
       "num_lines": 24,
-      "scene_id": "parallel_lines_003",
+      "scene_id": "scene_66456a150ad558e1",
       "true_direction_classes": 7
      },
      {
@@ -4010,7 +4010,7 @@
       "novel_view_count": 182,
       "novel_view_sq_sum": 103.75102200873219,
       "num_lines": 23,
-      "scene_id": "parallel_lines_004",
+      "scene_id": "scene_bf648f2822a7962e",
       "true_direction_classes": 7
      },
      {
@@ -4073,7 +4073,7 @@
       "novel_view_count": 192,
       "novel_view_sq_sum": 105.85262979391916,
       "num_lines": 25,
-      "scene_id": "parallel_lines_005",
+      "scene_id": "scene_d545cc16bb145780",
       "true_direction_classes": 7
      },
      {
@@ -4120,7 +4120,7 @@
       "novel_view_count": 136,
       "novel_view_sq_sum": 112.52721718821567,
       "num_lines": 17,
-      "scene_id": "parallel_lines_006",
+      "scene_id": "scene_79c93340876393a4",
       "true_direction_classes": 6
      },
      {
@@ -4163,7 +4163,7 @@
       "novel_view_count": 120,
       "novel_view_sq_sum": 41.26338378934123,
       "num_lines": 15,
-      "scene_id": "parallel_lines_007",
+      "scene_id": "scene_481cc313ed782643",
       "true_direction_classes": 6
      },
      {
@@ -4210,7 +4210,7 @@
       "novel_view_count": 136,
       "novel_view_sq_sum": 49.81192981043267,
       "num_lines": 17,
-      "scene_id": "parallel_lines_008",
+      "scene_id": "scene_5f164ba449769816",
       "true_direction_classes": 6
      },
      {
@@ -4271,7 +4271,7 @@
       "novel_view_count": 192,
       "novel_view_sq_sum": 44.148215957252646,
       "num_lines": 24,
-      "scene_id": "parallel_lines_009",
+      "scene_id": "scene_955538dc14a1e9d5",
       "true_direction_classes": 7
      },
      {
@@ -4330,7 +4330,7 @@
       "novel_view_count": 184,
       "novel_view_sq_sum": 34.09629583004159,
       "num_lines": 23,
-      "scene_id": "parallel_lines_010",
+      "scene_id": "scene_3bf618b758a91b06",
       "true_direction_classes": 6
      },
      {
@@ -4381,7 +4381,7 @@
       "novel_view_count": 150,
       "novel_view_sq_sum": 124.14215258776694,
       "num_lines": 19,
-      "scene_id": "parallel_lines_011",
+      "scene_id": "scene_e34df8c345b6e6cd",
       "true_direction_classes": 5
      },
      {
@@ -4426,7 +4426,7 @@
       "novel_view_count": 126,
       "novel_view_sq_sum": 22.19830248886438,
       "num_lines": 16,
-      "scene_id": "parallel_lines_012",
+      "scene_id": "scene_63394c25aac3b5d0",
       "true_direction_classes": 5
      },
      {
@@ -4467,7 +4467,7 @@
       "novel_view_count": 112,
       "novel_view_sq_sum": 35.112054805382186,
       "num_lines": 14,
-      "scene_id": "parallel_lines_013",
+      "scene_id": "scene_b7c03d025897a7cf",
       "true_direction_classes": 4
      },
      {
@@ -4530,7 +4530,7 @@
       "novel_view_count": 198,
       "novel_view_sq_sum": 94.32417148987906,
       "num_lines": 25,
-      "scene_id": "parallel_lines_014",
+      "scene_id": "scene_ac8d4ae25c08ecb1",
       "true_direction_classes": 7
      },
      {
@@ -4585,7 +4585,7 @@
       "novel_view_count": 168,
       "novel_view_sq_sum": 31.584384998129906,
       "num_lines": 21,
-      "scene_id": "parallel_lines_015",
+      "scene_id": "scene_b8017e9f83838164",
       "true_direction_classes": 6
      },
      {
@@ -4644,7 +4644,7 @@
       "novel_view_count": 184,
       "novel_view_sq_sum": 42.64686543570399,
       "num_lines": 23,
-      "scene_id": "parallel_lines_016",
+      "scene_id": "scene_c3f47bcf106afc5a",
       "true_direction_classes": 7
      },
      {
@@ -4699,7 +4699,7 @@
       "novel_view_count": 168,
       "novel_view_sq_sum": 27.993629348953,
       "num_lines": 21,
-      "scene_id": "parallel_lines_017",
+      "scene_id": "scene_6104efd7dce8f6c4",
       "true_direction_classes": 5
      },
      {
@@ -4756,7 +4756,7 @@
       "novel_view_count": 174,
       "novel_view_sq_sum": 44.26129258118953,
       "num_lines": 22,
-      "scene_id": "parallel_lines_018",
+      "scene_id": "scene_121437da94774133",
       "true_direction_classes": 7
      },
      {
@@ -4799,7 +4799,7 @@
       "novel_view_count": 120,
       "novel_view_sq_sum": 31.577168425802466,
       "num_lines": 15,
-      "scene_id": "parallel_lines_019",
+      "scene_id": "scene_9d7b6e53b5871e23",
       "true_direction_classes": 5
      },
      {
@@ -4846,7 +4846,7 @@
       "novel_view_count": 136,
       "novel_view_sq_sum": 64.73592693183923,
       "num_lines": 17,
-      "scene_id": "parallel_lines_020",
+      "scene_id": "scene_0d7b89eabfb4ca2b",
       "true_direction_classes": 6
      },
      {
@@ -4887,7 +4887,7 @@
       "novel_view_count": 112,
       "novel_view_sq_sum": 35.46875677296919,
       "num_lines": 14,
-      "scene_id": "parallel_lines_021",
+      "scene_id": "scene_964d13cf8ad814fd",
       "true_direction_classes": 4
      },
      {
@@ -4928,7 +4928,7 @@
       "novel_view_count": 112,
       "novel_view_sq_sum": 193.34153142366878,
       "num_lines": 14,
-      "scene_id": "parallel_lines_022",
+      "scene_id": "scene_52232658616ce8d7",
       "true_direction_classes": 6
      },
      {
@@ -4973,7 +4973,7 @@
       "novel_view_count": 128,
       "novel_view_sq_sum": 40.413095874005045,
       "num_lines": 16,
-      "scene_id": "parallel_lines_023",
+      "scene_id": "scene_534ee45617e34b5b",
       "true_direction_classes": 4
      }
     ]
@@ -5094,7 +5094,7 @@
       "novel_view_count": 200,
       "novel_view_sq_sum": 7721.009020369064,
       "num_lines": 25,
-      "scene_id": "parallel_lines_harder_000",
+      "scene_id": "scene_674152cb6192e664",
       "true_direction_classes": 6
      },
      {
@@ -5155,7 +5155,7 @@
       "novel_view_count": 192,
       "novel_view_sq_sum": 1230.0831049824549,
       "num_lines": 24,
-      "scene_id": "parallel_lines_harder_001",
+      "scene_id": "scene_ea8551d00088c60e",
       "true_direction_classes": 7
      },
      {
@@ -5224,7 +5224,7 @@
       "novel_view_count": 224,
       "novel_view_sq_sum": 1266.2279611523013,
       "num_lines": 28,
-      "scene_id": "parallel_lines_harder_002",
+      "scene_id": "scene_8d2e3f4bfdab32bd",
       "true_direction_classes": 7
      },
      {
@@ -5293,7 +5293,7 @@
       "novel_view_count": 224,
       "novel_view_sq_sum": 1266.9322654932032,
       "num_lines": 28,
-      "scene_id": "parallel_lines_harder_003",
+      "scene_id": "scene_3285b14156ec5fd6",
       "true_direction_classes": 7
      },
      {
@@ -5362,7 +5362,7 @@
       "novel_view_count": 224,
       "novel_view_sq_sum": 4782.510338740352,
       "num_lines": 28,
-      "scene_id": "parallel_lines_harder_004",
+      "scene_id": "scene_6766709cec9d4c18",
       "true_direction_classes": 8
      },
      {
@@ -5425,7 +5425,7 @@
       "novel_view_count": 200,
       "novel_view_sq_sum": 2922.3356440194007,
       "num_lines": 25,
-      "scene_id": "parallel_lines_harder_005",
+      "scene_id": "scene_a2f9dea5f13d5542",
       "true_direction_classes": 7
      },
      {
@@ -5498,7 +5498,7 @@
       "novel_view_count": 240,
       "novel_view_sq_sum": 2553.4965620882344,
       "num_lines": 30,
-      "scene_id": "parallel_lines_harder_006",
+      "scene_id": "scene_7f7a1642fdafed45",
       "true_direction_classes": 7
      },
      {
@@ -5561,7 +5561,7 @@
       "novel_view_count": 200,
       "novel_view_sq_sum": 572.3712510074822,
       "num_lines": 25,
-      "scene_id": "parallel_lines_harder_007",
+      "scene_id": "scene_a6e7b907775e8f15",
       "true_direction_classes": 8
      },
      {
@@ -5630,7 +5630,7 @@
       "novel_view_count": 222,
       "novel_view_sq_sum": 1559.1183349213484,
       "num_lines": 28,
-      "scene_id": "parallel_lines_harder_008",
+      "scene_id": "scene_de0807b00df28bf3",
       "true_direction_classes": 8
      },
      {
@@ -5691,7 +5691,7 @@
       "novel_view_count": 192,
       "novel_view_sq_sum": 4202.2733027316,
       "num_lines": 24,
-      "scene_id": "parallel_lines_harder_009",
+      "scene_id": "scene_020b02ba0f395fd2",
       "true_direction_classes": 6
      },
      {
@@ -5752,7 +5752,7 @@
       "novel_view_count": 192,
       "novel_view_sq_sum": 1565.4020405938004,
       "num_lines": 24,
-      "scene_id": "parallel_lines_harder_010",
+      "scene_id": "scene_152152ba68643109",
       "true_direction_classes": 7
      },
      {
@@ -5811,7 +5811,7 @@
       "novel_view_count": 184,
       "novel_view_sq_sum": 813.1279686648327,
       "num_lines": 23,
-      "scene_id": "parallel_lines_harder_011",
+      "scene_id": "scene_1e5cf3d4aa09d2b4",
       "true_direction_classes": 6
      },
      {
@@ -5880,7 +5880,7 @@
       "novel_view_count": 224,
       "novel_view_sq_sum": 725.4054701505813,
       "num_lines": 28,
-      "scene_id": "parallel_lines_harder_012",
+      "scene_id": "scene_553a23408671441c",
       "true_direction_classes": 6
      },
      {
@@ -5955,7 +5955,7 @@
       "novel_view_count": 248,
       "novel_view_sq_sum": 662.3890324874206,
       "num_lines": 31,
-      "scene_id": "parallel_lines_harder_013",
+      "scene_id": "scene_780d244e68a4610f",
       "true_direction_classes": 8
      },
      {
@@ -6020,7 +6020,7 @@
       "novel_view_count": 208,
       "novel_view_sq_sum": 2709.688972600505,
       "num_lines": 26,
-      "scene_id": "parallel_lines_harder_014",
+      "scene_id": "scene_f67327970439b189",
       "true_direction_classes": 7
      },
      {
@@ -6087,7 +6087,7 @@
       "novel_view_count": 216,
       "novel_view_sq_sum": 1015.5213745642891,
       "num_lines": 27,
-      "scene_id": "parallel_lines_harder_015",
+      "scene_id": "scene_2e4ee939ad64ce89",
       "true_direction_classes": 7
      },
      {
@@ -6148,7 +6148,7 @@
       "novel_view_count": 192,
       "novel_view_sq_sum": 2986.763093337399,
       "num_lines": 24,
-      "scene_id": "parallel_lines_harder_016",
+      "scene_id": "scene_a24d70c28704375b",
       "true_direction_classes": 8
      },
      {
@@ -6217,7 +6217,7 @@
       "novel_view_count": 224,
       "novel_view_sq_sum": 877.5768662712344,
       "num_lines": 28,
-      "scene_id": "parallel_lines_harder_017",
+      "scene_id": "scene_932c62d5b3b4ce89",
       "true_direction_classes": 7
      },
      {
@@ -6282,7 +6282,7 @@
       "novel_view_count": 208,
       "novel_view_sq_sum": 1612.310247429817,
       "num_lines": 26,
-      "scene_id": "parallel_lines_harder_018",
+      "scene_id": "scene_c843260410f1ddde",
       "true_direction_classes": 7
      },
      {
@@ -6349,7 +6349,7 @@
       "novel_view_count": 216,
       "novel_view_sq_sum": 2579.415930819505,
       "num_lines": 27,
-      "scene_id": "parallel_lines_harder_019",
+      "scene_id": "scene_c471da0067b4c233",
       "true_direction_classes": 7
      },
      {
@@ -6412,7 +6412,7 @@
       "novel_view_count": 200,
       "novel_view_sq_sum": 1500.0641802780215,
       "num_lines": 25,
-      "scene_id": "parallel_lines_harder_020",
+      "scene_id": "scene_d29c6dedbc0fe972",
       "true_direction_classes": 7
      },
      {
@@ -6479,7 +6479,7 @@
       "novel_view_count": 216,
       "novel_view_sq_sum": 842.1539014731002,
       "num_lines": 27,
-      "scene_id": "parallel_lines_harder_021",
+      "scene_id": "scene_b32b5e3fcd0618d3",
       "true_direction_classes": 8
      },
      {
@@ -6536,7 +6536,7 @@
       "novel_view_count": 174,
       "novel_view_sq_sum": 981.0625444377762,
       "num_lines": 22,
-      "scene_id": "parallel_lines_harder_022",
+      "scene_id": "scene_ffaa8e8eba8b134a",
       "true_direction_classes": 7
      },
      {
@@ -6603,7 +6603,7 @@
       "novel_view_count": 216,
       "novel_view_sq_sum": 1092.8975502604676,
       "num_lines": 27,
-      "scene_id": "parallel_lines_harder_023",
+      "scene_id": "scene_9e9b76b6ff418801",
       "true_direction_classes": 7
      }
     ],
@@ -6668,7 +6668,7 @@
       "novel_view_count": 200,
       "novel_view_sq_sum": 7500.692308753662,
       "num_lines": 25,
-      "scene_id": "parallel_lines_harder_000",
+      "scene_id": "scene_674152cb6192e664",
       "true_direction_classes": 6
      },
      {
@@ -6729,7 +6729,7 @@
       "novel_view_count": 192,
       "novel_view_sq_sum": 985.335431408482,
       "num_lines": 24,
-      "scene_id": "parallel_lines_harder_001",
+      "scene_id": "scene_ea8551d00088c60e",
       "true_direction_classes": 7
      },
      {
@@ -6798,7 +6798,7 @@
       "novel_view_count": 224,
       "novel_view_sq_sum": 1099.2277923127904,
       "num_lines": 28,
-      "scene_id": "parallel_lines_harder_002",
+      "scene_id": "scene_8d2e3f4bfdab32bd",
       "true_direction_classes": 7
      },
      {
@@ -6867,7 +6867,7 @@
       "novel_view_count": 224,
       "novel_view_sq_sum": 939.2857868409086,
       "num_lines": 28,
-      "scene_id": "parallel_lines_harder_003",
+      "scene_id": "scene_3285b14156ec5fd6",
       "true_direction_classes": 7
      },
      {
@@ -6936,7 +6936,7 @@
       "novel_view_count": 224,
       "novel_view_sq_sum": 4681.205501637263,
       "num_lines": 28,
-      "scene_id": "parallel_lines_harder_004",
+      "scene_id": "scene_6766709cec9d4c18",
       "true_direction_classes": 8
      },
      {
@@ -6999,7 +6999,7 @@
       "novel_view_count": 200,
       "novel_view_sq_sum": 1275.474263035944,
       "num_lines": 25,
-      "scene_id": "parallel_lines_harder_005",
+      "scene_id": "scene_a2f9dea5f13d5542",
       "true_direction_classes": 7
      },
      {
@@ -7072,7 +7072,7 @@
       "novel_view_count": 240,
       "novel_view_sq_sum": 1924.92419814933,
       "num_lines": 30,
-      "scene_id": "parallel_lines_harder_006",
+      "scene_id": "scene_7f7a1642fdafed45",
       "true_direction_classes": 7
      },
      {
@@ -7135,7 +7135,7 @@
       "novel_view_count": 200,
       "novel_view_sq_sum": 478.1515696769963,
       "num_lines": 25,
-      "scene_id": "parallel_lines_harder_007",
+      "scene_id": "scene_a6e7b907775e8f15",
       "true_direction_classes": 8
      },
      {
@@ -7204,7 +7204,7 @@
       "novel_view_count": 222,
       "novel_view_sq_sum": 1429.383342439304,
       "num_lines": 28,
-      "scene_id": "parallel_lines_harder_008",
+      "scene_id": "scene_de0807b00df28bf3",
       "true_direction_classes": 8
      },
      {
@@ -7265,7 +7265,7 @@
       "novel_view_count": 192,
       "novel_view_sq_sum": 2199.690676830848,
       "num_lines": 24,
-      "scene_id": "parallel_lines_harder_009",
+      "scene_id": "scene_020b02ba0f395fd2",
       "true_direction_classes": 6
      },
      {
@@ -7326,7 +7326,7 @@
       "novel_view_count": 192,
       "novel_view_sq_sum": 1213.2713336945344,
       "num_lines": 24,
-      "scene_id": "parallel_lines_harder_010",
+      "scene_id": "scene_152152ba68643109",
       "true_direction_classes": 7
      },
      {
@@ -7385,7 +7385,7 @@
       "novel_view_count": 184,
       "novel_view_sq_sum": 507.7768228113635,
       "num_lines": 23,
-      "scene_id": "parallel_lines_harder_011",
+      "scene_id": "scene_1e5cf3d4aa09d2b4",
       "true_direction_classes": 6
      },
      {
@@ -7454,7 +7454,7 @@
       "novel_view_count": 224,
       "novel_view_sq_sum": 612.2268446391527,
       "num_lines": 28,
-      "scene_id": "parallel_lines_harder_012",
+      "scene_id": "scene_553a23408671441c",
       "true_direction_classes": 6
      },
      {
@@ -7529,7 +7529,7 @@
       "novel_view_count": 248,
       "novel_view_sq_sum": 578.7320125071283,
       "num_lines": 31,
-      "scene_id": "parallel_lines_harder_013",
+      "scene_id": "scene_780d244e68a4610f",
       "true_direction_classes": 8
      },
      {
@@ -7594,7 +7594,7 @@
       "novel_view_count": 208,
       "novel_view_sq_sum": 2242.339940279975,
       "num_lines": 26,
-      "scene_id": "parallel_lines_harder_014",
+      "scene_id": "scene_f67327970439b189",
       "true_direction_classes": 7
      },
      {
@@ -7661,7 +7661,7 @@
       "novel_view_count": 216,
       "novel_view_sq_sum": 661.2760517599111,
       "num_lines": 27,
-      "scene_id": "parallel_lines_harder_015",
+      "scene_id": "scene_2e4ee939ad64ce89",
       "true_direction_classes": 7
      },
      {
@@ -7722,7 +7722,7 @@
       "novel_view_count": 192,
       "novel_view_sq_sum": 2350.202550625199,
       "num_lines": 24,
-      "scene_id": "parallel_lines_harder_016",
+      "scene_id": "scene_a24d70c28704375b",
       "true_direction_classes": 8
      },
      {
@@ -7791,7 +7791,7 @@
       "novel_view_count": 224,
       "novel_view_sq_sum": 840.3670729205193,
       "num_lines": 28,
-      "scene_id": "parallel_lines_harder_017",
+      "scene_id": "scene_932c62d5b3b4ce89",
       "true_direction_classes": 7
      },
      {
@@ -7856,7 +7856,7 @@
       "novel_view_count": 208,
       "novel_view_sq_sum": 1390.7301153020687,
       "num_lines": 26,
-      "scene_id": "parallel_lines_harder_018",
+      "scene_id": "scene_c843260410f1ddde",
       "true_direction_classes": 7
      },
      {
@@ -7923,7 +7923,7 @@
       "novel_view_count": 216,
       "novel_view_sq_sum": 950.0431031998778,
       "num_lines": 27,
-      "scene_id": "parallel_lines_harder_019",
+      "scene_id": "scene_c471da0067b4c233",
       "true_direction_classes": 7
      },
      {
@@ -7986,7 +7986,7 @@
       "novel_view_count": 200,
       "novel_view_sq_sum": 1356.152053642572,
       "num_lines": 25,
-      "scene_id": "parallel_lines_harder_020",
+      "scene_id": "scene_d29c6dedbc0fe972",
       "true_direction_classes": 7
      },
      {
@@ -8053,7 +8053,7 @@
       "novel_view_count": 216,
       "novel_view_sq_sum": 658.6643830085869,
       "num_lines": 27,
-      "scene_id": "parallel_lines_harder_021",
+      "scene_id": "scene_b32b5e3fcd0618d3",
       "true_direction_classes": 8
      },
      {
@@ -8110,7 +8110,7 @@
       "novel_view_count": 174,
       "novel_view_sq_sum": 809.69158936589,
       "num_lines": 22,
-      "scene_id": "parallel_lines_harder_022",
+      "scene_id": "scene_ffaa8e8eba8b134a",
       "true_direction_classes": 7
      },
      {
@@ -8177,7 +8177,7 @@
       "novel_view_count": 216,
       "novel_view_sq_sum": 862.4380344458242,
       "num_lines": 27,
-      "scene_id": "parallel_lines_harder_023",
+      "scene_id": "scene_9e9b76b6ff418801",
       "true_direction_classes": 7
      }
     ],
@@ -8242,7 +8242,7 @@
       "novel_view_count": 200,
       "novel_view_sq_sum": 7720.99717839077,
       "num_lines": 25,
-      "scene_id": "parallel_lines_harder_000",
+      "scene_id": "scene_674152cb6192e664",
       "true_direction_classes": 6
      },
      {
@@ -8303,7 +8303,7 @@
       "novel_view_count": 192,
       "novel_view_sq_sum": 788.3753045185446,
       "num_lines": 24,
-      "scene_id": "parallel_lines_harder_001",
+      "scene_id": "scene_ea8551d00088c60e",
       "true_direction_classes": 7
      },
      {
@@ -8372,7 +8372,7 @@
       "novel_view_count": 224,
       "novel_view_sq_sum": 1266.2309622744394,
       "num_lines": 28,
-      "scene_id": "parallel_lines_harder_002",
+      "scene_id": "scene_8d2e3f4bfdab32bd",
       "true_direction_classes": 7
      },
      {
@@ -8441,7 +8441,7 @@
       "novel_view_count": 224,
       "novel_view_sq_sum": 1266.9295260364506,
       "num_lines": 28,
-      "scene_id": "parallel_lines_harder_003",
+      "scene_id": "scene_3285b14156ec5fd6",
       "true_direction_classes": 7
      },
      {
@@ -8510,7 +8510,7 @@
       "novel_view_count": 224,
       "novel_view_sq_sum": 4754.48275922309,
       "num_lines": 28,
-      "scene_id": "parallel_lines_harder_004",
+      "scene_id": "scene_6766709cec9d4c18",
       "true_direction_classes": 8
      },
      {
@@ -8573,7 +8573,7 @@
       "novel_view_count": 200,
       "novel_view_sq_sum": 2922.3323172882388,
       "num_lines": 25,
-      "scene_id": "parallel_lines_harder_005",
+      "scene_id": "scene_a2f9dea5f13d5542",
       "true_direction_classes": 7
      },
      {
@@ -8646,7 +8646,7 @@
       "novel_view_count": 240,
       "novel_view_sq_sum": 2553.486026659483,
       "num_lines": 30,
-      "scene_id": "parallel_lines_harder_006",
+      "scene_id": "scene_7f7a1642fdafed45",
       "true_direction_classes": 7
      },
      {
@@ -8709,7 +8709,7 @@
       "novel_view_count": 200,
       "novel_view_sq_sum": 572.3703412990687,
       "num_lines": 25,
-      "scene_id": "parallel_lines_harder_007",
+      "scene_id": "scene_a6e7b907775e8f15",
       "true_direction_classes": 8
      },
      {
@@ -8778,7 +8778,7 @@
       "novel_view_count": 222,
       "novel_view_sq_sum": 1559.1161431722371,
       "num_lines": 28,
-      "scene_id": "parallel_lines_harder_008",
+      "scene_id": "scene_de0807b00df28bf3",
       "true_direction_classes": 8
      },
      {
@@ -8839,7 +8839,7 @@
       "novel_view_count": 192,
       "novel_view_sq_sum": 4202.277069505158,
       "num_lines": 24,
-      "scene_id": "parallel_lines_harder_009",
+      "scene_id": "scene_020b02ba0f395fd2",
       "true_direction_classes": 6
      },
      {
@@ -8900,7 +8900,7 @@
       "novel_view_count": 192,
       "novel_view_sq_sum": 1565.4008880462497,
       "num_lines": 24,
-      "scene_id": "parallel_lines_harder_010",
+      "scene_id": "scene_152152ba68643109",
       "true_direction_classes": 7
      },
      {
@@ -8959,7 +8959,7 @@
       "novel_view_count": 184,
       "novel_view_sq_sum": 813.122983666492,
       "num_lines": 23,
-      "scene_id": "parallel_lines_harder_011",
+      "scene_id": "scene_1e5cf3d4aa09d2b4",
       "true_direction_classes": 6
      },
      {
@@ -9028,7 +9028,7 @@
       "novel_view_count": 224,
       "novel_view_sq_sum": 725.4052531688166,
       "num_lines": 28,
-      "scene_id": "parallel_lines_harder_012",
+      "scene_id": "scene_553a23408671441c",
       "true_direction_classes": 6
      },
      {
@@ -9103,7 +9103,7 @@
       "novel_view_count": 248,
       "novel_view_sq_sum": 662.3856456915393,
       "num_lines": 31,
-      "scene_id": "parallel_lines_harder_013",
+      "scene_id": "scene_780d244e68a4610f",
       "true_direction_classes": 8
      },
      {
@@ -9168,7 +9168,7 @@
       "novel_view_count": 208,
       "novel_view_sq_sum": 2709.6810746491747,
       "num_lines": 26,
-      "scene_id": "parallel_lines_harder_014",
+      "scene_id": "scene_f67327970439b189",
       "true_direction_classes": 7
      },
      {
@@ -9235,7 +9235,7 @@
       "novel_view_count": 216,
       "novel_view_sq_sum": 1015.5496233441177,
       "num_lines": 27,
-      "scene_id": "parallel_lines_harder_015",
+      "scene_id": "scene_2e4ee939ad64ce89",
       "true_direction_classes": 7
      },
      {
@@ -9296,7 +9296,7 @@
       "novel_view_count": 192,
       "novel_view_sq_sum": 2986.762239554746,
       "num_lines": 24,
-      "scene_id": "parallel_lines_harder_016",
+      "scene_id": "scene_a24d70c28704375b",
       "true_direction_classes": 8
      },
      {
@@ -9365,7 +9365,7 @@
       "novel_view_count": 224,
       "novel_view_sq_sum": 877.5759379538348,
       "num_lines": 28,
-      "scene_id": "parallel_lines_harder_017",
+      "scene_id": "scene_932c62d5b3b4ce89",
       "true_direction_classes": 7
      },
      {
@@ -9430,7 +9430,7 @@
       "novel_view_count": 208,
       "novel_view_sq_sum": 1612.3098541376567,
       "num_lines": 26,
-      "scene_id": "parallel_lines_harder_018",
+      "scene_id": "scene_c843260410f1ddde",
       "true_direction_classes": 7
      },
      {
@@ -9497,7 +9497,7 @@
       "novel_view_count": 216,
       "novel_view_sq_sum": 2579.4157979368565,
       "num_lines": 27,
-      "scene_id": "parallel_lines_harder_019",
+      "scene_id": "scene_c471da0067b4c233",
       "true_direction_classes": 7
      },
      {
@@ -9560,7 +9560,7 @@
       "novel_view_count": 200,
       "novel_view_sq_sum": 1500.080165540418,
       "num_lines": 25,
-      "scene_id": "parallel_lines_harder_020",
+      "scene_id": "scene_d29c6dedbc0fe972",
       "true_direction_classes": 7
      },
      {
@@ -9627,7 +9627,7 @@
       "novel_view_count": 216,
       "novel_view_sq_sum": 842.1634844900858,
       "num_lines": 27,
-      "scene_id": "parallel_lines_harder_021",
+      "scene_id": "scene_b32b5e3fcd0618d3",
       "true_direction_classes": 8
      },
      {
@@ -9684,7 +9684,7 @@
       "novel_view_count": 174,
       "novel_view_sq_sum": 981.0637803473618,
       "num_lines": 22,
-      "scene_id": "parallel_lines_harder_022",
+      "scene_id": "scene_ffaa8e8eba8b134a",
       "true_direction_classes": 7
      },
      {
@@ -9751,7 +9751,7 @@
       "novel_view_count": 216,
       "novel_view_sq_sum": 1092.9105956293038,
       "num_lines": 27,
-      "scene_id": "parallel_lines_harder_023",
+      "scene_id": "scene_9e9b76b6ff418801",
       "true_direction_classes": 7
      }
     ],
@@ -9816,7 +9816,7 @@
       "novel_view_count": 200,
       "novel_view_sq_sum": 7228.810241326726,
       "num_lines": 25,
-      "scene_id": "parallel_lines_harder_000",
+      "scene_id": "scene_674152cb6192e664",
       "true_direction_classes": 6
      },
      {
@@ -9877,7 +9877,7 @@
       "novel_view_count": 192,
       "novel_view_sq_sum": 902.77545311034,
       "num_lines": 24,
-      "scene_id": "parallel_lines_harder_001",
+      "scene_id": "scene_ea8551d00088c60e",
       "true_direction_classes": 7
      },
      {
@@ -9946,7 +9946,7 @@
       "novel_view_count": 224,
       "novel_view_sq_sum": 615.6282739192824,
       "num_lines": 28,
-      "scene_id": "parallel_lines_harder_002",
+      "scene_id": "scene_8d2e3f4bfdab32bd",
       "true_direction_classes": 7
      },
      {
@@ -10015,7 +10015,7 @@
       "novel_view_count": 224,
       "novel_view_sq_sum": 566.513961969269,
       "num_lines": 28,
-      "scene_id": "parallel_lines_harder_003",
+      "scene_id": "scene_3285b14156ec5fd6",
       "true_direction_classes": 7
      },
      {
@@ -10084,7 +10084,7 @@
       "novel_view_count": 224,
       "novel_view_sq_sum": 3817.213063687229,
       "num_lines": 28,
-      "scene_id": "parallel_lines_harder_004",
+      "scene_id": "scene_6766709cec9d4c18",
       "true_direction_classes": 8
      },
      {
@@ -10147,7 +10147,7 @@
       "novel_view_count": 200,
       "novel_view_sq_sum": 844.2177210590683,
       "num_lines": 25,
-      "scene_id": "parallel_lines_harder_005",
+      "scene_id": "scene_a2f9dea5f13d5542",
       "true_direction_classes": 7
      },
      {
@@ -10220,7 +10220,7 @@
       "novel_view_count": 240,
       "novel_view_sq_sum": 1526.5063101827973,
       "num_lines": 30,
-      "scene_id": "parallel_lines_harder_006",
+      "scene_id": "scene_7f7a1642fdafed45",
       "true_direction_classes": 7
      },
      {
@@ -10283,7 +10283,7 @@
       "novel_view_count": 200,
       "novel_view_sq_sum": 319.8545155106643,
       "num_lines": 25,
-      "scene_id": "parallel_lines_harder_007",
+      "scene_id": "scene_a6e7b907775e8f15",
       "true_direction_classes": 8
      },
      {
@@ -10352,7 +10352,7 @@
       "novel_view_count": 222,
       "novel_view_sq_sum": 1060.7582716424752,
       "num_lines": 28,
-      "scene_id": "parallel_lines_harder_008",
+      "scene_id": "scene_de0807b00df28bf3",
       "true_direction_classes": 8
      },
      {
@@ -10413,7 +10413,7 @@
       "novel_view_count": 192,
       "novel_view_sq_sum": 4579.682637814391,
       "num_lines": 24,
-      "scene_id": "parallel_lines_harder_009",
+      "scene_id": "scene_020b02ba0f395fd2",
       "true_direction_classes": 6
      },
      {
@@ -10474,7 +10474,7 @@
       "novel_view_count": 192,
       "novel_view_sq_sum": 984.3657097692525,
       "num_lines": 24,
-      "scene_id": "parallel_lines_harder_010",
+      "scene_id": "scene_152152ba68643109",
       "true_direction_classes": 7
      },
      {
@@ -10533,7 +10533,7 @@
       "novel_view_count": 184,
       "novel_view_sq_sum": 188.68079887030817,
       "num_lines": 23,
-      "scene_id": "parallel_lines_harder_011",
+      "scene_id": "scene_1e5cf3d4aa09d2b4",
       "true_direction_classes": 6
      },
      {
@@ -10602,7 +10602,7 @@
       "novel_view_count": 224,
       "novel_view_sq_sum": 381.2826360712976,
       "num_lines": 28,
-      "scene_id": "parallel_lines_harder_012",
+      "scene_id": "scene_553a23408671441c",
       "true_direction_classes": 6
      },
      {
@@ -10677,7 +10677,7 @@
       "novel_view_count": 248,
       "novel_view_sq_sum": 286.3371303010649,
       "num_lines": 31,
-      "scene_id": "parallel_lines_harder_013",
+      "scene_id": "scene_780d244e68a4610f",
       "true_direction_classes": 8
      },
      {
@@ -10742,7 +10742,7 @@
       "novel_view_count": 208,
       "novel_view_sq_sum": 1880.331880747684,
       "num_lines": 26,
-      "scene_id": "parallel_lines_harder_014",
+      "scene_id": "scene_f67327970439b189",
       "true_direction_classes": 7
      },
      {
@@ -10809,7 +10809,7 @@
       "novel_view_count": 216,
       "novel_view_sq_sum": 555.893708271839,
       "num_lines": 27,
-      "scene_id": "parallel_lines_harder_015",
+      "scene_id": "scene_2e4ee939ad64ce89",
       "true_direction_classes": 7
      },
      {
@@ -10870,7 +10870,7 @@
       "novel_view_count": 192,
       "novel_view_sq_sum": 2004.9690084636045,
       "num_lines": 24,
-      "scene_id": "parallel_lines_harder_016",
+      "scene_id": "scene_a24d70c28704375b",
       "true_direction_classes": 8
      },
      {
@@ -10939,7 +10939,7 @@
       "novel_view_count": 224,
       "novel_view_sq_sum": 646.2032910456825,
       "num_lines": 28,
-      "scene_id": "parallel_lines_harder_017",
+      "scene_id": "scene_932c62d5b3b4ce89",
       "true_direction_classes": 7
      },
      {
@@ -11004,7 +11004,7 @@
       "novel_view_count": 208,
       "novel_view_sq_sum": 1118.6897705948377,
       "num_lines": 26,
-      "scene_id": "parallel_lines_harder_018",
+      "scene_id": "scene_c843260410f1ddde",
       "true_direction_classes": 7
      },
      {
@@ -11071,7 +11071,7 @@
       "novel_view_count": 216,
       "novel_view_sq_sum": 551.9298577202421,
       "num_lines": 27,
-      "scene_id": "parallel_lines_harder_019",
+      "scene_id": "scene_c471da0067b4c233",
       "true_direction_classes": 7
      },
      {
@@ -11134,7 +11134,7 @@
       "novel_view_count": 200,
       "novel_view_sq_sum": 1108.3362124426517,
       "num_lines": 25,
-      "scene_id": "parallel_lines_harder_020",
+      "scene_id": "scene_d29c6dedbc0fe972",
       "true_direction_classes": 7
      },
      {
@@ -11201,7 +11201,7 @@
       "novel_view_count": 216,
       "novel_view_sq_sum": 472.29596712257484,
       "num_lines": 27,
-      "scene_id": "parallel_lines_harder_021",
+      "scene_id": "scene_b32b5e3fcd0618d3",
       "true_direction_classes": 8
      },
      {
@@ -11258,7 +11258,7 @@
       "novel_view_count": 174,
       "novel_view_sq_sum": 588.5873996411844,
       "num_lines": 22,
-      "scene_id": "parallel_lines_harder_022",
+      "scene_id": "scene_ffaa8e8eba8b134a",
       "true_direction_classes": 7
      },
      {
@@ -11325,7 +11325,7 @@
       "novel_view_count": 216,
       "novel_view_sq_sum": 577.5504098616723,
       "num_lines": 27,
-      "scene_id": "parallel_lines_harder_023",
+      "scene_id": "scene_9e9b76b6ff418801",
       "true_direction_classes": 7
      }
     ]
@@ -11454,7 +11454,7 @@
       "novel_view_count": 232,
       "novel_view_sq_sum": 209.17949249644613,
       "num_lines": 29,
-      "scene_id": "parallel_lines_mislabeled_000",
+      "scene_id": "scene_9eb496003d83c09e",
       "true_direction_classes": 10
      },
      {
@@ -11527,7 +11527,7 @@
       "novel_view_count": 238,
       "novel_view_sq_sum": 174.28501983323156,
       "num_lines": 30,
-      "scene_id": "parallel_lines_mislabeled_001",
+      "scene_id": "scene_116879ad04c070e4",
       "true_direction_classes": 12
      },
      {
@@ -11574,7 +11574,7 @@
       "novel_view_count": 136,
       "novel_view_sq_sum": 57.46971364536815,
       "num_lines": 17,
-      "scene_id": "parallel_lines_mislabeled_002",
+      "scene_id": "scene_276d4a3d58b03a26",
       "true_direction_classes": 6
      },
      {
@@ -11653,7 +11653,7 @@
       "novel_view_count": 262,
       "novel_view_sq_sum": 516.3334669033861,
       "num_lines": 33,
-      "scene_id": "parallel_lines_mislabeled_003",
+      "scene_id": "scene_20fda1dd4cfdc2ef",
       "true_direction_classes": 10
      },
      {
@@ -11726,7 +11726,7 @@
       "novel_view_count": 238,
       "novel_view_sq_sum": 178.02379284039193,
       "num_lines": 30,
-      "scene_id": "parallel_lines_mislabeled_004",
+      "scene_id": "scene_6d8984755c0522ac",
       "true_direction_classes": 11
      },
      {
@@ -11801,7 +11801,7 @@
       "novel_view_count": 248,
       "novel_view_sq_sum": 263.8099027267076,
       "num_lines": 31,
-      "scene_id": "parallel_lines_mislabeled_005",
+      "scene_id": "scene_196ad1d98f3bdf05",
       "true_direction_classes": 9
      },
      {
@@ -11872,7 +11872,7 @@
       "novel_view_count": 232,
       "novel_view_sq_sum": 152.47088281431104,
       "num_lines": 29,
-      "scene_id": "parallel_lines_mislabeled_006",
+      "scene_id": "scene_cedea7f036d1b1f4",
       "true_direction_classes": 10
      },
      {
@@ -11927,7 +11927,7 @@
       "novel_view_count": 168,
       "novel_view_sq_sum": 82.43872039068528,
       "num_lines": 21,
-      "scene_id": "parallel_lines_mislabeled_007",
+      "scene_id": "scene_fe3f4a0033919645",
       "true_direction_classes": 8
      },
      {
@@ -11994,7 +11994,7 @@
       "novel_view_count": 216,
       "novel_view_sq_sum": 231.55191649456097,
       "num_lines": 27,
-      "scene_id": "parallel_lines_mislabeled_008",
+      "scene_id": "scene_8b8d7bc91195ce0d",
       "true_direction_classes": 9
      },
      {
@@ -12049,7 +12049,7 @@
       "novel_view_count": 168,
       "novel_view_sq_sum": 170.43084656800514,
       "num_lines": 21,
-      "scene_id": "parallel_lines_mislabeled_009",
+      "scene_id": "scene_7eb53db7cc719dda",
       "true_direction_classes": 8
      },
      {
@@ -12102,7 +12102,7 @@
       "novel_view_count": 160,
       "novel_view_sq_sum": 142.05777487702653,
       "num_lines": 20,
-      "scene_id": "parallel_lines_mislabeled_010",
+      "scene_id": "scene_2d467d847e2a42ef",
       "true_direction_classes": 7
      },
      {
@@ -12157,7 +12157,7 @@
       "novel_view_count": 168,
       "novel_view_sq_sum": 135.9902436924542,
       "num_lines": 21,
-      "scene_id": "parallel_lines_mislabeled_011",
+      "scene_id": "scene_d6bb47289c4bf096",
       "true_direction_classes": 8
      },
      {
@@ -12214,7 +12214,7 @@
       "novel_view_count": 176,
       "novel_view_sq_sum": 158.75932436815356,
       "num_lines": 22,
-      "scene_id": "parallel_lines_mislabeled_012",
+      "scene_id": "scene_393f5c51f50d9016",
       "true_direction_classes": 7
      },
      {
@@ -12281,7 +12281,7 @@
       "novel_view_count": 216,
       "novel_view_sq_sum": 222.24250573834092,
       "num_lines": 27,
-      "scene_id": "parallel_lines_mislabeled_013",
+      "scene_id": "scene_78fe2e22ddf5b592",
       "true_direction_classes": 8
      },
      {
@@ -12330,7 +12330,7 @@
       "novel_view_count": 144,
       "novel_view_sq_sum": 174.9193765610196,
       "num_lines": 18,
-      "scene_id": "parallel_lines_mislabeled_014",
+      "scene_id": "scene_f5fd28245bd5bd4c",
       "true_direction_classes": 7
      },
      {
@@ -12381,7 +12381,7 @@
       "novel_view_count": 152,
       "novel_view_sq_sum": 173.12589642850264,
       "num_lines": 19,
-      "scene_id": "parallel_lines_mislabeled_015",
+      "scene_id": "scene_3ad7bdef6756b1ea",
       "true_direction_classes": 8
      },
      {
@@ -12458,7 +12458,7 @@
       "novel_view_count": 256,
       "novel_view_sq_sum": 211.14639096316176,
       "num_lines": 32,
-      "scene_id": "parallel_lines_mislabeled_016",
+      "scene_id": "scene_8db833571ba4199b",
       "true_direction_classes": 10
      },
      {
@@ -12513,7 +12513,7 @@
       "novel_view_count": 166,
       "novel_view_sq_sum": 160.09951004537675,
       "num_lines": 21,
-      "scene_id": "parallel_lines_mislabeled_017",
+      "scene_id": "scene_351894bb9c9e9440",
       "true_direction_classes": 8
      },
      {
@@ -12592,7 +12592,7 @@
       "novel_view_count": 260,
       "novel_view_sq_sum": 199.77469071129713,
       "num_lines": 33,
-      "scene_id": "parallel_lines_mislabeled_018",
+      "scene_id": "scene_223cb7fd61111402",
       "true_direction_classes": 11
      },
      {
@@ -12669,7 +12669,7 @@
       "novel_view_count": 256,
       "novel_view_sq_sum": 76.16404370373621,
       "num_lines": 32,
-      "scene_id": "parallel_lines_mislabeled_019",
+      "scene_id": "scene_79c2fd438814f4ba",
       "true_direction_classes": 12
      },
      {
@@ -12736,7 +12736,7 @@
       "novel_view_count": 216,
       "novel_view_sq_sum": 176.6168768270432,
       "num_lines": 27,
-      "scene_id": "parallel_lines_mislabeled_020",
+      "scene_id": "scene_3e37fb96c7dd7315",
       "true_direction_classes": 9
      },
      {
@@ -12813,7 +12813,7 @@
       "novel_view_count": 256,
       "novel_view_sq_sum": 479.3658902728785,
       "num_lines": 32,
-      "scene_id": "parallel_lines_mislabeled_021",
+      "scene_id": "scene_65c342ea1896fdd6",
       "true_direction_classes": 11
      },
      {
@@ -12866,7 +12866,7 @@
       "novel_view_count": 160,
       "novel_view_sq_sum": 86.57602109596021,
       "num_lines": 20,
-      "scene_id": "parallel_lines_mislabeled_022",
+      "scene_id": "scene_a78f994158620aa0",
       "true_direction_classes": 8
      },
      {
@@ -12935,7 +12935,7 @@
       "novel_view_count": 224,
       "novel_view_sq_sum": 167.93007170658933,
       "num_lines": 28,
-      "scene_id": "parallel_lines_mislabeled_023",
+      "scene_id": "scene_c672fea049b9bbd6",
       "true_direction_classes": 10
      }
     ],
@@ -13008,7 +13008,7 @@
       "novel_view_count": 232,
       "novel_view_sq_sum": 176.06725980740205,
       "num_lines": 29,
-      "scene_id": "parallel_lines_mislabeled_000",
+      "scene_id": "scene_9eb496003d83c09e",
       "true_direction_classes": 10
      },
      {
@@ -13081,7 +13081,7 @@
       "novel_view_count": 238,
       "novel_view_sq_sum": 174.3758531680375,
       "num_lines": 30,
-      "scene_id": "parallel_lines_mislabeled_001",
+      "scene_id": "scene_116879ad04c070e4",
       "true_direction_classes": 12
      },
      {
@@ -13128,7 +13128,7 @@
       "novel_view_count": 136,
       "novel_view_sq_sum": 56.54594418850368,
       "num_lines": 17,
-      "scene_id": "parallel_lines_mislabeled_002",
+      "scene_id": "scene_276d4a3d58b03a26",
       "true_direction_classes": 6
      },
      {
@@ -13207,7 +13207,7 @@
       "novel_view_count": 262,
       "novel_view_sq_sum": 499.3572240633515,
       "num_lines": 33,
-      "scene_id": "parallel_lines_mislabeled_003",
+      "scene_id": "scene_20fda1dd4cfdc2ef",
       "true_direction_classes": 10
      },
      {
@@ -13280,7 +13280,7 @@
       "novel_view_count": 238,
       "novel_view_sq_sum": 170.57041560941434,
       "num_lines": 30,
-      "scene_id": "parallel_lines_mislabeled_004",
+      "scene_id": "scene_6d8984755c0522ac",
       "true_direction_classes": 11
      },
      {
@@ -13355,7 +13355,7 @@
       "novel_view_count": 248,
       "novel_view_sq_sum": 198.52011749207247,
       "num_lines": 31,
-      "scene_id": "parallel_lines_mislabeled_005",
+      "scene_id": "scene_196ad1d98f3bdf05",
       "true_direction_classes": 9
      },
      {
@@ -13426,7 +13426,7 @@
       "novel_view_count": 232,
       "novel_view_sq_sum": 180.5316853076525,
       "num_lines": 29,
-      "scene_id": "parallel_lines_mislabeled_006",
+      "scene_id": "scene_cedea7f036d1b1f4",
       "true_direction_classes": 10
      },
      {
@@ -13481,7 +13481,7 @@
       "novel_view_count": 168,
       "novel_view_sq_sum": 81.98269905785473,
       "num_lines": 21,
-      "scene_id": "parallel_lines_mislabeled_007",
+      "scene_id": "scene_fe3f4a0033919645",
       "true_direction_classes": 8
      },
      {
@@ -13548,7 +13548,7 @@
       "novel_view_count": 216,
       "novel_view_sq_sum": 228.17625285650547,
       "num_lines": 27,
-      "scene_id": "parallel_lines_mislabeled_008",
+      "scene_id": "scene_8b8d7bc91195ce0d",
       "true_direction_classes": 9
      },
      {
@@ -13603,7 +13603,7 @@
       "novel_view_count": 168,
       "novel_view_sq_sum": 166.12752519704003,
       "num_lines": 21,
-      "scene_id": "parallel_lines_mislabeled_009",
+      "scene_id": "scene_7eb53db7cc719dda",
       "true_direction_classes": 8
      },
      {
@@ -13656,7 +13656,7 @@
       "novel_view_count": 160,
       "novel_view_sq_sum": 119.21898943439055,
       "num_lines": 20,
-      "scene_id": "parallel_lines_mislabeled_010",
+      "scene_id": "scene_2d467d847e2a42ef",
       "true_direction_classes": 7
      },
      {
@@ -13711,7 +13711,7 @@
       "novel_view_count": 168,
       "novel_view_sq_sum": 137.54180228261848,
       "num_lines": 21,
-      "scene_id": "parallel_lines_mislabeled_011",
+      "scene_id": "scene_d6bb47289c4bf096",
       "true_direction_classes": 8
      },
      {
@@ -13768,7 +13768,7 @@
       "novel_view_count": 176,
       "novel_view_sq_sum": 160.95916473610933,
       "num_lines": 22,
-      "scene_id": "parallel_lines_mislabeled_012",
+      "scene_id": "scene_393f5c51f50d9016",
       "true_direction_classes": 7
      },
      {
@@ -13835,7 +13835,7 @@
       "novel_view_count": 216,
       "novel_view_sq_sum": 208.95117334503658,
       "num_lines": 27,
-      "scene_id": "parallel_lines_mislabeled_013",
+      "scene_id": "scene_78fe2e22ddf5b592",
       "true_direction_classes": 8
      },
      {
@@ -13884,7 +13884,7 @@
       "novel_view_count": 144,
       "novel_view_sq_sum": 125.95032317251503,
       "num_lines": 18,
-      "scene_id": "parallel_lines_mislabeled_014",
+      "scene_id": "scene_f5fd28245bd5bd4c",
       "true_direction_classes": 7
      },
      {
@@ -13935,7 +13935,7 @@
       "novel_view_count": 152,
       "novel_view_sq_sum": 191.35011583481966,
       "num_lines": 19,
-      "scene_id": "parallel_lines_mislabeled_015",
+      "scene_id": "scene_3ad7bdef6756b1ea",
       "true_direction_classes": 8
      },
      {
@@ -14012,7 +14012,7 @@
       "novel_view_count": 256,
       "novel_view_sq_sum": 203.68997170497062,
       "num_lines": 32,
-      "scene_id": "parallel_lines_mislabeled_016",
+      "scene_id": "scene_8db833571ba4199b",
       "true_direction_classes": 10
      },
      {
@@ -14067,7 +14067,7 @@
       "novel_view_count": 166,
       "novel_view_sq_sum": 161.14367902518308,
       "num_lines": 21,
-      "scene_id": "parallel_lines_mislabeled_017",
+      "scene_id": "scene_351894bb9c9e9440",
       "true_direction_classes": 8
      },
      {
@@ -14146,7 +14146,7 @@
       "novel_view_count": 260,
       "novel_view_sq_sum": 216.4514897931973,
       "num_lines": 33,
-      "scene_id": "parallel_lines_mislabeled_018",
+      "scene_id": "scene_223cb7fd61111402",
       "true_direction_classes": 11
      },
      {
@@ -14223,7 +14223,7 @@
       "novel_view_count": 256,
       "novel_view_sq_sum": 77.50161673712753,
       "num_lines": 32,
-      "scene_id": "parallel_lines_mislabeled_019",
+      "scene_id": "scene_79c2fd438814f4ba",
       "true_direction_classes": 12
      },
      {
@@ -14290,7 +14290,7 @@
       "novel_view_count": 216,
       "novel_view_sq_sum": 165.29293016773315,
       "num_lines": 27,
-      "scene_id": "parallel_lines_mislabeled_020",
+      "scene_id": "scene_3e37fb96c7dd7315",
       "true_direction_classes": 9
      },
      {
@@ -14367,7 +14367,7 @@
       "novel_view_count": 256,
       "novel_view_sq_sum": 505.77938378267277,
       "num_lines": 32,
-      "scene_id": "parallel_lines_mislabeled_021",
+      "scene_id": "scene_65c342ea1896fdd6",
       "true_direction_classes": 11
      },
      {
@@ -14420,7 +14420,7 @@
       "novel_view_count": 160,
       "novel_view_sq_sum": 98.65611286722239,
       "num_lines": 20,
-      "scene_id": "parallel_lines_mislabeled_022",
+      "scene_id": "scene_a78f994158620aa0",
       "true_direction_classes": 8
      },
      {
@@ -14489,7 +14489,7 @@
       "novel_view_count": 224,
       "novel_view_sq_sum": 159.97744113228015,
       "num_lines": 28,
-      "scene_id": "parallel_lines_mislabeled_023",
+      "scene_id": "scene_c672fea049b9bbd6",
       "true_direction_classes": 10
      }
     ],
@@ -14562,7 +14562,7 @@
       "novel_view_count": 232,
       "novel_view_sq_sum": 209.18007058882932,
       "num_lines": 29,
-      "scene_id": "parallel_lines_mislabeled_000",
+      "scene_id": "scene_9eb496003d83c09e",
       "true_direction_classes": 10
      },
      {
@@ -14635,7 +14635,7 @@
       "novel_view_count": 238,
       "novel_view_sq_sum": 174.2849673190724,
       "num_lines": 30,
-      "scene_id": "parallel_lines_mislabeled_001",
+      "scene_id": "scene_116879ad04c070e4",
       "true_direction_classes": 12
      },
      {
@@ -14682,7 +14682,7 @@
       "novel_view_count": 136,
       "novel_view_sq_sum": 57.46980055607122,
       "num_lines": 17,
-      "scene_id": "parallel_lines_mislabeled_002",
+      "scene_id": "scene_276d4a3d58b03a26",
       "true_direction_classes": 6
      },
      {
@@ -14761,7 +14761,7 @@
       "novel_view_count": 262,
       "novel_view_sq_sum": 516.3322199110305,
       "num_lines": 33,
-      "scene_id": "parallel_lines_mislabeled_003",
+      "scene_id": "scene_20fda1dd4cfdc2ef",
       "true_direction_classes": 10
      },
      {
@@ -14834,7 +14834,7 @@
       "novel_view_count": 238,
       "novel_view_sq_sum": 178.02306494320294,
       "num_lines": 30,
-      "scene_id": "parallel_lines_mislabeled_004",
+      "scene_id": "scene_6d8984755c0522ac",
       "true_direction_classes": 11
      },
      {
@@ -14909,7 +14909,7 @@
       "novel_view_count": 248,
       "novel_view_sq_sum": 263.79344500230616,
       "num_lines": 31,
-      "scene_id": "parallel_lines_mislabeled_005",
+      "scene_id": "scene_196ad1d98f3bdf05",
       "true_direction_classes": 9
      },
      {
@@ -14980,7 +14980,7 @@
       "novel_view_count": 232,
       "novel_view_sq_sum": 152.47075636576994,
       "num_lines": 29,
-      "scene_id": "parallel_lines_mislabeled_006",
+      "scene_id": "scene_cedea7f036d1b1f4",
       "true_direction_classes": 10
      },
      {
@@ -15035,7 +15035,7 @@
       "novel_view_count": 168,
       "novel_view_sq_sum": 82.43854488157348,
       "num_lines": 21,
-      "scene_id": "parallel_lines_mislabeled_007",
+      "scene_id": "scene_fe3f4a0033919645",
       "true_direction_classes": 8
      },
      {
@@ -15102,7 +15102,7 @@
       "novel_view_count": 216,
       "novel_view_sq_sum": 231.55036196983104,
       "num_lines": 27,
-      "scene_id": "parallel_lines_mislabeled_008",
+      "scene_id": "scene_8b8d7bc91195ce0d",
       "true_direction_classes": 9
      },
      {
@@ -15157,7 +15157,7 @@
       "novel_view_count": 168,
       "novel_view_sq_sum": 170.43102010340448,
       "num_lines": 21,
-      "scene_id": "parallel_lines_mislabeled_009",
+      "scene_id": "scene_7eb53db7cc719dda",
       "true_direction_classes": 8
      },
      {
@@ -15210,7 +15210,7 @@
       "novel_view_count": 160,
       "novel_view_sq_sum": 142.0590353663168,
       "num_lines": 20,
-      "scene_id": "parallel_lines_mislabeled_010",
+      "scene_id": "scene_2d467d847e2a42ef",
       "true_direction_classes": 7
      },
      {
@@ -15265,7 +15265,7 @@
       "novel_view_count": 168,
       "novel_view_sq_sum": 135.99015294730535,
       "num_lines": 21,
-      "scene_id": "parallel_lines_mislabeled_011",
+      "scene_id": "scene_d6bb47289c4bf096",
       "true_direction_classes": 8
      },
      {
@@ -15322,7 +15322,7 @@
       "novel_view_count": 176,
       "novel_view_sq_sum": 158.75928694015806,
       "num_lines": 22,
-      "scene_id": "parallel_lines_mislabeled_012",
+      "scene_id": "scene_393f5c51f50d9016",
       "true_direction_classes": 7
      },
      {
@@ -15389,7 +15389,7 @@
       "novel_view_count": 216,
       "novel_view_sq_sum": 222.24072607560572,
       "num_lines": 27,
-      "scene_id": "parallel_lines_mislabeled_013",
+      "scene_id": "scene_78fe2e22ddf5b592",
       "true_direction_classes": 8
      },
      {
@@ -15438,7 +15438,7 @@
       "novel_view_count": 144,
       "novel_view_sq_sum": 174.9195180247674,
       "num_lines": 18,
-      "scene_id": "parallel_lines_mislabeled_014",
+      "scene_id": "scene_f5fd28245bd5bd4c",
       "true_direction_classes": 7
      },
      {
@@ -15489,7 +15489,7 @@
       "novel_view_count": 152,
       "novel_view_sq_sum": 173.1258329860072,
       "num_lines": 19,
-      "scene_id": "parallel_lines_mislabeled_015",
+      "scene_id": "scene_3ad7bdef6756b1ea",
       "true_direction_classes": 8
      },
      {
@@ -15566,7 +15566,7 @@
       "novel_view_count": 256,
       "novel_view_sq_sum": 211.1478974265641,
       "num_lines": 32,
-      "scene_id": "parallel_lines_mislabeled_016",
+      "scene_id": "scene_8db833571ba4199b",
       "true_direction_classes": 10
      },
      {
@@ -15621,7 +15621,7 @@
       "novel_view_count": 166,
       "novel_view_sq_sum": 160.09971777908711,
       "num_lines": 21,
-      "scene_id": "parallel_lines_mislabeled_017",
+      "scene_id": "scene_351894bb9c9e9440",
       "true_direction_classes": 8
      },
      {
@@ -15700,7 +15700,7 @@
       "novel_view_count": 260,
       "novel_view_sq_sum": 199.77417943268605,
       "num_lines": 33,
-      "scene_id": "parallel_lines_mislabeled_018",
+      "scene_id": "scene_223cb7fd61111402",
       "true_direction_classes": 11
      },
      {
@@ -15777,7 +15777,7 @@
       "novel_view_count": 256,
       "novel_view_sq_sum": 76.16452457271342,
       "num_lines": 32,
-      "scene_id": "parallel_lines_mislabeled_019",
+      "scene_id": "scene_79c2fd438814f4ba",
       "true_direction_classes": 12
      },
      {
@@ -15844,7 +15844,7 @@
       "novel_view_count": 216,
       "novel_view_sq_sum": 176.61451410407565,
       "num_lines": 27,
-      "scene_id": "parallel_lines_mislabeled_020",
+      "scene_id": "scene_3e37fb96c7dd7315",
       "true_direction_classes": 9
      },
      {
@@ -15921,7 +15921,7 @@
       "novel_view_count": 256,
       "novel_view_sq_sum": 479.3671442559501,
       "num_lines": 32,
-      "scene_id": "parallel_lines_mislabeled_021",
+      "scene_id": "scene_65c342ea1896fdd6",
       "true_direction_classes": 11
      },
      {
@@ -15974,7 +15974,7 @@
       "novel_view_count": 160,
       "novel_view_sq_sum": 86.57685161164473,
       "num_lines": 20,
-      "scene_id": "parallel_lines_mislabeled_022",
+      "scene_id": "scene_a78f994158620aa0",
       "true_direction_classes": 8
      },
      {
@@ -16043,7 +16043,7 @@
       "novel_view_count": 224,
       "novel_view_sq_sum": 167.9302686365441,
       "num_lines": 28,
-      "scene_id": "parallel_lines_mislabeled_023",
+      "scene_id": "scene_c672fea049b9bbd6",
       "true_direction_classes": 10
      }
     ],
@@ -16116,7 +16116,7 @@
       "novel_view_count": 232,
       "novel_view_sq_sum": 4851.837051676965,
       "num_lines": 29,
-      "scene_id": "parallel_lines_mislabeled_000",
+      "scene_id": "scene_9eb496003d83c09e",
       "true_direction_classes": 10
      },
      {
@@ -16189,7 +16189,7 @@
       "novel_view_count": 238,
       "novel_view_sq_sum": 2670.047361873788,
       "num_lines": 30,
-      "scene_id": "parallel_lines_mislabeled_001",
+      "scene_id": "scene_116879ad04c070e4",
       "true_direction_classes": 12
      },
      {
@@ -16236,7 +16236,7 @@
       "novel_view_count": 136,
       "novel_view_sq_sum": 2505.8805285875264,
       "num_lines": 17,
-      "scene_id": "parallel_lines_mislabeled_002",
+      "scene_id": "scene_276d4a3d58b03a26",
       "true_direction_classes": 6
      },
      {
@@ -16315,7 +16315,7 @@
       "novel_view_count": 262,
       "novel_view_sq_sum": 5383.796357028857,
       "num_lines": 33,
-      "scene_id": "parallel_lines_mislabeled_003",
+      "scene_id": "scene_20fda1dd4cfdc2ef",
       "true_direction_classes": 10
      },
      {
@@ -16388,7 +16388,7 @@
       "novel_view_count": 238,
       "novel_view_sq_sum": 2534.6493872532483,
       "num_lines": 30,
-      "scene_id": "parallel_lines_mislabeled_004",
+      "scene_id": "scene_6d8984755c0522ac",
       "true_direction_classes": 11
      },
      {
@@ -16463,7 +16463,7 @@
       "novel_view_count": 248,
       "novel_view_sq_sum": 2999.3009573197214,
       "num_lines": 31,
-      "scene_id": "parallel_lines_mislabeled_005",
+      "scene_id": "scene_196ad1d98f3bdf05",
       "true_direction_classes": 9
      },
      {
@@ -16534,7 +16534,7 @@
       "novel_view_count": 232,
       "novel_view_sq_sum": 2699.961277010739,
       "num_lines": 29,
-      "scene_id": "parallel_lines_mislabeled_006",
+      "scene_id": "scene_cedea7f036d1b1f4",
       "true_direction_classes": 10
      },
      {
@@ -16589,7 +16589,7 @@
       "novel_view_count": 168,
       "novel_view_sq_sum": 2856.4610625975133,
       "num_lines": 21,
-      "scene_id": "parallel_lines_mislabeled_007",
+      "scene_id": "scene_fe3f4a0033919645",
       "true_direction_classes": 8
      },
      {
@@ -16656,7 +16656,7 @@
       "novel_view_count": 216,
       "novel_view_sq_sum": 7438.356325876729,
       "num_lines": 27,
-      "scene_id": "parallel_lines_mislabeled_008",
+      "scene_id": "scene_8b8d7bc91195ce0d",
       "true_direction_classes": 9
      },
      {
@@ -16711,7 +16711,7 @@
       "novel_view_count": 168,
       "novel_view_sq_sum": 3298.8316604646902,
       "num_lines": 21,
-      "scene_id": "parallel_lines_mislabeled_009",
+      "scene_id": "scene_7eb53db7cc719dda",
       "true_direction_classes": 8
      },
      {
@@ -16764,7 +16764,7 @@
       "novel_view_count": 160,
       "novel_view_sq_sum": 2465.1832000389313,
       "num_lines": 20,
-      "scene_id": "parallel_lines_mislabeled_010",
+      "scene_id": "scene_2d467d847e2a42ef",
       "true_direction_classes": 7
      },
      {
@@ -16819,7 +16819,7 @@
       "novel_view_count": 168,
       "novel_view_sq_sum": 1102.66500866072,
       "num_lines": 21,
-      "scene_id": "parallel_lines_mislabeled_011",
+      "scene_id": "scene_d6bb47289c4bf096",
       "true_direction_classes": 8
      },
      {
@@ -16876,7 +16876,7 @@
       "novel_view_count": 176,
       "novel_view_sq_sum": 3557.2753664115166,
       "num_lines": 22,
-      "scene_id": "parallel_lines_mislabeled_012",
+      "scene_id": "scene_393f5c51f50d9016",
       "true_direction_classes": 7
      },
      {
@@ -16943,7 +16943,7 @@
       "novel_view_count": 216,
       "novel_view_sq_sum": 1802.4711127715486,
       "num_lines": 27,
-      "scene_id": "parallel_lines_mislabeled_013",
+      "scene_id": "scene_78fe2e22ddf5b592",
       "true_direction_classes": 8
      },
      {
@@ -16992,7 +16992,7 @@
       "novel_view_count": 144,
       "novel_view_sq_sum": 6324.232804742062,
       "num_lines": 18,
-      "scene_id": "parallel_lines_mislabeled_014",
+      "scene_id": "scene_f5fd28245bd5bd4c",
       "true_direction_classes": 7
      },
      {
@@ -17043,7 +17043,7 @@
       "novel_view_count": 152,
       "novel_view_sq_sum": 2808.8284801296845,
       "num_lines": 19,
-      "scene_id": "parallel_lines_mislabeled_015",
+      "scene_id": "scene_3ad7bdef6756b1ea",
       "true_direction_classes": 8
      },
      {
@@ -17120,7 +17120,7 @@
       "novel_view_count": 256,
       "novel_view_sq_sum": 3604.17883772601,
       "num_lines": 32,
-      "scene_id": "parallel_lines_mislabeled_016",
+      "scene_id": "scene_8db833571ba4199b",
       "true_direction_classes": 10
      },
      {
@@ -17175,7 +17175,7 @@
       "novel_view_count": 166,
       "novel_view_sq_sum": 7291.55837628893,
       "num_lines": 21,
-      "scene_id": "parallel_lines_mislabeled_017",
+      "scene_id": "scene_351894bb9c9e9440",
       "true_direction_classes": 8
      },
      {
@@ -17254,7 +17254,7 @@
       "novel_view_count": 260,
       "novel_view_sq_sum": 2491.9050213133455,
       "num_lines": 33,
-      "scene_id": "parallel_lines_mislabeled_018",
+      "scene_id": "scene_223cb7fd61111402",
       "true_direction_classes": 11
      },
      {
@@ -17331,7 +17331,7 @@
       "novel_view_count": 256,
       "novel_view_sq_sum": 2120.420219561159,
       "num_lines": 32,
-      "scene_id": "parallel_lines_mislabeled_019",
+      "scene_id": "scene_79c2fd438814f4ba",
       "true_direction_classes": 12
      },
      {
@@ -17398,7 +17398,7 @@
       "novel_view_count": 216,
       "novel_view_sq_sum": 3049.353291060049,
       "num_lines": 27,
-      "scene_id": "parallel_lines_mislabeled_020",
+      "scene_id": "scene_3e37fb96c7dd7315",
       "true_direction_classes": 9
      },
      {
@@ -17475,7 +17475,7 @@
       "novel_view_count": 256,
       "novel_view_sq_sum": 1116.9533951444635,
       "num_lines": 32,
-      "scene_id": "parallel_lines_mislabeled_021",
+      "scene_id": "scene_65c342ea1896fdd6",
       "true_direction_classes": 11
      },
      {
@@ -17528,7 +17528,7 @@
       "novel_view_count": 160,
       "novel_view_sq_sum": 5259.722902365961,
       "num_lines": 20,
-      "scene_id": "parallel_lines_mislabeled_022",
+      "scene_id": "scene_a78f994158620aa0",
       "true_direction_classes": 8
      },
      {
@@ -17597,7 +17597,7 @@
       "novel_view_count": 224,
       "novel_view_sq_sum": 2223.723265692661,
       "num_lines": 28,
-      "scene_id": "parallel_lines_mislabeled_023",
+      "scene_id": "scene_c672fea049b9bbd6",
       "true_direction_classes": 10
      }
     ]
