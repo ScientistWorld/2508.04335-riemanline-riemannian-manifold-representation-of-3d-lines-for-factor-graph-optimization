@@ -5,4 +5,4 @@ action: submit
 gpus: 0
 test: false
 milestone: secondary_claims
-notes: "Full hardening run: reference + baselines on train (24/exp) and hidden test (64/exp), then 4 honest variants and 18 shortcut cases each through the no-argument hidden test, plus paired bootstrap analysis."
+notes: "Resume hardening run (preemption-safe): remaining honest variants and shortcut cases through the no-argument hidden test (64 scenes/exp), then paired bootstrap analysis. Finished cases and the reference stage are reused."
