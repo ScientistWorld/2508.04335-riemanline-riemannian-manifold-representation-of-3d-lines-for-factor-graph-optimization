@@ -1,16 +1,15 @@
 # Research Direction
 
 ## Research Problem
-Improve 3D line landmark optimization in visual factor graphs, especially when the scene contains known groups of parallel lines. The goal is better geometric reconstruction and image reprojection consistency without inflating the optimization state.
+Improve 3D line landmark reconstruction in multi-view line factor graphs that contain groups of parallel lines: more accurate line geometry (also when seen from new viewpoints) with a representation whose degrees of freedom match the true structure, robust to errors in the declared parallel groups.
 
 ## Core Contribution
-The paper's contribution is a compact manifold representation for line landmarks and line groups. Future work should stay focused on geometric line representations, manifold updates, factor design, initialization, or robust optimization for this same line-based factor graph setting.
+The source paper contributes a minimal manifold representation for line landmarks that shares one direction across a parallel group and optimizes it inside a reprojection factor graph. Work in this gym should stay a geometric reconstruction method for this setting: line parameterizations, manifold updates, factors and robust losses, initialization, structure verification or estimation, and solver design.
 
 ## Approach Scope
-Allowed changes include alternative minimal line parameterizations, different manifold update rules, robust losses, initialization strategies, or structural factors, provided the result is still a geometric factor-graph method for 3D line landmarks.
+Allowed: any geometric estimation procedure that reconstructs 3D lines from the given observations, including learned components trained only on the train split; deciding which declared groups or members to trust; alternative minimal representations; better initialization and optimization.
 
 ## Out of Bounds
-- Replacing the problem with neural image-to-geometry prediction
-- Adding extra cameras, observations, or labels to the fixed scored dataset
-- Optimizing only 2D image lines without reconstructing 3D line geometry
-- Reporting scores from a method that does not expose line normals and directions for evaluation
+- Reading, importing or regenerating the hidden test scenes (`eval/test/`), or using ground truth at solve time
+- Editing the evaluator, `scoring/reference.json` or the baseline solvers
+- Outputs that are not real 3D line estimates (constant, copied or partially missing lines)

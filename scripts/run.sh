@@ -1,33 +1,31 @@
 #!/bin/bash
-# SMOKE JOB (temporary): checks the hardened pipeline on CPU and times it.
+# Reproduce the reference end to end (CPU only, a few minutes).
+#
+# 1. Export the visible train scenes (public inputs + ground truth) to
+#    data/train_scenes/ for development.
+# 2. Run every solver in scripts/methods/ (StructRiemanLine and the three
+#    baselines) on the train scenes  -> scoring/scores_train.json (= scores.json)
+# 3. Run every solver on the hidden test scenes generated inside eval/test/
+#                                     -> scoring/scores_test.json
+# 4. Validate the workspace.
 set -e
+
 WORKSPACE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$WORKSPACE_DIR"
 export PYTHONPATH="$WORKSPACE_DIR:${PYTHONPATH:-}"
 export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1
-python -c "import numpy, scipy, sys; print(sys.version, numpy.__version__, scipy.__version__)"
-nproc || true
 
-echo "=== smoke"
-python tmp/smoke.py 2 || echo "SMOKE FAILED"
-
-echo "=== export train scenes"
 rm -rf data/train_scenes
 python -m eval.train.evaluate --export-scenes data/train_scenes
-du -sh data/train_scenes
 
-echo "=== evaluate_train"
-time bash scripts/evaluate_train.sh
+bash scripts/evaluate_train.sh
 cp scoring/scores_train.json scoring/scores.json
-echo "=== evaluate_test"
-time bash scripts/evaluate_test.sh
-python validate.py || echo "VALIDATE FAILED"
+bash scripts/evaluate_test.sh
 
-echo "=== harness case"
-time python -m redteam.after_hardening.run_cases hidden_generator_import
-cat redteam/after_hardening/cases/hidden_generator_import/status.json || true
-python - <<'PY'
-import json
-s = json.load(open("tmp/hardening/hidden_generator_import/scores_test.json"))
-print(json.dumps(s["_metadata"]["failed_methods"], indent=1)[:2000])
-PY
+python validate.py
+
+# ---- Hardening checks (this job only): honest variants and shortcuts, each
+# run through the real no-argument scripts/evaluate_test.sh in its own copy.
+rm -rf tmp/hardening redteam/after_hardening/cases
+python -m redteam.after_hardening.run_cases
+python -m redteam.after_hardening.analyze

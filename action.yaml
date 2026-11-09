@@ -3,6 +3,6 @@
 # only after your turn ends.
 action: submit
 gpus: 0
-test: true
+test: false
 milestone: secondary_claims
-notes: "Smoke test of the hardened gym: hidden-test scene generation, new solver interface, reference/baselines/variants on 2 scenes per experiment, full train/test evaluation timing, one harness case."
+notes: "Full hardening run: reference + baselines on train (24/exp) and hidden test (64/exp), then 4 honest variants and 18 shortcut cases each through the no-argument hidden test, plus paired bootstrap analysis."

@@ -19,7 +19,7 @@ from typing import Any
 import numpy as np
 
 SPLIT = "test"
-NUM_SCENES = 32
+NUM_SCENES = 64
 # 128-bit root seed: scenes cannot be rebuilt without it, and it cannot be
 # recovered by enumerating seeds.
 ROOT_SEED = 0x9E3779B97F4A7C15F39CC0605CEDC834
