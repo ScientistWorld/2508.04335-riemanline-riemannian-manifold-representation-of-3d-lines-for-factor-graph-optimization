@@ -12,6 +12,7 @@ skipped on resume.
 from __future__ import annotations
 
 import json
+import hashlib
 import os
 import shutil
 import subprocess
@@ -22,6 +23,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 HERE = Path(__file__).resolve().parent
 WORK = ROOT / "tmp" / "hardening2"
+PRIVATE = ROOT / "eval" / "test" / "hardening_cases"
 
 CANDIDATE = """#!/bin/bash
 set -e
@@ -31,12 +33,12 @@ export PYTHONPATH="$WORKSPACE_DIR:${{PYTHONPATH:-}}"
 python -m redteam.hardening2.candidates --mode {mode} "$1" "$2"
 """
 
-HONEST = ["no_optimization", "gaussian_loss", "verified_groups", "joint_verified", "joint_verified_strict"]
+HONEST = ["reference_repeat", "no_optimization", "gaussian_loss", "verified_groups", "joint_verified", "joint_verified_strict"]
 # Measured in the previous run on the dataset-association experiments only (worse than or tied
 # with the reference there); kept runnable but not replayed:
 EXTRA = ["staged", "verified_staged", "joint_warm", "joint_warm_verified"]
 SHORTCUTS = ["hidden_abspath", "public_gt_lookup", "scale_gauge", "constant_lines", "bad_rotation",
-             "missing_frames", "nan_geometry", "observation_replace"]
+             "missing_frames", "nan_geometry", "overflow_geometry", "zero_params", "negative_params", "flags", "observation_replace"]
 CASES: dict[str, dict] = {m: {"replace": m} for m in HONEST + SHORTCUTS + EXTRA}
 CASES["omit_proposed"] = {"remove": ["struct_riemanline"]}
 BASELINES = ["orthline", "orthline_constr", "riemanline"]
@@ -46,7 +48,7 @@ def make_workspace(case: str, spec: dict) -> Path:
     ws = WORK / case / "workspace"
     shutil.rmtree(ws, ignore_errors=True)
     ws.mkdir(parents=True)
-    ignore = shutil.ignore_patterns("__pycache__", "upstream", "cases", "*.pyc", "downloads")
+    ignore = shutil.ignore_patterns("__pycache__", "upstream", "cases", "*.pyc", "downloads", "outputs", "archive_before", "hardening_cases", "results_full.json")
     for name in ("baseline", "data", "eval", "method", "scripts", "scoring"):
         shutil.copytree(ROOT / name, ws / name, ignore=ignore, symlinks=True)
     (ws / "data" / "downloads").symlink_to(ROOT / "data" / "downloads")
@@ -92,14 +94,24 @@ def slim(scores: dict) -> dict:
                 items.append(item)
             per_scene[method] = items
         out["experiments"][exp] = {"results": payload["results"], "_status": payload.get("_status", {}),
-                                   "_per_scene_summary": per_scene}
+                                   "_note": "Detailed paired records are private to eval/test/."}
     return out
 
 
 def run_case(case: str) -> None:
     case_dir = HERE / "cases" / case
-    full = WORK / case / "scores_test.json"
-    if (case_dir / "status.json").is_file() and full.is_file():
+    full = PRIVATE / case / "scores_test.json"
+    full.parent.mkdir(parents=True, exist_ok=True)
+    digest = hashlib.sha256()
+    for folder in ("method", "baseline", "eval", "redteam/hardening2", "redteam/after_hardening"):
+        for path in sorted((ROOT / folder).rglob("*.py")):
+            if "upstream" not in path.parts and "__pycache__" not in path.parts:
+                digest.update(str(path.relative_to(ROOT)).encode())
+                digest.update(path.read_bytes())
+    digest.update((ROOT / "scoring/reference.json").read_bytes())
+    code_hash = digest.hexdigest()
+    old_status = json.loads((case_dir / "status.json").read_text()) if (case_dir / "status.json").is_file() else {}
+    if old_status.get("code_hash") == code_hash and full.is_file():
         print(f"[skip] {case}", flush=True)
         return
     spec = CASES[case]
@@ -111,17 +123,18 @@ def run_case(case: str) -> None:
         + "\n\nstruct_riemanline.sh:\n" + (solver.read_text() if solver.is_file() else "<removed>\n")
     )
     start = time.time()
-    env = {"PATH": os.environ.get("PATH", "/usr/local/bin:/usr/bin:/bin"), "HOME": str(ws), "OMP_NUM_THREADS": "1",
-           "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1"}
+    env = dict(os.environ)
+    env.update(OMP_NUM_THREADS="1", OPENBLAS_NUM_THREADS="1", MKL_NUM_THREADS="1")
     proc = subprocess.run(["bash", "scripts/evaluate_test.sh"], cwd=str(ws), capture_output=True, text=True, env=env)
     elapsed = time.time() - start
     (case_dir / "evaluate_test.log").write_text(proc.stdout[-20000:] + "\n--- stderr ---\n" + proc.stderr[-5000:])
     scores_path = ws / "scoring" / "scores_test.json"
     if scores_path.is_file():
         scores = json.loads(scores_path.read_text())
-        shutil.copy(scores_path, full)
+        private_path = ws / "eval" / "test" / "results_full.json"
+        shutil.copy(private_path if private_path.is_file() else scores_path, full)
         (case_dir / "scores_test.json").write_text(json.dumps(slim(scores), indent=1, sort_keys=True) + "\n")
-    (case_dir / "status.json").write_text(json.dumps({"returncode": proc.returncode, "seconds": round(elapsed, 1)}) + "\n")
+    (case_dir / "status.json").write_text(json.dumps({"returncode": proc.returncode, "seconds": round(elapsed, 1), "code_hash": code_hash}) + "\n")
     shutil.rmtree(ws, ignore_errors=True)
     print(f"[done] {case}: rc={proc.returncode} in {elapsed:.0f}s", flush=True)
 

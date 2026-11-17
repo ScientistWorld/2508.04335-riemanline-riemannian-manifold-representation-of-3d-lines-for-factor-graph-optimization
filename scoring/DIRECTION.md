@@ -1,15 +1,7 @@
 # Research Direction
 
-## Research Problem
-Improve 3D line landmark reconstruction in multi-view line factor graphs that contain groups of parallel lines: more accurate line geometry (also when seen from new viewpoints) with a representation whose degrees of freedom match the true structure, robust to errors in the declared parallel groups.
+Improve accurate, compact 3D mapping from multi-view point and line observations, with trajectory refinement when camera poses are uncertain. Declared parallel groups are useful but fallible. Strong methods must handle weak geometry, observation noise, and association errors on unseen procedural scenes and dataset sequences.
 
-## Core Contribution
-The source paper contributes a minimal manifold representation for line landmarks that shares one direction across a parallel group and optimizes it inside a reprojection factor graph. Work in this gym should stay a geometric reconstruction method for this setting: line parameterizations, manifold updates, factors and robust losses, initialization, structure verification or estimation, and solver design.
+The paper studies minimal geometric line representations in factor graphs. This gym permits any estimation procedure for the same inputs and outputs, including learned components developed only on the train split. Useful directions include structure verification or estimation, improved initialization, robust estimation, alternative representations and solver design. Joint experiments make trajectory consequences visible alongside line accuracy and compactness.
 
-## Approach Scope
-Allowed: any geometric estimation procedure that reconstructs 3D lines from the given observations, including learned components trained only on the train split; deciding which declared groups or members to trust; alternative minimal representations; better initialization and optimization.
-
-## Out of Bounds
-- Reading, importing or regenerating the hidden test scenes (`eval/test/`), or using ground truth at solve time
-- Editing the evaluator, `scoring/reference.json` or the baseline solvers
-- Outputs that are not real 3D line estimates (constant, copied or partially missing lines)
+Do not use hidden evaluation artifacts or ground truth during solving, modify fixed comparisons, or manufacture metadata in place of geometry. Report tradeoffs rather than interpreting a lower single error as an across-the-board improvement.

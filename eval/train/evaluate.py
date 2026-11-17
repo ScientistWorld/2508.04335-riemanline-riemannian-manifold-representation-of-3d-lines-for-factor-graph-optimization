@@ -8,7 +8,7 @@ writes besides its line estimates is read.  Solvers run from a symlinked view
 of the workspace that does not contain ``eval/test``, each on a fresh copy of
 the public inputs.
 
-A solver run is *failed* when it exits non-zero, times out, misses a scene or a
+A solver run is *failed* when it exits non-zero, misses a scene or a
 line, writes a non-finite or non-Plucker line, or does not solve the task
 (median endpoint-to-line residual on the scene's own observations above
 ``GATE_MEDIAN_RESIDUAL_PX``).  A failed run receives the worst value of every
@@ -18,6 +18,7 @@ scored metric in every experiment, and so does every method row required by
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import math
 import os
@@ -30,6 +31,7 @@ from typing import Any
 
 import numpy as np
 
+from eval.train import guard
 from eval.train import real as real_lib
 from eval.train import scenes as scene_lib
 
@@ -37,7 +39,6 @@ ROOT = Path(__file__).resolve().parents[2]
 SOLVER_DIR = ROOT / "scripts" / "methods"
 REFERENCE = ROOT / "scoring" / "reference.json"
 
-SOLVER_TIMEOUT_S = 3 * 3600
 GATE_MEDIAN_RESIDUAL_PX = 10.0
 PIXEL_CLIP = 100.0
 SAME_DIRECTION_RAD = 1e-7
@@ -130,12 +131,14 @@ def _count_directions(directions: np.ndarray) -> int:
 def _read_lines(path: Path, expected_ids: list[int]) -> tuple[np.ndarray, np.ndarray]:
     if not path.is_file():
         raise InvalidOutput(f"missing output {path.name}")
+    if path.stat().st_size > 16 * 1024 * 1024:
+        raise InvalidOutput(f"{path.name}: output JSON exceeds 16 MiB")
     try:
         payload = json.loads(path.read_text())
     except Exception as exc:  # noqa: BLE001
         raise InvalidOutput(f"{path.name}: unreadable JSON ({exc})") from exc
     lines = payload.get("lines") if isinstance(payload, dict) else None
-    if not isinstance(lines, list):
+    if not isinstance(lines, list) or len(lines) != len(expected_ids):
         raise InvalidOutput(f"{path.name}: no 'lines' list")
     by_id: dict[int, tuple[np.ndarray, np.ndarray]] = {}
     for item in lines:
@@ -150,11 +153,11 @@ def _read_lines(path: Path, expected_ids: list[int]) -> tuple[np.ndarray, np.nda
         if not (np.all(np.isfinite(n)) and np.all(np.isfinite(d))):
             raise InvalidOutput(f"{path.name}: non-finite line {lid}")
         dn = float(np.linalg.norm(d))
-        if dn < 1e-9:
+        if not math.isfinite(dn) or dn < 1e-9:
             raise InvalidOutput(f"{path.name}: zero direction for line {lid}")
         d = d / dn
         m = n / dn
-        if float(np.linalg.norm(m)) > 1e6:
+        if not np.all(np.isfinite(m)) or float(np.linalg.norm(m)) > 1e6:
             raise InvalidOutput(f"{path.name}: line {lid} at infinity")
         if abs(float(np.dot(m, d))) > PLUCKER_TOL * max(1.0, float(np.linalg.norm(m))):
             raise InvalidOutput(f"{path.name}: line {lid} violates the Plucker constraint n.d = 0")
@@ -254,6 +257,18 @@ def pooled_metrics(per_scene: list[dict[str, Any]]) -> dict[str, float]:
 
 # ---------------------------------------------------------------- running
 
+def _fixed_assets_error() -> str:
+    pins = json.loads(Path(__file__).with_name("baseline_hashes.json").read_text())
+    for name, digest in pins.items():
+        path = ROOT / name
+        # A missing solver gets a complete failed row via _required_methods.
+        if not path.exists() and name.startswith("scripts/methods/"):
+            continue
+        if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != digest:
+            return f"evaluator-pinned comparison asset changed: {name}"
+    return ""
+
+
 def _required_methods() -> list[str]:
     try:
         ref = json.loads(REFERENCE.read_text())
@@ -289,6 +304,10 @@ def _run_solver(view: Path, script: Path, in_dir: Path, out_dir: Path, log_path:
     env.setdefault("OMP_NUM_THREADS", "1")
     env.setdefault("OPENBLAS_NUM_THREADS", "1")
     env.setdefault("MKL_NUM_THREADS", "1")
+    env["PYTHONDONTWRITEBYTECODE"] = "1"
+    env["TMPDIR"] = str(out_dir / ".tmp")
+    (out_dir / ".tmp").mkdir(exist_ok=True)
+    read_paths, write_paths = guard.solver_paths(ROOT, view, in_dir, out_dir)
     start = time.time()
     with log_path.open("w") as log:
         try:
@@ -298,12 +317,14 @@ def _run_solver(view: Path, script: Path, in_dir: Path, out_dir: Path, log_path:
                 env=env,
                 stdout=log,
                 stderr=subprocess.STDOUT,
-                timeout=SOLVER_TIMEOUT_S,
+                preexec_fn=lambda: guard.restrict_filesystem(read_paths, write_paths),
             )
-        except subprocess.TimeoutExpired:
-            return False, f"timeout after {SOLVER_TIMEOUT_S}s"
+        except (OSError, subprocess.SubprocessError) as exc:
+            return False, f"solver launch / answer isolation failed: {exc}"
     if proc.returncode != 0:
-        tail = log_path.read_text()[-600:]
+        with log_path.open("rb") as stream:
+            stream.seek(max(0, log_path.stat().st_size - 600))
+            tail = stream.read().decode(errors="replace")
         return False, f"exit code {proc.returncode}: {tail}"
     return True, f"ok in {time.time() - start:.1f}s"
 
@@ -332,7 +353,11 @@ def evaluate(scores_path: Path) -> None:
         for exp in experiments:
             for scene in all_scenes[exp]:
                 (in_dir / f"{scene['public']['scene_id']}.json").write_text(json.dumps(scene["public"]))
+        fixed_error = _fixed_assets_error()
         for method in methods:
+            if fixed_error:
+                status[method].update(failed=True, reason=fixed_error)
+                continue
             if method not in solvers:
                 status[method].update(failed=True, reason="no solver script scripts/methods/%s.sh" % method)
                 continue
@@ -364,6 +389,14 @@ def evaluate(scores_path: Path) -> None:
                     status[method].update(failed=True, reason=f"{exp}: scoring error {exc!r}")
                     break
                 per_scene[method][exp] = rows
+            if not status[method]["failed"]:
+                for exp in experiments:
+                    real = exp in real_lib.EXPERIMENTS
+                    vals = (real_lib.pooled_metrics if real else pooled_metrics)(per_scene[method][exp])
+                    worst = real_lib.WORST if real else WORST
+                    if set(vals) != set(worst) or any(not math.isfinite(v) or v < 0 or v > worst[k] for k, v in vals.items()):
+                        status[method].update(failed=True, reason=f"{exp}: impossible aggregate metric")
+                        break
     finally:
         pass
 

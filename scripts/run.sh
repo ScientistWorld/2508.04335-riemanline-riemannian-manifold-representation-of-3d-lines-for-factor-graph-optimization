@@ -25,11 +25,12 @@ export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1
 code_hash() {
     find eval method baseline scripts/methods scoring/reference.json -type f \
         \( -name '*.py' -o -name '*.sh' -o -name '*.json' \) \
-        -not -path '*/__pycache__/*' -not -path '*/downloads/*' -not -path 'method/upstream/*' \
+        -not -path '*/__pycache__/*' -not -path '*/downloads/*' -not -path '*/outputs/*' -not -path 'method/upstream/*' \
         | LC_ALL=C sort | xargs sha256sum | sha256sum | cut -c1-16
 }
 HASH="$(code_hash)"
 mkdir -p outputs
+python -c 'import numpy, scipy; print("numpy", numpy.__version__, "scipy", scipy.__version__)'
 
 rm -rf data/train_scenes
 python -m eval.train.evaluate --export-scenes data/train_scenes
@@ -50,5 +51,6 @@ fi
 
 python redteam/hardening2/run_cases.py
 python redteam/hardening2/analyze.py
+python redteam/hardening2/verify.py
 
 python validate.py

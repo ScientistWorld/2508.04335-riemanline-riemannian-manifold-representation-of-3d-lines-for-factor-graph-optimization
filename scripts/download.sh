@@ -22,8 +22,8 @@ set -e
 WORKSPACE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$WORKSPACE_DIR"
 
-BASE_URL="https://raw.githubusercontent.com/yanyan-li/Open-Structure/main/dataset"
-TRAIN_SEQS="livingroom0 livingroom1 office0 office japanesealley"
+BASE_URL="https://raw.githubusercontent.com/yanyan-li/Open-Structure/7aaff32e72b82139a8fe56e26415fec16bbceacd/dataset"
+TRAIN_SEQS="livingroom0 livingroom1 office0 office1 office japanesealley"
 TEST_SEQS="livingroom2 livingroom3 office2 office3 hospital carwelding"
 
 fetch_sequence() {

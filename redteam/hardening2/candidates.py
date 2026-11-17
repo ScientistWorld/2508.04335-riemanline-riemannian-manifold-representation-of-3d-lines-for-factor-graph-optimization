@@ -431,7 +431,9 @@ def run(mode: str, input_dir: Path, output_dir: Path) -> None:
     for i, path in enumerate(paths):
         scene = load_json(path)
         joint = is_joint(scene)
-        if mode == "no_optimization":
+        if mode == "reference_repeat":
+            out = reference(scene)
+        elif mode == "no_optimization":
             out = joint_no_optimization(scene) if joint else old.no_optimization(scene)
         elif mode == "gaussian_loss":
             out = solve_joint_scene(scene, loss="linear") if joint else solve_scene(scene, loss="linear")
@@ -461,6 +463,13 @@ def run(mode: str, input_dir: Path, output_dir: Path) -> None:
             out = constant_lines(scene)
         elif mode in ("bad_rotation", "missing_frames", "nan_geometry"):
             out = corrupt_joint(reference(scene), mode)
+        elif mode == "overflow_geometry":
+            out = reference(scene)
+            for line in out["lines"]:
+                line["direction"] = (np.asarray(line["direction"]) * 1e300).tolist()
+                line["normal"] = (np.asarray(line["normal"]) * 1e300).tolist()
+        elif mode in ("zero_params", "negative_params", "flags"):
+            out = old.corrupt(reference(scene), mode)
         elif mode == "observation_replace":
             out = reference(scene)
             observation_replace(path, scene, out)

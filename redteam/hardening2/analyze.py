@@ -23,7 +23,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 HERE = Path(__file__).resolve().parent
-WORK = ROOT / "tmp" / "hardening2"
+WORK = ROOT / "eval" / "test" / "hardening_cases"
 sys.path.insert(0, str(HERE))
 from run_cases import CASES, HONEST, SHORTCUTS  # noqa: E402
 
@@ -51,7 +51,7 @@ def geomean(v: list[float], floor: float, ceil: float) -> float:
 def pooled(exp: str, rows: list[dict]) -> dict[str, float]:
     dirs = [x for r in rows for x in r["direction_errors_deg"]]
     nrms = [x for r in rows for x in r["normal_errors_deg"]]
-    if exp == JOINT:
+    if exp.startswith(JOINT):
         n = sum(r["num_lines_scored"] for r in rows)
         return {
             "ate_rmse_cm": geomean([r["ate_rmse_cm"] for r in rows], 0.01, 1000.0),
@@ -80,14 +80,14 @@ def load(path: Path) -> dict | None:
 
 def main() -> None:
     ref_cfg = json.loads((ROOT / "scoring" / "reference.json").read_text())["experiments"]
-    base = load(ROOT / "scoring" / "scores_test.json")
+    base = load(ROOT / "eval" / "test" / "results_full.json")
     rows: dict[str, dict] = {}  # name -> {"results": {exp: metrics}, "per_scene": {exp: rows}, "failed": bool}
     for m in [REF] + BASELINES:
         rows[m] = {"results": {e: base["experiments"][e]["results"][m] for e in ref_cfg},
                    "per_scene": {e: base["experiments"][e]["_per_scene"].get(m) for e in ref_cfg},
                    "failed": bool(base["experiments"][next(iter(ref_cfg))]["_status"][m]["failed"])}
     status = {}
-    for case in CASES:
+    for case in [c for c in CASES if c in HONEST or c in SHORTCUTS or c == "omit_proposed"]:
         sc = load(WORK / case / "scores_test.json")
         st = load(HERE / "cases" / case / "status.json")
         status[case] = st
@@ -100,9 +100,9 @@ def main() -> None:
                       "failed": failed,
                       "reason": sc["experiments"][exp0]["_status"].get(REF, {}).get("reason", "")}
 
-    # Failed runs are left out of the standard deviations (their worst values
-    # would otherwise set the scale); they are still ranked against it.
-    honest_cohort = [REF] + BASELINES + [c for c in HONEST if c in rows and not rows[c]["failed"]]
+    # Every ranked attempt, including failed attempts, participates in scale.
+    # Unreplayed historical EXTRA cases are not part of this final cohort.
+    honest_cohort = [REF] + BASELINES + [c for c in HONEST if c in rows]
 
     def sds(cohort: list[str]) -> dict:
         out = {}
@@ -129,33 +129,63 @@ def main() -> None:
 
     sd_q = sds(honest_cohort)
     summary: dict = {"cohort_honest": honest_cohort, "candidates": {}}
+    before = load(HERE / "before_metrics.json") or {}
     rng = random.Random(0)
     for name in list(rows):
         if name == REF:
             continue
         is_shortcut = name in SHORTCUTS or name == "omit_proposed"
-        sd = sds(honest_cohort + [name]) if (is_shortcut and not rows[name]["failed"]) else sd_q
+        sd = sds(honest_cohort + [name]) if is_shortcut else sd_q
         entry = {"failed": rows[name]["failed"], "reason": rows[name].get("reason", "")[:200],
                  "status": status.get(name),
                  "rank_delta_vs_reference": delta(rows[name]["results"], rows[REF]["results"], sd),
                  "per_experiment_delta": {e: delta(rows[name]["results"], rows[REF]["results"], sd, exp=e, weighted=False) for e in ref_cfg},
                  "results": rows[name]["results"]}
+        if name in before:
+            entry["before_rank_delta_same_scale"] = delta(before[name]["results"], before["_reference"]["results"], sd)
         if not rows[name]["failed"] and not is_shortcut:
             cis = {}
+            total_boot = [0.0] * N_BOOT
             for e in ref_cfg:
                 a, b = rows[name]["per_scene"][e], rows[REF]["per_scene"][e]
                 if not a or not b or len(a) != len(b):
                     continue
+                assert [v["scene_id"] for v in a] == [v["scene_id"] for v in b], "unpaired instances"
                 n = len(a)
                 vals = []
-                for _ in range(N_BOOT):
+                for boot_i in range(N_BOOT):
                     idx = [rng.randrange(n) for _ in range(n)]
                     pa = pooled(e, [a[i] for i in idx])
                     pb = pooled(e, [b[i] for i in idx])
-                    vals.append(delta({e: pa}, {e: pb}, sd, exp=e, weighted=False))
+                    value = delta({e: pa}, {e: pb}, sd, exp=e, weighted=False)
+                    vals.append(value)
+                    total_boot[boot_i] += ref_cfg[e].get("weight", 1.0) * value
                 cis[e] = [round(percentile(vals, 2.5), 3), round(percentile(vals, 97.5), 3)]
+            blocks = {}
+            for e in ref_cfg:
+                if not e.startswith(JOINT):
+                    continue
+                a, b = rows[name]["per_scene"][e], rows[REF]["per_scene"][e]
+                groups = {}
+                for i, r in enumerate(a):
+                    groups.setdefault(r["sequence"], []).append(i)
+                keys = sorted(groups)
+                vals = []
+                for _ in range(N_BOOT):
+                    idx = [i for _ in keys for i in groups[rng.choice(keys)]]
+                    vals.append(delta({e: pooled(e, [a[i] for i in idx])},
+                                      {e: pooled(e, [b[i] for i in idx])}, sd, exp=e, weighted=False))
+                blocks[e] = [percentile(vals, 2.5), percentile(vals, 97.5)]
+            entry["paired_sequence_block_ci95"] = blocks
             entry["per_experiment_delta_ci95"] = cis
+            entry["rank_delta_ci95"] = [percentile(total_boot, 2.5), percentile(total_boot, 97.5)]
         summary["candidates"][name] = entry
+    repeat = rows.get("reference_repeat")
+    if repeat and not repeat["failed"]:
+        summary["repeat_max_abs_metric_difference"] = max(abs(repeat["results"][e][m] - rows[REF]["results"][e][m])
+            for e, cfg in ref_cfg.items() for m in cfg["metrics"])
+    summary["reference_results"] = rows[REF]["results"]
+    summary["before_reference_results"] = before.get("_reference", {}).get("results")
     (HERE / "summary.json").write_text(json.dumps(summary, indent=1, sort_keys=True) + "\n")
     print(f"{'candidate':22s} {'rankQ':>8s}  " + "  ".join(f"{e[:22]:>22s}" for e in ref_cfg))
     for name, ent in summary["candidates"].items():

@@ -1,39 +1,27 @@
 # Evaluation
 
-How success is measured for any method that reconstructs 3D lines from the scene files described in `briefing/problem.md`. This file describes the measurement only.
+Run `bash scripts/evaluate_train.sh` for visible development scores and `bash scripts/evaluate_test.sh` for the hidden test. Both take no arguments and evaluate every `scripts/methods/*.sh` on disk. Numbers are written under each experiment's `results` in `scoring/scores_train.json` and `scoring/scores_test.json`. Required methods without a solver receive complete failed rows.
 
-## Interface
+A solver is called once per split as `bash scripts/methods/<name>.sh INPUT_DIR OUTPUT_DIR`, with all experiments mixed under opaque scene ids. It writes one JSON per input, named identically:
 
-A method is a solver script `scripts/methods/<name>.sh` called as
+```
+{"lines": [{"id": 1, "normal": [x,y,z], "direction": [x,y,z]}]}
+```
 
-    bash scripts/methods/<name>.sh INPUT_DIR OUTPUT_DIR
+Joint inputs (`task: "joint_ba"`) additionally require `"frames": [{"id": 1, "R_cw": [[...],[...],[...]], "t_cw": [x,y,z]}]`. All frame and line ids must be answered exactly once. Each output JSON is limited to 16 MiB. Direction vectors may have arbitrary nonzero scale if the moment has the same scale; moment and direction must be orthogonal. Other output fields are ignored.
 
-It is called once per split with the scenes of all experiments mixed in one directory under opaque ids (a scene file does not say which experiment it belongs to). It must read every `INPUT_DIR/<scene_id>.json` and write `OUTPUT_DIR/<scene_id>.json` containing
+Procedural inputs contain `cameras` (id, K, R_cw, t_cw), `observations` (line_id, camera_id, pixel endpoints p0, p1), `lines` (ids), `parallel_groups`, and `image_size`. Joint inputs contain `intrinsics` (fx, fy, cx, cy), `frames`, `points` (id, xyz), `lines` (id, start, end), `point_observations` ([point_id, frame_id, u, v]), `line_observations` ([line_id, frame_id, us, vs, ue, ve]), and `parallel_groups`. Initial landmark endpoints in joint inputs are estimates, not ground truth.
 
-    {"lines": [{"id": <int>, "normal": [x, y, z], "direction": [x, y, z]}, ...]}
+The three procedural experiments use 24 train and 64 test scenes each. The two joint experiments use six train sequences and six disjoint test sequences, four keyframe phases per sequence (24/24 instances per experiment), with at most 150 keyframes. ICL-NUIM retains its original measurement noise; TartanAir's exact projected measurements receive 1 px Gaussian noise. All methods see identical instances. The clustered joint experiment derives imperfect associations from the initial estimates. Fixed seeds and deterministic reference optimization eliminate seed noise. Train and test use independent evaluator implementations and the same interface and preprocessing. Train procedural truth is exported to `data/train_scenes/`; train dataset truth is public in `data/downloads/`. Test data, seeds and generators remain in `eval/test/`. Filesystem confinement denies solver access there, including absolute paths; public code and model files remain readable. Inputs, output directories and temporary work directories are writable.
 
-with one entry per line id of the scene. Any other field is ignored. Scene files contain `scene_id`, `cameras` (`id`, `K`, `R_cw`, `t_cw`; a world point X maps to camera coordinates `R_cw X + t_cw`), `observations` (`line_id`, `camera_id`, segment endpoints `p0`, `p1` in pixels), `lines` (ids only), `parallel_groups` (declared groups of line ids) and `image_size`.
+All metrics are lower-is-better and are recomputed from raw geometry against evaluator-owned observations and truth:
 
-Every solver on disk is evaluated; the row named `struct_riemanline` is the reference row. A row listed in `scoring/reference.json` whose solver is missing is scored as a failed run.
+- Direction and moment errors: unsigned angular errors in degrees, median over lines; direction p90 is also scored in every experiment. Procedural experiments additionally score moment p90.
+- `novel_view_line_rmse_px` (procedural only): RMS endpoint-to-line distance in unseen noise-free views, distances clipped at 100 px.
+- `ate_rmse_cm` (joint only): camera-center RMSE after Sim(3) alignment to dataset truth, geometric mean over instances, clipped to [0.01, 1000] cm. Scale is unobservable from the input's 2D measurements.
+- `rotation_rmse_deg` (joint only): orientation RMSE after the same alignment, geometric mean over instances, clipped to [0.001, 180] degrees.
+- `param_count_error_per_line`: absolute difference between the geometric representation's effective and true minimal line parameter counts, divided by the number of scored lines. Each count is 2 times the number of distinct directions plus 2 times the number of lines. Estimated direction equality uses 1e-7 rad; dataset truth uses 0.01 degree to account for coordinate precision. This measures structural compactness; it does not count internal optimizer state or trust declared parameter counts.
 
-## Splits
+A nonzero exit, missing output/id, non-finite or impossible geometry, invalid rotation or Plucker constraint, or median endpoint reprojection residual above 10 px in any input fails the entire run. Every experiment then gets every metric's worst value: angular errors 90 degrees, novel-view error 100 px, parameter error 2; joint ATE 1000 cm and rotation 180 degrees. A failed task cannot gain rank through compactness. There is no scored runtime or solver wall-clock cutoff.
 
-- **Train** (`scripts/evaluate_train.sh`, also `scripts/evaluate.sh`): 24 scenes per experiment generated by `eval/train/` with public seeds. Full scenes with ground truth are exported to `data/train_scenes/`; solver inputs and outputs are kept under `outputs/train/`.
-- **Hidden test** (`scripts/evaluate_test.sh`, no arguments): 64 unseen scenes per experiment from the same distribution, generated inside `eval/test/` at evaluation time. Solvers run once on their public inputs; ground truth and held-out cameras never leave the evaluator.
-
-## Validity
-
-A run fails, and receives the worst value of every metric in every experiment, if the solver exits non-zero or times out, misses a scene or a line, writes a non-finite line, writes a line whose normal is not orthogonal to its direction (Plucker constraint), or does not solve the task: the median endpoint-to-line distance of the scene's own observations to the projected estimated lines exceeds 10 px in any scene (good reconstructions are near 1 px; constant or wrong-structure outputs are at 15-100 px). Worst values: 90 degrees for angles, 100 px for the novel-view error, 2.0 for the parameter-count error.
-
-## Metrics (all lower is better; pooled over all lines of all scenes of an experiment)
-
-- `median_direction_error_deg`, `p90_direction_error_deg`: unsigned angle between estimated and true line directions.
-- `median_normal_error_deg`, `p90_normal_error_deg`: unsigned angle between estimated and true Plucker normal vectors (world frame at the first camera).
-- `novel_view_line_rmse_px`: the true 3D segments are projected (noise-free) into held-out cameras that the method never sees; RMS distance (each distance clipped at 100 px) of those projected endpoints to the projection of the estimated line.
-- `param_count_error_per_line`: the output's effective parameter count is 2 x (number of distinct estimated directions, exact equality up to 1e-7 rad) + 2 x (number of lines); the scene's minimal count is the same formula with the true distinct directions. The metric is |effective - minimal| summed over scenes, divided by the number of lines. Sharing directions that are truly parallel lowers it; sharing directions that are not parallel, or not sharing truly parallel ones, raises it.
-
-All numbers are recomputed by the evaluator from the line estimates; self-reported counts, costs or flags are not read.
-
-## Reference points
-
-`scoring/scores_train.json` and `scoring/scores_test.json` hold the current reference row and three baseline rows on each split. `scoring/reference.json` holds the metric directions, coefficients and experiment weights, and the source paper's own reported numbers.
+The ranking uses the sum, over experiments and metrics, of experiment weight times the absolute coefficient times improvement over the frozen reference in the metric's better direction, divided by that metric's population standard deviation across attempts being ranked (zero variance contributes zero). Failed runs participate with their complete worst-value vectors. Only `results` numbers are ranked; diagnostic status, runtime, bootstrap intervals and illustrative rank deltas are not inputs to ranking. `scoring/reference.json` defines directions, coefficients, weights and calibration rows. Paper numbers on a different scale are preserved under `_paper_reported`; agreement with a paper number is never a metric.

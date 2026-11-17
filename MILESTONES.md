@@ -50,3 +50,8 @@
 
 ## Stop Justification
 - Completed at milestone `secondary_claims`.
+
+### [2026-11-17] - secondary_claims
+- Final review pass adds joint pose/point/line experiments on ICL-NUIM and TartanAir, including imperfect initial associations, and balances the public/held-out dataset splits.
+- Closes absolute-path hidden-answer reads with filesystem confinement; removes solver wall-clock limits, pins baseline comparisons, validates overflow and retains private raw test outputs.
+- Combined final reference/baseline and paired control verification pending; no claim of full-sequence ATE or runtime reproduction.

@@ -1,16 +1,7 @@
 # Scientist Constraints
 
-## Data
-Use only what a scene file provides (cameras, segment observations, declared parallel groups) when solving a scene. The train scenes in `data/train_scenes/` and the train generator `eval/train/scenes.py` may be used freely for development, tuning and learning. A solver must not read, import or regenerate anything from `eval/test/`, must not use ground truth at solve time, and must not try to infer which experiment a test scene belongs to from anything but the scene's own observations.
+Use the public input instances and train split for development. Do not read, import or regenerate hidden inputs, answers or seeds from `eval/test/`, or use dataset ground truth to solve test instances. Network access is absent during execution. The hidden evaluator confines solver file access to public assets, its fresh input copy, outputs and temporary work directory.
 
-## Interface
-A method is a solver script `scripts/methods/<name>.sh INPUT_DIR OUTPUT_DIR` that writes one JSON per scene with `{"lines": [{"id", "normal", "direction"}]}`. The scored row for your method is `struct_riemanline`: replace `scripts/methods/struct_riemanline.sh` (or the code it calls) with your method. Keep the baseline solvers unchanged.
+Supply any estimation procedure through `scripts/methods/<name>.sh INPUT_DIR OUTPUT_DIR`; replace `struct_riemanline.sh` to submit under the reference row, or add a solver to compare it. Reconstruct every line and, for joint tasks, every camera pose. See `briefing/evaluation.md` for raw JSON formats. Learned components trained on the train split are allowed. You may change initialization, optimization, representations, losses or association handling; you are not limited to reference settings.
 
-## Evaluation
-`eval/` must stay unchanged and must not import from `method/`. The hidden test (`scripts/evaluate_test.sh`, no arguments) regenerates its scenes, runs every solver once and recomputes all metrics; nothing a solver writes besides its line estimates is read.
-
-## Compliance Checklist
-- [ ] Solvers use only the scene file they are given (no ground truth, no access to `eval/test/`)
-- [ ] `eval/` and `scoring/reference.json` are unchanged
-- [ ] `scripts/methods/struct_riemanline.sh` runs your method and writes every scene and line
-- [ ] Output lines are finite Plucker lines in the world frame of the first camera
+Keep `eval/`, `scoring/reference.json`, and baseline source/launchers unchanged. Baseline hashes are pinned by the evaluator. Self-reported counts, scores, validity flags and runtime have no effect. Output geometry must satisfy the task and validity gates before any improvement can count. Sim(3) gauge changes are equivalent reconstructions, not scientific gains.

@@ -31,7 +31,6 @@
  },
  "experiments": {
   "open_structure_joint_ba": {
-   "_per_scene_summary": {},
    "_status": {
     "orthline": {
      "failed": true,
@@ -86,7 +85,6 @@
    }
   },
   "parallel_lines": {
-   "_per_scene_summary": {},
    "_status": {
     "orthline": {
      "failed": true,
@@ -141,7 +139,6 @@
    }
   },
   "parallel_lines_harder": {
-   "_per_scene_summary": {},
    "_status": {
     "orthline": {
      "failed": true,
@@ -196,7 +193,6 @@
    }
   },
   "parallel_lines_mislabeled": {
-   "_per_scene_summary": {},
    "_status": {
     "orthline": {
      "failed": true,

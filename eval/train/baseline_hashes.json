@@ -1,0 +1,10 @@
+{
+  "baseline/__init__.py": "5006680203444e2e61550d68409b99bfd7eb62338a441648dc68c627f83a2442",
+  "baseline/joint_ba.py": "f099e0b996210021248290247429887a92d03e6bedfe03b3bb5346e5d0a04750",
+  "baseline/line_ba.py": "c54c4a13b5602f7cf887e4e8ca20ca4b53a8780961f659e57023bb955c131859",
+  "baseline/orthline.py": "b31af5a8219d337e71524d289ab35befc18eb30d547c7353d5bb47d44f7682fa",
+  "baseline/riemanline.py": "45d1a210f412d8858f0ae4511b2c8e576e4785b6d6b13335727ada5a5e78efdc",
+  "scripts/methods/orthline.sh": "4b36b2699e1952489b2405ff4b1bcdc481182d08fccb6b2f9c6fd5d623fc9dca",
+  "scripts/methods/orthline_constr.sh": "001bf940e38952ab6f10e9270a4d83593b4519a8e3a2fc027968177ccedb5a70",
+  "scripts/methods/riemanline.sh": "de94eb00a19e10bb2d29fc3f039dd9931b4ee3701aad5409b3249e9a078d9522"
+}

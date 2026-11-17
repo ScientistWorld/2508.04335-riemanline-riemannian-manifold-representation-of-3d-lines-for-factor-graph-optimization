@@ -12,7 +12,7 @@ Each line is decoupled into a unit direction u2 on the sphere S^2 and a scaled n
 
 ## Implementation in this gym
 
-`method/struct_riemanline.py` (+ `method/line_ba.py`): linear multi-view triangulation as the initial factor graph, the authors' group consensus check, shared-direction initialization from the members' principal direction, and a Levenberg-Marquardt solver whose steps are applied through the Eq. 4-7 retraction (Jacobians in local coordinates by finite differences). Camera poses are known and fixed; the paper's joint pose/point optimisation and ATE evaluation are not reproduced.
+`method/struct_riemanline.py` (+ `method/line_ba.py`): linear multi-view triangulation as the initial factor graph, the authors' group consensus check, shared-direction initialization from the members' principal direction, and a Levenberg-Marquardt solver whose steps are applied through the Eq. 4-7 retraction (Jacobians in local coordinates by finite differences). `method/joint_ba.py` extends the same line states and factors to joint camera pose, point and line optimization on dataset factor graphs, using sparse line derivatives and point Schur elimination. Procedural cameras stay fixed. Dataset instances retain the initial graph estimates and prune landmarks observed by fewer than three selected cameras. At most 150 keyframes, four phases per sequence, replace the full-sequence scale. Joint ATE uses Sim(3) alignment because inputs have 2D measurements only. Full paper ATE gains and runtime are not claimed.
 
 ## Main Claims
 

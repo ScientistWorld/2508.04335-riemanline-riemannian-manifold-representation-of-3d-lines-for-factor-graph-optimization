@@ -3,9 +3,9 @@
   "experiments": {
     "parallel_lines": {
       "description": "Recover 3D line landmarks (2-3 declared parallel groups plus individual lines) from noisy multi-view segment observations with known poses; 8 cameras around the scene, 1.0 px noise, partial visibility and truncated segments.",
-      "notes": "Result values are the paper's Table 6 parameter counts expressed per line: StructRiemanLine uses the minimal count of the true structure (44 for 20 lines, error 0), independent 4n representations use 80, i.e. (80 - 44) / 20 = 1.8 excess parameters per line. The paper reports no number on this synthetic scale for the angular and novel-view metrics; its Table 4 values are kept under _paper_reported for context only.",
+      "notes": "Gym calibration values in results are measured on the scaled held-out reference run, not paper claims. Original paper tables and earlier scalar summaries are preserved unchanged under _paper_reported. Joint experiments use at most 150 keyframes, Sim(3) alignment and 1 px added TartanAir observation noise; procedural experiments use their own scale. No paper number is a target for agreement.",
       "weight": 0.2,
-      "primary_metric": "param_count_error_per_line",
+      "primary_metric": "median_direction_error_deg",
       "metrics": {
         "median_direction_error_deg": {
           "higher_is_better": false,
@@ -41,19 +41,39 @@
       "results": {
         "struct_riemanline": {
           "type": "proposed",
+          "median_direction_error_deg": 0.136772,
+          "median_normal_error_deg": 0.112499,
+          "novel_view_line_rmse_px": 0.718188365135571,
+          "p90_direction_error_deg": 0.36155820000000005,
+          "p90_normal_error_deg": 0.4209893000000002,
           "param_count_error_per_line": 0.0
         },
         "riemanline": {
           "type": "baseline",
-          "param_count_error_per_line": 1.8
+          "median_direction_error_deg": 0.3515275,
+          "median_normal_error_deg": 0.24185800000000002,
+          "novel_view_line_rmse_px": 0.939334832953727,
+          "p90_direction_error_deg": 0.8681567,
+          "p90_normal_error_deg": 0.7965001,
+          "param_count_error_per_line": 1.4133986928104576
         },
         "orthline": {
           "type": "baseline",
-          "param_count_error_per_line": 1.8
+          "median_direction_error_deg": 0.3515275,
+          "median_normal_error_deg": 0.24185800000000002,
+          "novel_view_line_rmse_px": 0.939335994260752,
+          "p90_direction_error_deg": 0.8681611,
+          "p90_normal_error_deg": 0.7965009000000001,
+          "param_count_error_per_line": 1.4133986928104576
         },
         "orthline_constr": {
           "type": "baseline",
-          "param_count_error_per_line": 1.8
+          "median_direction_error_deg": 0.35055250000000004,
+          "median_normal_error_deg": 0.2407125,
+          "novel_view_line_rmse_px": 0.918682377586033,
+          "p90_direction_error_deg": 0.8531371000000001,
+          "p90_normal_error_deg": 0.7898633000000003,
+          "param_count_error_per_line": 1.4133986928104576
         }
       },
       "_paper_reported": {
@@ -143,15 +163,29 @@
             "point_only": 3072,
             "orthline_constr": 3152,
             "struct_riemanline": 3116
+          }
+        },
+        "_previous_scalar_summary": {
+          "struct_riemanline": {
+            "param_count_error_per_line": 0.0
+          },
+          "riemanline": {
+            "param_count_error_per_line": 1.8
+          },
+          "orthline": {
+            "param_count_error_per_line": 1.8
+          },
+          "orthline_constr": {
+            "param_count_error_per_line": 1.8
           }
         }
       }
     },
     "parallel_lines_harder": {
       "description": "Same task with three parallel groups and more individual lines, 6 cameras on a 110-degree arc (narrow baseline), 1.5 px noise, 70% visibility, shorter segments.",
-      "notes": "Result values are the paper's Table 6 parameter counts expressed per line: StructRiemanLine uses the minimal count of the true structure (44 for 20 lines, error 0), independent 4n representations use 80, i.e. (80 - 44) / 20 = 1.8 excess parameters per line. The paper reports no number on this synthetic scale for the angular and novel-view metrics; its Table 4 values are kept under _paper_reported for context only.",
+      "notes": "Gym calibration values in results are measured on the scaled held-out reference run, not paper claims. Original paper tables and earlier scalar summaries are preserved unchanged under _paper_reported. Joint experiments use at most 150 keyframes, Sim(3) alignment and 1 px added TartanAir observation noise; procedural experiments use their own scale. No paper number is a target for agreement.",
       "weight": 0.15,
-      "primary_metric": "param_count_error_per_line",
+      "primary_metric": "median_direction_error_deg",
       "metrics": {
         "median_direction_error_deg": {
           "higher_is_better": false,
@@ -187,19 +221,39 @@
       "results": {
         "struct_riemanline": {
           "type": "proposed",
-          "param_count_error_per_line": 0.0
+          "median_direction_error_deg": 0.473505,
+          "median_normal_error_deg": 0.305875,
+          "novel_view_line_rmse_px": 3.459577062136739,
+          "p90_direction_error_deg": 1.658862,
+          "p90_normal_error_deg": 1.4214050000000014,
+          "param_count_error_per_line": 0.02592810842663524
         },
         "riemanline": {
           "type": "baseline",
-          "param_count_error_per_line": 1.8
+          "median_direction_error_deg": 1.49544,
+          "median_normal_error_deg": 0.93914,
+          "novel_view_line_rmse_px": 4.530884808999379,
+          "p90_direction_error_deg": 5.671044600000001,
+          "p90_normal_error_deg": 3.3740294000000013,
+          "param_count_error_per_line": 1.483794932233353
         },
         "orthline": {
           "type": "baseline",
-          "param_count_error_per_line": 1.8
+          "median_direction_error_deg": 1.495405,
+          "median_normal_error_deg": 0.943947,
+          "novel_view_line_rmse_px": 4.281433310911406,
+          "p90_direction_error_deg": 5.655843400000002,
+          "p90_normal_error_deg": 3.3881712000000013,
+          "param_count_error_per_line": 1.483794932233353
         },
         "orthline_constr": {
           "type": "baseline",
-          "param_count_error_per_line": 1.8
+          "median_direction_error_deg": 1.255263,
+          "median_normal_error_deg": 0.82587,
+          "novel_view_line_rmse_px": 3.701430536426429,
+          "p90_direction_error_deg": 2.7333356,
+          "p90_normal_error_deg": 2.5707136000000004,
+          "param_count_error_per_line": 1.483794932233353
         }
       },
       "_paper_reported": {
@@ -290,14 +344,28 @@
             "orthline_constr": 3152,
             "struct_riemanline": 3116
           }
+        },
+        "_previous_scalar_summary": {
+          "struct_riemanline": {
+            "param_count_error_per_line": 0.0
+          },
+          "riemanline": {
+            "param_count_error_per_line": 1.8
+          },
+          "orthline": {
+            "param_count_error_per_line": 1.8
+          },
+          "orthline_constr": {
+            "param_count_error_per_line": 1.8
+          }
         }
       }
     },
     "parallel_lines_mislabeled": {
       "description": "Where the paper's method falls short: the declared parallel associations contain errors (1-2 members per group are 3-10 degrees off parallel, and half of the scenes contain one grossly wrong member), as produced by imperfect vanishing-point clustering. 8 cameras, 1.2 px noise.",
-      "notes": "Result values are the paper's Table 6 parameter counts expressed per line: StructRiemanLine uses the minimal count of the true structure (44 for 20 lines, error 0), independent 4n representations use 80, i.e. (80 - 44) / 20 = 1.8 excess parameters per line. The paper reports no number on this synthetic scale for the angular and novel-view metrics; its Table 4 values are kept under _paper_reported for context only. This setting is not in the paper; the paper assumes correct associations, so its Table 6 numbers describe the correctly grouped case only.",
+      "notes": "Gym calibration values in results are measured on the scaled held-out reference run, not paper claims. Original paper tables and earlier scalar summaries are preserved unchanged under _paper_reported. Joint experiments use at most 150 keyframes, Sim(3) alignment and 1 px added TartanAir observation noise; procedural experiments use their own scale. No paper number is a target for agreement.",
       "weight": 0.15,
-      "primary_metric": "param_count_error_per_line",
+      "primary_metric": "median_direction_error_deg",
       "metrics": {
         "median_direction_error_deg": {
           "higher_is_better": false,
@@ -333,19 +401,39 @@
       "results": {
         "struct_riemanline": {
           "type": "proposed",
-          "param_count_error_per_line": 0.0
+          "median_direction_error_deg": 0.24926,
+          "median_normal_error_deg": 0.184191,
+          "novel_view_line_rmse_px": 4.941716891479203,
+          "p90_direction_error_deg": 5.555280699999997,
+          "p90_normal_error_deg": 2.9917275999999995,
+          "param_count_error_per_line": 0.2973300970873786
         },
         "riemanline": {
           "type": "baseline",
-          "param_count_error_per_line": 1.8
+          "median_direction_error_deg": 0.4261965,
+          "median_normal_error_deg": 0.2703585,
+          "novel_view_line_rmse_px": 1.152599163870628,
+          "p90_direction_error_deg": 1.0440494999999996,
+          "p90_normal_error_deg": 0.8792325999999999,
+          "param_count_error_per_line": 1.2657766990291262
         },
         "orthline": {
           "type": "baseline",
-          "param_count_error_per_line": 1.8
+          "median_direction_error_deg": 0.4262,
+          "median_normal_error_deg": 0.27035750000000003,
+          "novel_view_line_rmse_px": 1.1525957263584428,
+          "p90_direction_error_deg": 1.0440481999999995,
+          "p90_normal_error_deg": 0.8792331999999999,
+          "param_count_error_per_line": 1.2657766990291262
         },
         "orthline_constr": {
           "type": "baseline",
-          "param_count_error_per_line": 1.8
+          "median_direction_error_deg": 0.415291,
+          "median_normal_error_deg": 0.26693900000000004,
+          "novel_view_line_rmse_px": 1.115524987620003,
+          "p90_direction_error_deg": 0.9918410999999999,
+          "p90_normal_error_deg": 0.8439563999999997,
+          "param_count_error_per_line": 1.2657766990291262
         }
       },
       "_paper_reported": {
@@ -361,14 +449,28 @@
             "orthline_constr": 3152,
             "struct_riemanline": 3116
           }
+        },
+        "_previous_scalar_summary": {
+          "struct_riemanline": {
+            "param_count_error_per_line": 0.0
+          },
+          "riemanline": {
+            "param_count_error_per_line": 1.8
+          },
+          "orthline": {
+            "param_count_error_per_line": 1.8
+          },
+          "orthline_constr": {
+            "param_count_error_per_line": 1.8
+          }
         }
       }
     },
     "open_structure_joint_ba": {
       "description": "Joint optimisation of camera poses, point landmarks and line landmarks from the initial co-visibility factor graph of an Open-Structure sequence (paper Sec. 4-5, Tables 2-4). Hidden test: 6 held-out sequences (ICL-NUIM livingroom2, livingroom3, office2, office3; TartanAir hospital, carwelding), 4 keyframe-phase instances each (at most 150 keyframes), scored against the datasets' own ground-truth trajectories and line landmarks.",
-      "notes": "Scaled reproduction of Tables 2-4: keyframe subsets instead of every frame; ATE RMSE uses Sim(3) alignment (the factor graph has 2D measurements only, so its scale is a free gauge) and is the geometric mean over instances; 1 px Gaussian noise is added to the TartanAir measurements, which Open-Structure provides as exact projections. The ate_rmse_cm values below are the geometric means of the paper's own per-sequence ATE RMSE (SE(3)-aligned, every frame; Tables 2-3) over the six held-out sequences, given for orientation only: they are not on exactly this gym's scale. param_count_error_per_line follows the paper's Table 6 (2n + 2 per parallel group vs 4n), as in the procedural experiments.",
+      "notes": "Gym calibration values in results are measured on the scaled held-out reference run, not paper claims. Original paper tables and earlier scalar summaries are preserved unchanged under _paper_reported. Joint experiments use at most 150 keyframes, Sim(3) alignment and 1 px added TartanAir observation noise; procedural experiments use their own scale. No paper number is a target for agreement.",
       "weight": 0.3,
-      "primary_metric": "ate_rmse_cm",
+      "primary_metric": "param_count_error_per_line",
       "metrics": {
         "ate_rmse_cm": {
           "higher_is_better": false,
@@ -404,23 +506,39 @@
       "results": {
         "struct_riemanline": {
           "type": "proposed",
-          "ate_rmse_cm": 1.802,
-          "param_count_error_per_line": 0.0
+          "ate_rmse_cm": 1.706285111342305,
+          "median_direction_error_deg": 0.155067,
+          "median_normal_error_deg": 0.260216,
+          "p90_direction_error_deg": 1.335586,
+          "param_count_error_per_line": 0.01220865704772475,
+          "rotation_rmse_deg": 0.4413387505753161
         },
         "riemanline": {
           "type": "baseline",
-          "ate_rmse_cm": 2.157,
-          "param_count_error_per_line": 1.8
+          "ate_rmse_cm": 1.6952659349981372,
+          "median_direction_error_deg": 1.8923145,
+          "median_normal_error_deg": 0.6935910000000001,
+          "p90_direction_error_deg": 13.168701000000002,
+          "param_count_error_per_line": 1.7380688124306327,
+          "rotation_rmse_deg": 0.434258962642006
         },
         "orthline": {
           "type": "baseline",
-          "ate_rmse_cm": 2.047,
-          "param_count_error_per_line": 1.8
+          "ate_rmse_cm": 1.6563453140854836,
+          "median_direction_error_deg": 1.962362,
+          "median_normal_error_deg": 0.74009,
+          "p90_direction_error_deg": 16.141163300000002,
+          "param_count_error_per_line": 1.7380688124306327,
+          "rotation_rmse_deg": 0.42479666127581356
         },
         "orthline_constr": {
           "type": "baseline",
-          "ate_rmse_cm": 2.1,
-          "param_count_error_per_line": 1.8
+          "ate_rmse_cm": 1.6573901049716684,
+          "median_direction_error_deg": 0.9922610000000001,
+          "median_normal_error_deg": 0.494765,
+          "p90_direction_error_deg": 2.7738579000000003,
+          "param_count_error_per_line": 1.7380688124306327,
+          "rotation_rmse_deg": 0.4219159898330505
         }
       },
       "_paper_reported": {
@@ -606,14 +724,32 @@
               0.15
             ]
           ]
+        },
+        "_previous_scalar_summary": {
+          "struct_riemanline": {
+            "ate_rmse_cm": 1.802,
+            "param_count_error_per_line": 0.0
+          },
+          "riemanline": {
+            "ate_rmse_cm": 2.157,
+            "param_count_error_per_line": 1.8
+          },
+          "orthline": {
+            "ate_rmse_cm": 2.047,
+            "param_count_error_per_line": 1.8
+          },
+          "orthline_constr": {
+            "ate_rmse_cm": 2.1,
+            "param_count_error_per_line": 1.8
+          }
         }
       }
     },
     "open_structure_joint_ba_clustered": {
       "description": "Same task and hidden sequences as open_structure_joint_ba, but the declared parallel groups come from a vanishing-direction clustering of the initial map's line directions (10 deg), as a SLAM front end would produce them, instead of the dataset's exact associations: groups contain some non-parallel lines (truly 1-13 deg off) and miss some members. Different keyframe phases, world frames, ids and noise draws from open_structure_joint_ba.",
-      "notes": "Where the paper's method falls short on the paper's own data: it trusts the declared groups (only a coarse 25 deg consistency check). The paper reports no numbers for this setting; the ate_rmse_cm values below are the same geometric means of the paper's Tables 2-3 (dataset associations) over the six held-out sequences, for orientation only. Same metrics, coefficients and scaling notes as open_structure_joint_ba.",
+      "notes": "Gym calibration values in results are measured on the scaled held-out reference run, not paper claims. Original paper tables and earlier scalar summaries are preserved unchanged under _paper_reported. Joint experiments use at most 150 keyframes, Sim(3) alignment and 1 px added TartanAir observation noise; procedural experiments use their own scale. No paper number is a target for agreement.",
       "weight": 0.2,
-      "primary_metric": "ate_rmse_cm",
+      "primary_metric": "param_count_error_per_line",
       "metrics": {
         "ate_rmse_cm": {
           "higher_is_better": false,
@@ -649,27 +785,61 @@
       "results": {
         "struct_riemanline": {
           "type": "proposed",
-          "ate_rmse_cm": 1.802,
-          "param_count_error_per_line": 0.0
+          "ate_rmse_cm": 1.7649206922509115,
+          "median_direction_error_deg": 0.146707,
+          "median_normal_error_deg": 0.2507475,
+          "p90_direction_error_deg": 1.4242523000000025,
+          "param_count_error_per_line": 0.1418994413407821,
+          "rotation_rmse_deg": 0.4693996624237314
         },
         "riemanline": {
           "type": "baseline",
-          "ate_rmse_cm": 2.157,
-          "param_count_error_per_line": 1.8
+          "ate_rmse_cm": 1.8228668273769968,
+          "median_direction_error_deg": 1.8826585,
+          "median_normal_error_deg": 0.6608735,
+          "p90_direction_error_deg": 13.132457000000004,
+          "param_count_error_per_line": 1.7284916201117317,
+          "rotation_rmse_deg": 0.4654901600472835
         },
         "orthline": {
           "type": "baseline",
-          "ate_rmse_cm": 2.047,
-          "param_count_error_per_line": 1.8
+          "ate_rmse_cm": 1.8308010111609052,
+          "median_direction_error_deg": 1.8920275,
+          "median_normal_error_deg": 0.6659695,
+          "p90_direction_error_deg": 14.268495000000014,
+          "param_count_error_per_line": 1.7284916201117317,
+          "rotation_rmse_deg": 0.4625614506922923
         },
         "orthline_constr": {
           "type": "baseline",
-          "ate_rmse_cm": 2.1,
-          "param_count_error_per_line": 1.8
+          "ate_rmse_cm": 1.839044764609539,
+          "median_direction_error_deg": 0.9973164999999999,
+          "median_normal_error_deg": 0.483527,
+          "p90_direction_error_deg": 2.406592300000002,
+          "param_count_error_per_line": 1.7284916201117317,
+          "rotation_rmse_deg": 0.46329980642447455
         }
       },
       "_paper_reported": {
-        "_source": "See open_structure_joint_ba._paper_reported (the paper has no clustered-declaration setting)."
+        "_source": "See open_structure_joint_ba._paper_reported (the paper has no clustered-declaration setting).",
+        "_previous_scalar_summary": {
+          "struct_riemanline": {
+            "ate_rmse_cm": 1.802,
+            "param_count_error_per_line": 0.0
+          },
+          "riemanline": {
+            "ate_rmse_cm": 2.157,
+            "param_count_error_per_line": 1.8
+          },
+          "orthline": {
+            "ate_rmse_cm": 2.047,
+            "param_count_error_per_line": 1.8
+          },
+          "orthline_constr": {
+            "ate_rmse_cm": 2.1,
+            "param_count_error_per_line": 1.8
+          }
+        }
       }
     }
   }

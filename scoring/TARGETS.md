@@ -1,19 +1,9 @@
 # Evaluation Targets
 
-All targets are measured by `bash scripts/evaluate_test.sh` (hidden test, no arguments) on the row `struct_riemanline`; `bash scripts/evaluate.sh` gives the same measurements on the visible train scenes. Every metric is lower-is-better.
+All quantities are lower-is-better. `bash scripts/evaluate_train.sh` and `bash scripts/evaluate_test.sh` write every target under every experiment's `results`. Improve over the frozen reference in `scores_test.json`; paper numbers are context, not matching targets.
 
-## Primary: line reconstruction accuracy (all three experiments)
-- **Metrics**: `median_direction_error_deg`, `p90_direction_error_deg`, `median_normal_error_deg`, `p90_normal_error_deg`, `novel_view_line_rmse_px`.
-- **Goal**: lower errors than the current reference row in `scoring/scores_test.json`, on `parallel_lines`, `parallel_lines_harder` and `parallel_lines_mislabeled`.
-- **Run**: `bash scripts/evaluate_test.sh`
+- All five experiments: `median_direction_error_deg`, `p90_direction_error_deg`, `median_normal_error_deg` measure line accuracy; `param_count_error_per_line` measures the compactness constraint. Display primary: median direction error for procedural tasks, structural parameter error for joint tasks. Ranking uses every metric with its stated coefficient; the display primary does not restrict ranking.
+- `parallel_lines`, `parallel_lines_harder`, `parallel_lines_mislabeled`: also `p90_normal_error_deg` and `novel_view_line_rmse_px`.
+- `open_structure_joint_ba`, `open_structure_joint_ba_clustered`: also `ate_rmse_cm` and `rotation_rmse_deg` against dataset truth.
 
-## Constraint: compact, structurally correct representation (all three experiments)
-- **Metric**: `param_count_error_per_line` (0 means the output uses exactly the degrees of freedom of the true structure: one shared direction per truly parallel set).
-- **Goal**: do not trade it away for accuracy. The reference is at 0 when the declared groups are correct; on `parallel_lines_mislabeled` it is above 0 because some declared members are not parallel.
-- `scoring/reference.json` lists the paper's own value (Table 6 expressed per line: 0 for the shared-direction representation, 1.8 for independent 4n representations).
-
-## Constraint: validity
-- Every scene and line answered, finite Plucker lines (normal orthogonal to direction), median residual on the scene's own observations at most 10 px in every scene. Violations score the worst value of every metric in every experiment.
-
-## Comparison rows
-- `orthline`, `orthline_constr`, `riemanline`: independent-line baselines (with and without explicit parallel residuals) scored on the same scenes.
+Validity is mandatory: every scene, frame and line answered, finite valid geometry, proper rotations, and median observed line residual at most 10 px per instance. Any failure gives worst values in all scored metrics of all experiments. Compare against the fixed `orthline`, `orthline_constr`, and `riemanline` rows as well as the reference. Accuracy gains must be assessed together with compactness and trajectory behavior, not by optimizing only one side.

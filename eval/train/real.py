@@ -39,7 +39,7 @@ ROOT = Path(__file__).resolve().parents[2]
 DATA_DIR = ROOT / "data" / "downloads" / "open_structure"
 SPLIT = "train"
 SEED = 20250806
-SEQUENCES = ["livingroom0", "livingroom1", "office0", "office", "japanesealley"]
+SEQUENCES = ["livingroom0", "livingroom1", "office0", "office1", "office", "japanesealley"]
 EXPERIMENT = "open_structure_joint_ba"
 # Same sequences, but the declared parallel groups come from a vanishing-direction
 # clustering of the initial map's lines (as a front end would produce them)
@@ -364,12 +364,16 @@ def _read_output(path: Path, frame_ids: list[int], line_ids: list[int]):
 
     if not path.is_file():
         raise InvalidJointOutput(f"missing output {path.name}")
+    if path.stat().st_size > 16 * 1024 * 1024:
+        raise InvalidJointOutput(f"{path.name}: output JSON exceeds 16 MiB")
     try:
         payload = json.loads(path.read_text())
     except Exception as exc:  # noqa: BLE001
         raise InvalidJointOutput(f"{path.name}: unreadable JSON ({exc})") from exc
     if not isinstance(payload, dict) or not isinstance(payload.get("frames"), list) or not isinstance(payload.get("lines"), list):
         raise InvalidJointOutput(f"{path.name}: needs 'frames' and 'lines' lists")
+    if len(payload["frames"]) != len(frame_ids) or len(payload["lines"]) != len(line_ids):
+        raise InvalidJointOutput(f"{path.name}: wrong frame or line count")
     frames: dict[int, tuple[np.ndarray, np.ndarray]] = {}
     for item in payload["frames"]:
         try:
@@ -400,10 +404,12 @@ def _read_output(path: Path, frame_ids: list[int], line_ids: list[int]):
         if not (np.all(np.isfinite(n)) and np.all(np.isfinite(d))):
             raise InvalidJointOutput(f"{path.name}: non-finite line {lid}")
         dn = float(np.linalg.norm(d))
-        if dn < 1e-9:
+        if not math.isfinite(dn) or dn < 1e-9:
             raise InvalidJointOutput(f"{path.name}: zero direction for line {lid}")
         d = d / dn
         m = n / dn
+        if not np.all(np.isfinite(m)) or not math.isfinite(float(np.linalg.norm(m))):
+            raise InvalidJointOutput(f"{path.name}: invalid normalisation for line {lid}")
         # A far-away (poorly constrained) line is a legitimate, if bad, estimate: its
         # errors are scored like any other line, so no distance limit is imposed.
         if abs(float(np.dot(m, d))) > PLUCKER_TOL * max(1.0, float(np.linalg.norm(m))):
@@ -504,6 +510,7 @@ def score_instance(instance: dict[str, Any], output_path: Path) -> dict[str, Any
     init_err = np.linalg.norm(s0 * init @ r0.T + t0 - c_gt, axis=1)
     return {
         "scene_id": public["scene_id"],
+        "sequence": hidden["sequence"],
         "sequence": hidden["sequence"],
         "num_frames": len(ids),
         "num_lines_scored": len(dir_err),

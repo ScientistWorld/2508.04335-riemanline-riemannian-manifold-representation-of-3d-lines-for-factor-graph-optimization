@@ -237,3 +237,7 @@ data/downloads/
 
 # Held-out Open-Structure sequences for the hidden test (fetched by scripts/download.sh)
 eval/test/downloads/
+eval/test/outputs/
+eval/test/results_full.json
+eval/test/hardening_cases/
+eval/test/archive_before/
