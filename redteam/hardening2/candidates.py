@@ -111,7 +111,8 @@ def staged(scene: dict[str, Any], loss: str = "cauchy") -> dict[str, Any]:
     return out
 
 
-CHI2_2DOF_1E4 = 18.42
+CHI2_2DOF_1E4 = 18.42   # chi^2(2) upper 1e-4 quantile
+CHI2_2DOF_1E16 = 73.68  # chi^2(2) upper 1e-16 quantile (strict)
 
 
 def _joint_solve(scene: dict[str, Any], use_groups: bool = True, loss: str = "cauchy"):
@@ -173,7 +174,8 @@ def _free_fit(pb: JointProblem, poses: Poses, i: int, n_i: np.ndarray, d_i: np.n
     return float(np.sum(_line_rows(pb, poses, idx, nn[i], dd[i]) ** 2))
 
 
-def joint_verified(scene: dict[str, Any], warm: bool = False, max_rounds: int = 4) -> dict[str, Any]:
+def joint_verified(scene: dict[str, Any], warm: bool = False, max_rounds: int = 8,
+                   threshold: float = CHI2_2DOF_1E4) -> dict[str, Any]:
     """StructRiemanLine with a statistical membership test on the joint graph:
     after each optimisation, every group member whose own measurements reject
     the shared direction (freeing its direction lowers its squared residual by
@@ -202,7 +204,7 @@ def joint_verified(scene: dict[str, Any], warm: bool = False, max_rounds: int = 
                 stat = (shared - _free_fit(pb, poses, int(i), n[i], d[i])) / sigma2
                 if stat > best[0]:
                     best = (stat, int(i))
-            if best[0] > CHI2_2DOF_1E4:
+            if best[0] > threshold:
                 drop.append(best[1])
         if not drop:
             break
@@ -443,6 +445,9 @@ def run(mode: str, input_dir: Path, output_dir: Path) -> None:
             out = _guarded(joint_warm, scene) if joint else old.verified_groups(scene, loss="cauchy")
         elif mode == "joint_verified":
             out = _guarded(joint_verified, scene) if joint else old.verified_groups(scene, loss="cauchy")
+        elif mode == "joint_verified_strict":
+            out = (_guarded(lambda sc: joint_verified(sc, threshold=CHI2_2DOF_1E16), scene) if joint
+                   else old.verified_groups(scene, loss="cauchy"))
         elif mode == "joint_warm_verified":
             out = (_guarded(lambda sc: joint_verified(sc, warm=True), scene) if joint
                    else old.verified_groups(scene, loss="cauchy"))

@@ -43,6 +43,13 @@ SPLIT = "test"
 SEED = 37097536992350142650741239478268729701
 SEQUENCES = ["livingroom2", "livingroom3", "office2", "office3", "hospital", "carwelding"]
 EXPERIMENT = "open_structure_joint_ba"
+# Same sequences, but the declared parallel groups come from a vanishing-direction
+# clustering of the initial map's lines (as a front end would produce them)
+# instead of the dataset's exact associations.  Different keyframe phases, world
+# frames, ids and noise draws from the EXPERIMENT instances.
+EXPERIMENT_CLUSTERED = "open_structure_joint_ba_clustered"
+EXPERIMENTS = (EXPERIMENT, EXPERIMENT_CLUSTERED)
+CLUSTER_DEG = 10.0
 
 ICL = {"livingroom0", "livingroom1", "livingroom2", "livingroom3", "office0", "office1", "office2", "office3"}
 INTRINSICS = {
@@ -129,8 +136,9 @@ def sequence_dir(seq: str) -> Path:
 
 # ------------------------------------------------------------------ instances
 
-def _rng(seq: str, k: int) -> np.random.Generator:
-    h = hashlib.sha256(f"{SEED}:{seq}:{k}".encode()).digest()
+def _rng(seq: str, k: int, exp: str = EXPERIMENT) -> np.random.Generator:
+    tag = "" if exp == EXPERIMENT else f":{exp}"
+    h = hashlib.sha256(f"{SEED}:{seq}:{k}{tag}".encode()).digest()
     return np.random.default_rng(int.from_bytes(h[:16], "little"))
 
 
@@ -139,8 +147,33 @@ def _random_rotation(rng: np.random.Generator) -> np.ndarray:
     return quat_to_R(q)
 
 
-def _scene_id(seq: str, k: int) -> str:
-    return hashlib.sha256(f"{SPLIT}:{SEED}:{seq}:{k}:joint".encode()).hexdigest()[:16]
+def _scene_id(seq: str, k: int, exp: str = EXPERIMENT) -> str:
+    tag = "joint" if exp == EXPERIMENT else exp
+    return hashlib.sha256(f"{SPLIT}:{SEED}:{seq}:{k}:{tag}".encode()).hexdigest()[:16]
+
+
+def cluster_groups(directions: dict[int, np.ndarray]) -> list[list[int]]:
+    """Greedy vanishing-direction clustering of line directions (a front end's
+    parallel-group association): repeatedly take the direction with the most
+    lines within CLUSTER_DEG, refine it to the members' principal direction,
+    and declare every line within CLUSTER_DEG of it a group (at least 3 lines)."""
+    remaining = sorted(directions)
+    cos_t = math.cos(math.radians(CLUSTER_DEG))
+    groups: list[list[int]] = []
+    while len(remaining) >= 3:
+        d = np.array([directions[i] for i in remaining])
+        close = np.abs(d @ d.T) >= cos_t
+        seed = int(np.argmax(close.sum(axis=1)))
+        m = d[close[seed]]
+        u = np.linalg.eigh(m.T @ m)[1][:, -1]
+        sel = np.abs(d @ u) >= cos_t
+        members = [remaining[j] for j in np.nonzero(sel)[0]]
+        if len(members) < 3:
+            break
+        groups.append(members)
+        taken = set(members)
+        remaining = [r for r in remaining if r not in taken]
+    return groups
 
 
 _SEQ_CACHE: dict[str, tuple] = {}
@@ -157,14 +190,17 @@ def load_sequence(seq: str) -> tuple[dict[str, Any], dict[int, np.ndarray], dict
     return _SEQ_CACHE[seq]
 
 
-def build_instance(seq: str, k: int = 0) -> dict[str, Any]:
+def build_instance(seq: str, k: int = 0, exp: str = EXPERIMENT) -> dict[str, Any]:
     g, gt, gt_lines = load_sequence(seq)
     intr = INTRINSICS["icl" if seq in ICL else "tartan"]
-    rng = _rng(seq, k)
+    rng = _rng(seq, k, exp)
 
     frames_all = sorted(i for i in g["V"] if i in gt)
     stride = max(1, math.ceil(len(frames_all) / MAX_KEYFRAMES))
-    offset = (k * stride) // INSTANCES_PER_SEQUENCE
+    if exp == EXPERIMENT:
+        offset = (k * stride) // INSTANCES_PER_SEQUENCE
+    else:  # phases between those of EXPERIMENT
+        offset = ((2 * k + 1) * stride) // (2 * INSTANCES_PER_SEQUENCE)
     kfs = frames_all[offset::stride]
     kf_set = set(kfs)
 
@@ -219,12 +255,20 @@ def build_instance(seq: str, k: int = 0) -> dict[str, Any]:
     line_obs = [[line_new[a[0]], frame_new[a[1]], round(a[2] + e[0], 4), round(a[3] + e[1], 4),
                  round(a[4] + e[2], 4), round(a[5] + e[3], 4)] for a, e in zip(lobs, ln)]
     groups = []
-    for grp in g["G"]:
+    if exp == EXPERIMENT:
+        declared = g["G"]
+    else:
+        init_dirs = {}
+        for l in l_list:
+            e = g["L"][l]
+            init_dirs[l] = (e[3:] - e[:3]) / np.linalg.norm(e[3:] - e[:3])
+        declared = cluster_groups(init_dirs)
+    for grp in declared:
         members = [line_new[m] for m in grp if m in keep_l]
         if len(members) >= 2:
             groups.append(sorted(members))
 
-    sid = _scene_id(seq, k)
+    sid = _scene_id(seq, k, exp)
     public = {
         "scene_id": sid,
         "task": "joint_ba",
@@ -259,8 +303,8 @@ def build_instance(seq: str, k: int = 0) -> dict[str, Any]:
     return {"public": public, "hidden": hidden}
 
 
-def all_instances() -> list[dict[str, Any]]:
-    return [build_instance(seq, k) for seq in SEQUENCES for k in range(INSTANCES_PER_SEQUENCE)]
+def all_instances(exp: str = EXPERIMENT) -> list[dict[str, Any]]:
+    return [build_instance(seq, k, exp) for seq in SEQUENCES for k in range(INSTANCES_PER_SEQUENCE)]
 
 
 # ------------------------------------------------------------------ scoring helpers

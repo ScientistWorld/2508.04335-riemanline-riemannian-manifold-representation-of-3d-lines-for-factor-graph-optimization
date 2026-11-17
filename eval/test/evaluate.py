@@ -311,7 +311,7 @@ def _run_solver(view: Path, script: Path, in_dir: Path, out_dir: Path, log_path:
 
 def evaluate(scores_path: Path) -> None:
     synthetic = list(scene_lib.EXPERIMENTS)
-    experiments = synthetic + [real_lib.EXPERIMENT]
+    experiments = synthetic + list(real_lib.EXPERIMENTS)
     solvers = {p.stem: p for p in sorted(SOLVER_DIR.glob("*.sh"))} if SOLVER_DIR.is_dir() else {}
     methods = sorted(set(solvers) | set(_required_methods()))
     scratch_parent = ROOT / "tmp"
@@ -325,7 +325,8 @@ def evaluate(scores_path: Path) -> None:
     per_scene: dict[str, dict[str, list]] = {m: {} for m in methods}
     try:
         all_scenes = {exp: scene_lib.all_scenes(exp) for exp in synthetic}
-        all_scenes[real_lib.EXPERIMENT] = real_lib.all_instances()
+        for exp in real_lib.EXPERIMENTS:
+            all_scenes[exp] = real_lib.all_instances(exp)
         view = _solver_workspace(scratch)
         # One solver call over the scenes of every experiment, interleaved under
         # opaque ids: a solver cannot tell which experiment a scene belongs to.
@@ -355,7 +356,7 @@ def evaluate(scores_path: Path) -> None:
                 try:
                     for scene in all_scenes[exp]:
                         sid = scene["public"]["scene_id"]
-                        if exp == real_lib.EXPERIMENT:
+                        if exp in real_lib.EXPERIMENTS:
                             rows.append(real_lib.score_instance(scene, out_dir / f"{sid}.json"))
                         else:
                             rows.append(_score_scene(scene, out_dir / f"{sid}.json"))
@@ -377,7 +378,7 @@ def evaluate(scores_path: Path) -> None:
             "solver_dir": "scripts/methods",
             "gate_median_residual_px": GATE_MEDIAN_RESIDUAL_PX,
             "worst_values": WORST,
-            "joint_ba_instances": len(all_scenes.get(real_lib.EXPERIMENT, [])),
+            "joint_ba_instances": {e: len(all_scenes.get(e, [])) for e in real_lib.EXPERIMENTS},
             "joint_ba_gate_median_line_residual_px": real_lib.GATE_MEDIAN_LINE_RESIDUAL_PX,
             "joint_ba_worst_values": real_lib.WORST,
             "failed_methods": {m: s["reason"] for m, s in status.items() if s["failed"]},
@@ -387,7 +388,7 @@ def evaluate(scores_path: Path) -> None:
         results = {}
         details = {}
         for method in methods:
-            real = exp == real_lib.EXPERIMENT
+            real = exp in real_lib.EXPERIMENTS
             if status[method]["failed"]:
                 results[method] = dict(real_lib.WORST if real else WORST)
             else:

@@ -31,11 +31,13 @@ export PYTHONPATH="$WORKSPACE_DIR:${{PYTHONPATH:-}}"
 python -m redteam.hardening2.candidates --mode {mode} "$1" "$2"
 """
 
-HONEST = ["no_optimization", "gaussian_loss", "verified_groups", "staged", "verified_staged",
-          "joint_warm", "joint_verified", "joint_warm_verified"]
+HONEST = ["no_optimization", "gaussian_loss", "verified_groups", "joint_verified", "joint_verified_strict"]
+# Measured in the previous run on the dataset-association experiments only (worse than or tied
+# with the reference there); kept runnable but not replayed:
+EXTRA = ["staged", "verified_staged", "joint_warm", "joint_warm_verified"]
 SHORTCUTS = ["hidden_abspath", "public_gt_lookup", "scale_gauge", "constant_lines", "bad_rotation",
              "missing_frames", "nan_geometry", "observation_replace"]
-CASES: dict[str, dict] = {m: {"replace": m} for m in HONEST + SHORTCUTS}
+CASES: dict[str, dict] = {m: {"replace": m} for m in HONEST + SHORTCUTS + EXTRA}
 CASES["omit_proposed"] = {"remove": ["struct_riemanline"]}
 BASELINES = ["orthline", "orthline_constr", "riemanline"]
 
@@ -125,7 +127,7 @@ def run_case(case: str) -> None:
 
 
 def main() -> None:
-    cases = sys.argv[1:] or list(CASES)
+    cases = sys.argv[1:] or [c for c in CASES if c not in EXTRA]
     for case in cases:
         run_case(case)
 

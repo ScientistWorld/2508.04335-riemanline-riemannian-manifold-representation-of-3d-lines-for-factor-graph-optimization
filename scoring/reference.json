@@ -4,7 +4,7 @@
     "parallel_lines": {
       "description": "Recover 3D line landmarks (2-3 declared parallel groups plus individual lines) from noisy multi-view segment observations with known poses; 8 cameras around the scene, 1.0 px noise, partial visibility and truncated segments.",
       "notes": "Result values are the paper's Table 6 parameter counts expressed per line: StructRiemanLine uses the minimal count of the true structure (44 for 20 lines, error 0), independent 4n representations use 80, i.e. (80 - 44) / 20 = 1.8 excess parameters per line. The paper reports no number on this synthetic scale for the angular and novel-view metrics; its Table 4 values are kept under _paper_reported for context only.",
-      "weight": 0.25,
+      "weight": 0.2,
       "primary_metric": "param_count_error_per_line",
       "metrics": {
         "median_direction_error_deg": {
@@ -150,7 +150,7 @@
     "parallel_lines_harder": {
       "description": "Same task with three parallel groups and more individual lines, 6 cameras on a 110-degree arc (narrow baseline), 1.5 px noise, 70% visibility, shorter segments.",
       "notes": "Result values are the paper's Table 6 parameter counts expressed per line: StructRiemanLine uses the minimal count of the true structure (44 for 20 lines, error 0), independent 4n representations use 80, i.e. (80 - 44) / 20 = 1.8 excess parameters per line. The paper reports no number on this synthetic scale for the angular and novel-view metrics; its Table 4 values are kept under _paper_reported for context only.",
-      "weight": 0.2,
+      "weight": 0.15,
       "primary_metric": "param_count_error_per_line",
       "metrics": {
         "median_direction_error_deg": {
@@ -367,7 +367,7 @@
     "open_structure_joint_ba": {
       "description": "Joint optimisation of camera poses, point landmarks and line landmarks from the initial co-visibility factor graph of an Open-Structure sequence (paper Sec. 4-5, Tables 2-4). Hidden test: 6 held-out sequences (ICL-NUIM livingroom2, livingroom3, office2, office3; TartanAir hospital, carwelding), 4 keyframe-phase instances each (at most 150 keyframes), scored against the datasets' own ground-truth trajectories and line landmarks.",
       "notes": "Scaled reproduction of Tables 2-4: keyframe subsets instead of every frame; ATE RMSE uses Sim(3) alignment (the factor graph has 2D measurements only, so its scale is a free gauge) and is the geometric mean over instances; 1 px Gaussian noise is added to the TartanAir measurements, which Open-Structure provides as exact projections. The ate_rmse_cm values below are the geometric means of the paper's own per-sequence ATE RMSE (SE(3)-aligned, every frame; Tables 2-3) over the six held-out sequences, given for orientation only: they are not on exactly this gym's scale. param_count_error_per_line follows the paper's Table 6 (2n + 2 per parallel group vs 4n), as in the procedural experiments.",
-      "weight": 0.4,
+      "weight": 0.3,
       "primary_metric": "ate_rmse_cm",
       "metrics": {
         "ate_rmse_cm": {
@@ -607,6 +607,69 @@
             ]
           ]
         }
+      }
+    },
+    "open_structure_joint_ba_clustered": {
+      "description": "Same task and hidden sequences as open_structure_joint_ba, but the declared parallel groups come from a vanishing-direction clustering of the initial map's line directions (10 deg), as a SLAM front end would produce them, instead of the dataset's exact associations: groups contain some non-parallel lines (truly 1-13 deg off) and miss some members. Different keyframe phases, world frames, ids and noise draws from open_structure_joint_ba.",
+      "notes": "Where the paper's method falls short on the paper's own data: it trusts the declared groups (only a coarse 25 deg consistency check). The paper reports no numbers for this setting; the ate_rmse_cm values below are the same geometric means of the paper's Tables 2-3 (dataset associations) over the six held-out sequences, for orientation only. Same metrics, coefficients and scaling notes as open_structure_joint_ba.",
+      "weight": 0.2,
+      "primary_metric": "ate_rmse_cm",
+      "metrics": {
+        "ate_rmse_cm": {
+          "higher_is_better": false,
+          "coefficient": 1.0,
+          "description": "Absolute trajectory error (cm): RMSE of keyframe camera centres after Sim(3) alignment to the ground-truth trajectory, geometric mean over instances (paper Tables 2-3)."
+        },
+        "rotation_rmse_deg": {
+          "higher_is_better": false,
+          "coefficient": 0.5,
+          "description": "RMS rotation error (deg) of the keyframe orientations after the same alignment, geometric mean over instances (paper Sec. 5: rotational consistency)."
+        },
+        "median_direction_error_deg": {
+          "higher_is_better": false,
+          "coefficient": 1.0,
+          "description": "Median unsigned angle (deg) between estimated and ground-truth line directions, after the trajectory alignment, pooled over every scored line (paper Table 4, 'Dir.')."
+        },
+        "p90_direction_error_deg": {
+          "higher_is_better": false,
+          "coefficient": 0.5,
+          "description": "90th percentile of the same direction errors (paper Fig. 5: error tails)."
+        },
+        "median_normal_error_deg": {
+          "higher_is_better": false,
+          "coefficient": 0.6,
+          "description": "Median unsigned angle (deg) between estimated and ground-truth Plucker normal (moment) vectors in the ground-truth frame (paper Table 4, 'Norm.')."
+        },
+        "param_count_error_per_line": {
+          "higher_is_better": false,
+          "coefficient": 0.5,
+          "description": "|effective - minimal| line parameters per scored line: effective = 2 x (distinct estimated directions) + 2 x (lines); minimal = the same count for the ground-truth direction classes (paper Table 6)."
+        }
+      },
+      "results": {
+        "struct_riemanline": {
+          "type": "proposed",
+          "ate_rmse_cm": 1.802,
+          "param_count_error_per_line": 0.0
+        },
+        "riemanline": {
+          "type": "baseline",
+          "ate_rmse_cm": 2.157,
+          "param_count_error_per_line": 1.8
+        },
+        "orthline": {
+          "type": "baseline",
+          "ate_rmse_cm": 2.047,
+          "param_count_error_per_line": 1.8
+        },
+        "orthline_constr": {
+          "type": "baseline",
+          "ate_rmse_cm": 2.1,
+          "param_count_error_per_line": 1.8
+        }
+      },
+      "_paper_reported": {
+        "_source": "See open_structure_joint_ba._paper_reported (the paper has no clustered-declaration setting)."
       }
     }
   }
