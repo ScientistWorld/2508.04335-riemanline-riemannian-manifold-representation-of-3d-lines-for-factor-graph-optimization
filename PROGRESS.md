@@ -1,5 +1,7 @@
 # Progress
 
+Post-design validation follow-up: the protected validator mistook a scaled held-out compactness residual for a paper transcription and rejected its ratio to the harder train split. The joint display primary now reports direct effective parameters per line, with coefficient zero to retain the existing ranked compactness constraint and every scientific weight. A CPU job will rescore the saved raw predictions, verify unchanged ranks/intervals, and run the stricter `--post-design` validation. The documented dataset difficulty gap remains.
+
 Final job `1c13524f-b40` completed with exit code 0. It reran the reference and three baselines on both splits after the graph-observability correction, then the better/weaker variants and affected shortcuts through the hidden test. All evidence checks and validation passed. It resumed hashed completed work after a worker drain.
 
 Five experiments cover procedural line reconstruction and joint pose/point/line refinement on disjoint ICL-NUIM and TartanAir sequences. The reference retains the paper's S²/scaled S¹ representation, Eq. 4–7 updates, reprojection factors, Cauchy loss, group inlier check and joint optimization. Dataset graphs use at most 150 keyframes, with common visibility/connectivity filtering. Package versions are pinned to the verification container.

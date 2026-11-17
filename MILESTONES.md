@@ -52,6 +52,9 @@
 - Completed at milestone `secondary_claims`.
 
 ### [2026-11-17] - secondary_claims
+- Post-design reporting correction: joint display primary measures direct effective parameters per line; its zero coefficient preserves every ranked target and weight. Saved raw predictions will be rescored in one CPU verification job with strict validation. Method, data and milestone are unchanged; dataset train/test difficulty remains a limitation.
+
+### [2026-11-17] - secondary_claims
 - Final review pass adds joint pose/point/line experiments on ICL-NUIM and TartanAir, including imperfect initial associations, and balances the public/held-out dataset splits.
 - Closes absolute-path hidden-answer reads with filesystem confinement; removes solver wall-clock limits, pins baseline comparisons, validates overflow and retains private raw test outputs.
 - Combined final reference/baseline and paired control verification pending; no claim of full-sequence ATE or runtime reproduction.

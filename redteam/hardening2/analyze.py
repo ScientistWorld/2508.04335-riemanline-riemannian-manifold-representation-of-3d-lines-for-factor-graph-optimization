@@ -80,6 +80,9 @@ def load(path: Path) -> dict | None:
 
 def main() -> None:
     ref_cfg = json.loads((ROOT / "scoring" / "reference.json").read_text())["experiments"]
+    # This audit ranks scientific targets only; display-only metrics add no term.
+    ref_cfg = {e: {**cfg, "metrics": {m: mc for m, mc in cfg["metrics"].items()
+                if abs(float(mc["coefficient"])) > 0}} for e, cfg in ref_cfg.items()}
     base = load(ROOT / "eval" / "test" / "results_full.json")
     rows: dict[str, dict] = {}  # name -> {"results": {exp: metrics}, "per_scene": {exp: rows}, "failed": bool}
     for m in [REF] + BASELINES:
@@ -99,6 +102,13 @@ def main() -> None:
                       "per_scene": {e: sc["experiments"][e].get("_per_scene", {}).get(REF) for e in ref_cfg},
                       "failed": failed,
                       "reason": sc["experiments"][exp0]["_status"].get(REF, {}).get("reason", "")}
+
+    # Keep historical rank reports on their ranked quantities. Direct state
+    # dimensionality is now displayed too, with coefficient zero.
+    for record in rows.values():
+        for e, vals in record['results'].items():
+            if vals:
+                record['results'][e] = {m: vals[m] for m in ref_cfg[e]['metrics']}
 
     # Every ranked attempt, including failed attempts, participates in scale.
     # Unreplayed historical EXTRA cases are not part of this final cohort.

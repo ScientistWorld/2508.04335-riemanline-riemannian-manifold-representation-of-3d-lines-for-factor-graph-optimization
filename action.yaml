@@ -1,3 +1,5 @@
-action: done
+action: submit
+gpus: 0
+test: false
 milestone: secondary_claims
-notes: "Verified paired scientific headroom, closed major shortcuts, refreshed reference scores, and documented remaining dataset train/test difficulty and truth-coverage limits."
+notes: "Reporting-only correction: rescore saved raw reference/baseline geometry on both splits, verify every ranked number and paired interval is unchanged, and run post-design validation."

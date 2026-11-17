@@ -31,6 +31,9 @@ for name in ('hidden_abspath', 'constant_lines', 'bad_rotation', 'missing_frames
     for exp, ecfg in cfg.items():
         worst = json.loads((ROOT / 'scoring/scores_test.json').read_text())['_metadata']
         expected = worst['joint_ba_worst_values'] if exp.startswith('open_structure') else worst['worst_values']
+        # Historical audit vectors contain the six ranked targets; the added
+        # direct-dimensionality display has coefficient zero.
+        expected = {m: v for m, v in expected.items() if abs(ecfg['metrics'][m]['coefficient']) > 0}
         assert c[name]['results'][exp] == expected, (name, exp)
 for name in ('zero_params', 'negative_params', 'flags', 'observation_replace', 'scale_gauge', 'public_gt_lookup'):
     assert abs(c[name]['rank_delta_vs_reference']) < 1e-7, (name, c[name]['rank_delta_vs_reference'])

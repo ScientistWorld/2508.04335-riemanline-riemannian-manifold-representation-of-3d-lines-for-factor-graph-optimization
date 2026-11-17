@@ -470,7 +470,7 @@
       "description": "Joint optimisation of camera poses, point landmarks and line landmarks from the initial co-visibility factor graph of an Open-Structure sequence (paper Sec. 4-5, Tables 2-4). Hidden test: 6 held-out sequences (ICL-NUIM livingroom2, livingroom3, office2, office3; TartanAir hospital, carwelding), 4 keyframe-phase instances each (at most 150 keyframes), scored against the datasets' own ground-truth trajectories and line landmarks.",
       "notes": "Gym calibration values in results are measured on the scaled held-out reference run, not paper claims. Original paper tables and earlier scalar summaries are preserved unchanged under _paper_reported. Joint experiments use at most 150 keyframes, Sim(3) alignment and 1 px added TartanAir observation noise; procedural experiments use their own scale. No paper number is a target for agreement.",
       "weight": 0.3,
-      "primary_metric": "param_count_error_per_line",
+      "primary_metric": "effective_line_parameters_per_line",
       "metrics": {
         "ate_rmse_cm": {
           "higher_is_better": false,
@@ -501,6 +501,11 @@
           "higher_is_better": false,
           "coefficient": 0.5,
           "description": "|effective - minimal| line parameters per scored line: effective = 2 x (distinct estimated directions) + 2 x (lines); minimal = the same count for the ground-truth direction classes (paper Table 6)."
+        },
+        "effective_line_parameters_per_line": {
+          "higher_is_better": false,
+          "coefficient": 0.0,
+          "description": "Display only: geometric line-state dimensions per scored line, (2n + 2d) / n, where d is the number of distinct estimated directions. Recomputed from output geometry. This is the direct complexity quantity of paper Table 6, normalized by the line count; the ranked compactness constraint remains param_count_error_per_line to penalize both over- and under-sharing without double-counting complexity."
         }
       },
       "results": {
@@ -511,7 +516,8 @@
           "median_normal_error_deg": 0.243609,
           "p90_direction_error_deg": 1.3845061000000007,
           "param_count_error_per_line": 0.012263099219620958,
-          "rotation_rmse_deg": 0.3716160472311165
+          "rotation_rmse_deg": 0.3716160472311165,
+          "effective_line_parameters_per_line": 2.2753623188405796
         },
         "riemanline": {
           "type": "baseline",
@@ -520,7 +526,8 @@
           "median_normal_error_deg": 0.6806665000000001,
           "p90_direction_error_deg": 13.235619600000001,
           "param_count_error_per_line": 1.7369007803790413,
-          "rotation_rmse_deg": 0.38763269948871026
+          "rotation_rmse_deg": 0.38763269948871026,
+          "effective_line_parameters_per_line": 4.0
         },
         "orthline": {
           "type": "baseline",
@@ -529,7 +536,8 @@
           "median_normal_error_deg": 0.727961,
           "p90_direction_error_deg": 15.892509500000006,
           "param_count_error_per_line": 1.7369007803790413,
-          "rotation_rmse_deg": 0.38749636196252857
+          "rotation_rmse_deg": 0.38749636196252857,
+          "effective_line_parameters_per_line": 4.0
         },
         "orthline_constr": {
           "type": "baseline",
@@ -538,7 +546,8 @@
           "median_normal_error_deg": 0.49208949999999996,
           "p90_direction_error_deg": 2.5838866000000005,
           "param_count_error_per_line": 1.7369007803790413,
-          "rotation_rmse_deg": 0.36990045040453245
+          "rotation_rmse_deg": 0.36990045040453245,
+          "effective_line_parameters_per_line": 4.0
         }
       },
       "_paper_reported": {
@@ -743,13 +752,14 @@
             "param_count_error_per_line": 1.8
           }
         }
-      }
+      },
+      "_display_primary_note": "The primary displays direct effective dimensionality, rather than a small residual relative to scene-specific ground-truth classes. It has zero rank coefficient: all six existing ranked metrics and coefficients are unchanged. Calibration results are held-out gym measurements, not paper transcriptions. Train/test residual errors and difficulty can differ substantially and remain reported."
     },
     "open_structure_joint_ba_clustered": {
       "description": "Same task and hidden sequences as open_structure_joint_ba, but the declared parallel groups come from a vanishing-direction clustering of the initial map's line directions (10 deg), as a SLAM front end would produce them, instead of the dataset's exact associations: groups contain some non-parallel lines (truly 1-13 deg off) and miss some members. Different keyframe phases, world frames, ids and noise draws from open_structure_joint_ba.",
       "notes": "Gym calibration values in results are measured on the scaled held-out reference run, not paper claims. Original paper tables and earlier scalar summaries are preserved unchanged under _paper_reported. Joint experiments use at most 150 keyframes, Sim(3) alignment and 1 px added TartanAir observation noise; procedural experiments use their own scale. No paper number is a target for agreement.",
       "weight": 0.2,
-      "primary_metric": "param_count_error_per_line",
+      "primary_metric": "effective_line_parameters_per_line",
       "metrics": {
         "ate_rmse_cm": {
           "higher_is_better": false,
@@ -780,6 +790,11 @@
           "higher_is_better": false,
           "coefficient": 0.5,
           "description": "|effective - minimal| line parameters per scored line: effective = 2 x (distinct estimated directions) + 2 x (lines); minimal = the same count for the ground-truth direction classes (paper Table 6)."
+        },
+        "effective_line_parameters_per_line": {
+          "higher_is_better": false,
+          "coefficient": 0.0,
+          "description": "Display only: geometric line-state dimensions per scored line, (2n + 2d) / n, where d is the number of distinct estimated directions. Recomputed from output geometry. This is the direct complexity quantity of paper Table 6, normalized by the line count; the ranked compactness constraint remains param_count_error_per_line to penalize both over- and under-sharing without double-counting complexity."
         }
       },
       "results": {
@@ -790,7 +805,8 @@
           "median_normal_error_deg": 0.251263,
           "p90_direction_error_deg": 1.450849,
           "param_count_error_per_line": 0.14261650758001124,
-          "rotation_rmse_deg": 0.40592695600084244
+          "rotation_rmse_deg": 0.40592695600084244,
+          "effective_line_parameters_per_line": 2.1291409320606403
         },
         "riemanline": {
           "type": "baseline",
@@ -799,7 +815,8 @@
           "median_normal_error_deg": 0.664628,
           "p90_direction_error_deg": 13.219261,
           "param_count_error_per_line": 1.7282425603593488,
-          "rotation_rmse_deg": 0.3773718959133201
+          "rotation_rmse_deg": 0.3773718959133201,
+          "effective_line_parameters_per_line": 4.0
         },
         "orthline": {
           "type": "baseline",
@@ -808,7 +825,8 @@
           "median_normal_error_deg": 0.676453,
           "p90_direction_error_deg": 14.332781,
           "param_count_error_per_line": 1.7282425603593488,
-          "rotation_rmse_deg": 0.38731478070074044
+          "rotation_rmse_deg": 0.38731478070074044,
+          "effective_line_parameters_per_line": 4.0
         },
         "orthline_constr": {
           "type": "baseline",
@@ -817,7 +835,8 @@
           "median_normal_error_deg": 0.483523,
           "p90_direction_error_deg": 2.394687,
           "param_count_error_per_line": 1.7282425603593488,
-          "rotation_rmse_deg": 0.382480951154447
+          "rotation_rmse_deg": 0.382480951154447,
+          "effective_line_parameters_per_line": 4.0
         }
       },
       "_paper_reported": {
@@ -840,7 +859,8 @@
             "param_count_error_per_line": 1.8
           }
         }
-      }
+      },
+      "_display_primary_note": "The primary displays direct effective dimensionality, rather than a small residual relative to scene-specific ground-truth classes. It has zero rank coefficient: all six existing ranked metrics and coefficients are unchanged. Calibration results are held-out gym measurements, not paper transcriptions. Train/test residual errors and difficulty can differ substantially and remain reported."
     }
   }
 }

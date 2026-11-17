@@ -375,6 +375,8 @@ WORST = {
     "p90_direction_error_deg": 90.0,
     "median_normal_error_deg": 90.0,
     "param_count_error_per_line": 2.0,
+    # Display the direct dimensionality alongside the ranked excess error.
+    "effective_line_parameters_per_line": 4.0,
 }
 METRICS = tuple(WORST)
 SAME_DIRECTION_RAD = 1e-7  # estimated directions count as shared only when (numerically) identical
@@ -580,6 +582,10 @@ def pooled_metrics(rows: list[dict[str, Any]]) -> dict[str, float]:
         "median_direction_error_deg": float(np.median(dirs)) if len(dirs) else 90.0,
         "p90_direction_error_deg": float(np.percentile(dirs, 90)) if len(dirs) else 90.0,
         "median_normal_error_deg": float(np.median(nrms)) if len(nrms) else 90.0,
+        "effective_line_parameters_per_line": (
+            2.0 + 2.0 * sum(r["distinct_directions"] for r in rows)
+            / sum(r["num_lines_scored"] for r in rows)
+        ) if any(r["num_lines_scored"] for r in rows) else 4.0,
         "param_count_error_per_line": float(
             sum(2 * abs(r["distinct_directions"] - r["true_direction_classes"]) for r in rows)
             / max(1, sum(r["num_lines_scored"] for r in rows))) if any(r["num_lines_scored"] for r in rows) else 2.0,
