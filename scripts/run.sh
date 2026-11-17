@@ -11,6 +11,10 @@
 # 4. Hardening checks: variants and shortcuts through the real hidden test
 #    (redteam/hardening2/), then the analysis -> redteam/hardening2/summary.json
 # 5. Validate the workspace.
+#
+# Resumable (jobs can be preempted): steps 2-3 are skipped when their score
+# file was produced by the same code (stamp in outputs/), and finished
+# hardening cases are skipped.
 set -e
 
 WORKSPACE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -18,12 +22,31 @@ cd "$WORKSPACE_DIR"
 export PYTHONPATH="$WORKSPACE_DIR:${PYTHONPATH:-}"
 export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1
 
+code_hash() {
+    find eval method baseline scripts/methods scoring/reference.json -type f \
+        \( -name '*.py' -o -name '*.sh' -o -name '*.json' \) \
+        -not -path '*/__pycache__/*' -not -path '*/downloads/*' -not -path 'method/upstream/*' \
+        | LC_ALL=C sort | xargs sha256sum | sha256sum | cut -c1-16
+}
+HASH="$(code_hash)"
+mkdir -p outputs
+
 rm -rf data/train_scenes
 python -m eval.train.evaluate --export-scenes data/train_scenes
 
-bash scripts/evaluate_train.sh
+if [ -f scoring/scores_train.json ] && [ "$(cat outputs/.stamp_train 2>/dev/null)" = "$HASH" ]; then
+    echo "scores_train.json is current ($HASH); skipping train evaluation"
+else
+    bash scripts/evaluate_train.sh
+    echo "$HASH" > outputs/.stamp_train
+fi
 cp scoring/scores_train.json scoring/scores.json
-bash scripts/evaluate_test.sh
+if [ -f scoring/scores_test.json ] && [ "$(cat outputs/.stamp_test 2>/dev/null)" = "$HASH" ]; then
+    echo "scores_test.json is current ($HASH); skipping hidden-test evaluation"
+else
+    bash scripts/evaluate_test.sh
+    echo "$HASH" > outputs/.stamp_test
+fi
 
 python redteam/hardening2/run_cases.py
 python redteam/hardening2/analyze.py
