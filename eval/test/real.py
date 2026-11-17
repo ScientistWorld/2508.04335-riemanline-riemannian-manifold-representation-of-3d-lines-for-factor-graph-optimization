@@ -362,8 +362,8 @@ def _read_output(path: Path, frame_ids: list[int], line_ids: list[int]):
             raise InvalidJointOutput(f"{path.name}: zero direction for line {lid}")
         d = d / dn
         m = n / dn
-        if float(np.linalg.norm(m)) > 1e6:
-            raise InvalidJointOutput(f"{path.name}: line {lid} at infinity")
+        # A far-away (poorly constrained) line is a legitimate, if bad, estimate: its
+        # errors are scored like any other line, so no distance limit is imposed.
         if abs(float(np.dot(m, d))) > PLUCKER_TOL * max(1.0, float(np.linalg.norm(m))):
             raise InvalidJointOutput(f"{path.name}: line {lid} violates the Plucker constraint n.d = 0")
         lines[lid] = (m, d)

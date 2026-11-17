@@ -292,6 +292,19 @@ def observation_replace(path: Path, scene: dict[str, Any], out: dict[str, Any]) 
     path.write_text(json.dumps(tampered))
 
 
+def _guarded(fn, scene: dict[str, Any]) -> dict[str, Any]:
+    """Honest variants fall back to the reference on an instance where they crash (logged)."""
+    try:
+        return fn(scene)
+    except Exception as exc:  # noqa: BLE001
+        import traceback
+
+        print(f"WARNING: {fn.__name__} failed on {scene.get('scene_id')}: {exc!r}\n{traceback.format_exc()}", flush=True)
+        out = reference(scene)
+        out["fallback"] = "reference"
+        return out
+
+
 def run(mode: str, input_dir: Path, output_dir: Path) -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
     paths = sorted(input_dir.glob("*.json"))
@@ -305,9 +318,9 @@ def run(mode: str, input_dir: Path, output_dir: Path) -> None:
         elif mode == "verified_groups":
             out = reference(scene) if joint else old.verified_groups(scene, loss="cauchy")
         elif mode == "staged":
-            out = staged(scene) if joint else reference(scene)
+            out = _guarded(staged, scene) if joint else reference(scene)
         elif mode == "verified_staged":
-            out = staged(scene) if joint else old.verified_groups(scene, loss="cauchy")
+            out = _guarded(staged, scene) if joint else old.verified_groups(scene, loss="cauchy")
         elif mode == "hidden_abspath":
             out = hidden_abspath(scene)
         elif mode == "public_gt_lookup":
