@@ -1,6 +1,8 @@
 # Once you set action to 'submit' or 'done', STOP immediately.
 # Do NOT sleep, poll, or wait for jobs. The system reads this file
 # only after your turn ends.
-action: done
+action: pending
+gpus: 0
+test: false
 milestone: secondary_claims
-notes: "Hardened: hidden-test scenes only in eval/test (opaque ids, one interleaved solver call), recomputed metrics with worst-value failures, paper's method restored, mislabeled-groups headroom experiment; all shortcuts closed except reading the evaluator by absolute path (see HARDENING.md)."
+notes: ""
