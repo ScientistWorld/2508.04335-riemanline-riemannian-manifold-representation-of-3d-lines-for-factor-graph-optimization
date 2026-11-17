@@ -12,7 +12,9 @@ phase offsets, so each sequence yields several factor graphs over the whole
 trajectory with disjoint keyframes and measurements.  As in the paper (Sec. 5,
 "Landmarks observed by fewer than three cameras are pruned prior to
 optimization"), landmarks with fewer than three keyframe observations are
-pruned; so are degenerate initial landmarks.
+pruned; so are degenerate initial landmarks. Cameras with fewer than six
+retained point observations are removed, and only the largest connected point
+co-visibility component is retained; visibility pruning repeats to stability.
 
 ICL-NUIM measurements come from real feature detection (about 1 px error).
 Open-Structure's TartanAir measurements are exact projections of the
@@ -59,6 +61,7 @@ MAX_KEYFRAMES = 150
 INSTANCES_PER_SEQUENCE = 4
 TARTAN_PIXEL_NOISE = 1.0
 MIN_OBS = 3
+MIN_CAMERA_POINTS = 6  # retain identifiable camera poses after keyframe/landmark pruning
 
 
 # ------------------------------------------------------------------ parsing
@@ -202,23 +205,56 @@ def build_instance(seq: str, k: int = 0, exp: str = EXPERIMENT) -> dict[str, Any
     kfs = frames_all[offset::stride]
     kf_set = set(kfs)
 
-    # landmarks: non-degenerate, observed in >= MIN_OBS distinct keyframes
-    pobs = [a for a in g["PA"] if a[1] in kf_set and a[0] in g["P"]]
-    lobs = [a for a in g["LA"] if a[1] in kf_set and a[0] in g["L"]]
-    p_frames: dict[int, set] = {}
-    for a in pobs:
-        p_frames.setdefault(a[0], set()).add(a[1])
-    l_frames: dict[int, set] = {}
-    for a in lobs:
-        l_frames.setdefault(a[0], set()).add(a[1])
-    keep_p = {p for p, fs in p_frames.items() if len(fs) >= MIN_OBS and np.linalg.norm(g["P"][p]) > 1e-4}
-    keep_l = set()
-    for l, fs in l_frames.items():
-        e = g["L"][l]
-        if len(fs) >= MIN_OBS and np.linalg.norm(e[:3] - e[3:]) >= 0.01:
-            keep_l.add(l)
-    pobs = [a for a in pobs if a[0] in keep_p]
-    lobs = [a for a in lobs if a[0] in keep_l]
+    # Pruning keyframes can leave a camera with too few retained features to
+    # determine its pose. In particular, the office1 archive has a low-visibility
+    # interval: after subsampling, some cameras have 0--3 points and 0--3 lines.
+    # Their free poses can escape to infinity and corrupt Sim(3) alignment of
+    # otherwise accurate landmarks. Select an observable connected point graph
+    # using only public measurements, identically on both splits. Recompute
+    # landmark visibility after each camera removal until the graph is stable.
+    while True:
+        kf_set = set(kfs)
+        pobs = [a for a in g["PA"] if a[1] in kf_set and a[0] in g["P"]]
+        lobs = [a for a in g["LA"] if a[1] in kf_set and a[0] in g["L"]]
+        p_frames: dict[int, set] = {}
+        for a in pobs:
+            p_frames.setdefault(a[0], set()).add(a[1])
+        l_frames: dict[int, set] = {}
+        for a in lobs:
+            l_frames.setdefault(a[0], set()).add(a[1])
+        keep_p = {p for p, fs in p_frames.items()
+                  if len(fs) >= MIN_OBS and np.linalg.norm(g["P"][p]) > 1e-4}
+        keep_l = {l for l, fs in l_frames.items()
+                  if len(fs) >= MIN_OBS and np.linalg.norm(g["L"][l][:3] - g["L"][l][3:]) >= 0.01}
+        pobs = [a for a in pobs if a[0] in keep_p]
+        lobs = [a for a in lobs if a[0] in keep_l]
+        camera_points = {f: set() for f in kfs}
+        for p, f, *_ in pobs:
+            camera_points[f].add(p)
+        observable = {f for f in kfs if len(camera_points[f]) >= MIN_CAMERA_POINTS}
+        # Connectivity through retained point tracks fixes one common gauge.
+        parent = {f: f for f in observable}
+
+        def find(f: int) -> int:
+            while parent[f] != f:
+                parent[f] = parent[parent[f]]
+                f = parent[f]
+            return f
+
+        for p in keep_p:
+            fs = sorted(p_frames[p] & observable)
+            for f in fs[1:]:
+                parent[find(f)] = find(fs[0])
+        components: dict[int, set] = {}
+        for f in sorted(observable):
+            components.setdefault(find(f), set()).add(f)
+        largest = max(components.values(), key=lambda fs: (len(fs), -min(fs)), default=set())
+        if len(largest) < 3:
+            raise ValueError(f"{seq}: fewer than three observable connected cameras after pruning")
+        next_kfs = [f for f in kfs if f in largest]
+        if next_kfs == kfs:
+            break
+        kfs = next_kfs
 
     # world-frame change and id relabelling
     r_s = _random_rotation(rng)
@@ -510,7 +546,6 @@ def score_instance(instance: dict[str, Any], output_path: Path) -> dict[str, Any
     init_err = np.linalg.norm(s0 * init @ r0.T + t0 - c_gt, axis=1)
     return {
         "scene_id": public["scene_id"],
-        "sequence": hidden["sequence"],
         "sequence": hidden["sequence"],
         "num_frames": len(ids),
         "num_lines_scored": len(dir_err),

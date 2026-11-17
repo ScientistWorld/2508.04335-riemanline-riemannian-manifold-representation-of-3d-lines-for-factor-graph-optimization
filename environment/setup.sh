@@ -16,4 +16,4 @@
 
 set -e
 
-uv pip install --system numpy scipy
+uv pip install --system numpy==2.4.6 scipy==1.17.1

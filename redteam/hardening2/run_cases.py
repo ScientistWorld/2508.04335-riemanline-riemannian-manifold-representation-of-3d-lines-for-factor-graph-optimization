@@ -5,8 +5,8 @@ downloaded Open-Structure data is symlinked), changes only scripts/methods/,
 then runs ``bash scripts/evaluate_test.sh`` there.  To save CPU the baseline
 solver scripts are removed in every case (their rows then score as failed in
 that case; the baseline numbers come from the reference run in
-scoring/scores_test.json).  Full score files go to tmp/hardening2/<case>/; a
-slim copy is kept in redteam/hardening2/cases/<case>/.  Finished cases are
+scoring/scores_test.json).  Full paired score files go to eval/test/hardening_cases/<case>/; a
+slim aggregate copy is kept in redteam/hardening2/cases/<case>/.  Finished cases are
 skipped on resume.
 """
 from __future__ import annotations

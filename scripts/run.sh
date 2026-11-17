@@ -1,5 +1,6 @@
 #!/bin/bash
 # Reproduce the reference end to end (CPU only).
+# Final verification includes identical observable-graph selection on both splits.
 #
 # 1. Export the visible procedural train scenes (public inputs + ground truth)
 #    to data/train_scenes/ for development.  (Open-Structure train instances

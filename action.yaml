@@ -2,4 +2,4 @@ action: submit
 gpus: 0
 test: false
 milestone: secondary_claims
-notes: "One sequential final verification: regenerate train/test reference and baselines with confined hidden answers, then paired dataset headroom, repeat/noise checks and affected shortcut replays; validate complete scores."
+notes: "Combined observability correction verification: rerun references and baselines on both splits, paired variants and affected shortcuts; retain all previous measurements for before/after reporting."
