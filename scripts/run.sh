@@ -1,25 +1,19 @@
 #!/bin/bash
-# Reproduce the reference end to end (CPU only, a few minutes).
-#
-# 1. Export the visible train scenes (public inputs + ground truth) to
-#    data/train_scenes/ for development.
-# 2. Run every solver in scripts/methods/ (StructRiemanLine and the three
-#    baselines) on the train scenes  -> scoring/scores_train.json (= scores.json)
-# 3. Run every solver on the hidden test scenes generated inside eval/test/
-#                                     -> scoring/scores_test.json
-# 4. Validate the workspace.
-set -e
-
+# TEMPORARY diagnostic job for the new Open-Structure joint-BA experiment.
+# (The final run.sh reproduces the reference end to end; see tmp/run.sh.reference.)
+set +e
 WORKSPACE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$WORKSPACE_DIR"
 export PYTHONPATH="$WORKSPACE_DIR:${PYTHONPATH:-}"
 export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1
-
+python -c "import numpy, scipy; print('numpy', numpy.__version__, 'scipy', scipy.__version__)"
+nproc
+rm -f outputs/diag_joint.jsonl
+python tmp/diag_joint.py no_optimization struct_verbose
 rm -rf data/train_scenes
 python -m eval.train.evaluate --export-scenes data/train_scenes
-
-bash scripts/evaluate_train.sh
+time bash scripts/evaluate_train.sh
 cp scoring/scores_train.json scoring/scores.json
-bash scripts/evaluate_test.sh
-
-python validate.py
+time bash scripts/evaluate_test.sh
+python tmp/diag_joint.py struct_iter300 struct_linear points_only
+echo DIAG_DONE

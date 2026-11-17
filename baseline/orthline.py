@@ -18,11 +18,13 @@ residual units into the pixel units used here.  The state stays 4n-dimensional.
 from __future__ import annotations
 
 import argparse
+import time
 from pathlib import Path
 from typing import Any
 
 import numpy as np
 
+from baseline.joint_ba import JointProblem, LineModel, frames_payload, solve_joint
 from baseline.line_ba import (
     Observations,
     dump_json,
@@ -104,7 +106,58 @@ def parallel_pairs(scene: dict[str, Any], obs: Observations, directions: np.ndar
     return rows
 
 
+def group_pairs(groups_idx: list[list[int]], directions: np.ndarray) -> list[tuple[int, list[int]]]:
+    """Eq. 11 rows: every declared member with its partners whose initial
+    direction satisfies |cos| > 0.92 (the authors' gating)."""
+    rows = []
+    for members in groups_idx:
+        for i in members:
+            di = directions[i] / np.linalg.norm(directions[i])
+            partners = [
+                j for j in members
+                if j != i and abs(float(np.dot(di, directions[j] / np.linalg.norm(directions[j])))) > PAIR_COS
+            ]
+            if partners:
+                rows.append((i, partners))
+    return rows
+
+
+def solve_joint_scene(scene: dict[str, Any], constrained: bool = False, loss: str = "cauchy") -> dict[str, Any]:
+    """Joint pose / point / line factor graph with independent orthonormal lines
+    (plus the Eq. 11 parallelism residual when ``constrained``)."""
+    pb = JointProblem(scene)
+    normals, directions = pb.initial_plucker()
+    state = OrthLines.from_plucker(normals, directions)
+    pairs = group_pairs(pb.groups, directions) if constrained else []
+    weight = pb.scale
+
+    def extra(s: OrthLines) -> np.ndarray:
+        if not pairs:
+            return np.zeros(0)
+        _, d = s.decode()
+        out = np.empty(len(pairs))
+        for k, (i, partners) in enumerate(pairs):
+            out[k] = weight * float(np.mean(1.0 - np.abs(d[partners] @ d[i])))
+        return out
+
+    col_lines = [np.array([i]) for i in range(pb.num_lines) for _ in range(4)]
+    model = LineModel(state, col_lines, extra=extra if pairs else None,
+                      extra_row_lines=[tuple([i] + partners) for i, partners in pairs])
+    poses, _, state, info = solve_joint(pb, model, loss=loss, scale=CAUCHY_PX, max_iterations=MAX_ITERATIONS)
+    n, d = state.decode()
+    return {
+        "scene_id": scene.get("scene_id"),
+        "method": "orthline_constr" if constrained else "orthline",
+        "num_parameters": 4 * pb.num_lines,
+        "solver": info,
+        "frames": frames_payload(pb, poses),
+        "lines": [{"id": pb.line_ids[i], "normal": n[i].tolist(), "direction": d[i].tolist()} for i in range(pb.num_lines)],
+    }
+
+
 def solve_scene(scene: dict[str, Any], constrained: bool = False, loss: str = "cauchy") -> dict[str, Any]:
+    if scene.get("task") == "joint_ba":
+        return solve_joint_scene(scene, constrained=constrained, loss=loss)
     obs = Observations(scene)
     normals, directions = triangulate_lines(obs)
     state = OrthLines.from_plucker(normals, directions)
@@ -156,10 +209,11 @@ def main() -> None:
     out = Path(args.output_dir)
     out.mkdir(parents=True, exist_ok=True)
     for path in sorted(Path(args.input_dir).glob("*.json")):
+        t0 = time.time()
         result = solve_scene(load_json(path), constrained=args.constrained)
         dump_json(out / path.name, result)
         print(f"{path.name}: cost {result['solver']['initial_cost']:.1f} -> {result['solver']['final_cost']:.1f} "
-              f"in {result['solver']['iterations']} it", flush=True)
+              f"in {result['solver']['iterations']} it, {time.time() - t0:.1f}s", flush=True)
 
 
 if __name__ == "__main__":

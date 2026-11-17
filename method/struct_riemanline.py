@@ -23,6 +23,7 @@ the principal direction of its members.
 from __future__ import annotations
 
 import argparse
+import time
 import math
 from dataclasses import dataclass
 from pathlib import Path
@@ -30,6 +31,7 @@ from typing import Any
 
 import numpy as np
 
+from method.joint_ba import JointProblem, LineModel, frames_payload, solve_joint
 from method.line_ba import (
     Observations,
     dump_json,
@@ -149,21 +151,32 @@ def parallel_inliers(members: list[int], directions: np.ndarray, cos_threshold: 
     return best
 
 
-def initial_state(scene: dict[str, Any], obs: Observations, use_groups: bool = True) -> GroupedLines:
-    normals, directions = triangulate_lines(obs)
+def build_state(groups_idx: list[list[int]], normals: np.ndarray, directions: np.ndarray, num_lines: int,
+                use_groups: bool = True) -> GroupedLines:
+    """Declared groups that pass the authors' inlier check share one direction;
+    every other line is an individual RiemanLine (k = 1 group)."""
     grouped: set[int] = set()
     groups: list[LineGroup] = []
     if use_groups:
-        for members_ids in scene.get("parallel_groups", []):
-            members = [obs.index[int(m)] for m in members_ids if int(m) in obs.index and obs.index[int(m)] not in grouped]
+        for members_all in groups_idx:
+            members = [m for m in members_all if m not in grouped]
             inl = parallel_inliers(members, directions)
             if len(inl) > 2:
                 groups.append(group_from_lines(inl, normals, directions))
                 grouped.update(inl)
-    for i in range(obs.num_lines):
+    for i in range(num_lines):
         if i not in grouped:
             groups.append(group_from_lines([i], normals, directions, u2=directions[i]))
-    return GroupedLines(groups, obs.num_lines)
+    return GroupedLines(groups, num_lines)
+
+
+def initial_state(scene: dict[str, Any], obs: Observations, use_groups: bool = True) -> GroupedLines:
+    normals, directions = triangulate_lines(obs)
+    groups_idx = [
+        [obs.index[int(m)] for m in members_ids if int(m) in obs.index]
+        for members_ids in scene.get("parallel_groups", [])
+    ]
+    return build_state(groups_idx, normals, directions, obs.num_lines, use_groups=use_groups)
 
 
 def optimize(state: GroupedLines, obs: Observations, loss: str = "cauchy", scale: float = CAUCHY_PX,
@@ -207,6 +220,33 @@ def solve_scene(scene: dict[str, Any], use_groups: bool = True, loss: str = "cau
     return payload(scene, obs, state, "struct_riemanline" if use_groups else "riemanline", info)
 
 
+def solve_joint_scene(scene: dict[str, Any], use_groups: bool = True, loss: str = "cauchy",
+                      scale: float = CAUCHY_PX, max_iterations: int = MAX_ITERATIONS) -> dict[str, Any]:
+    """Joint pose / point / line factor graph (paper Sec. 4, Tables 2-4): the
+    initial graph's lines become (Struct)RiemanLine landmarks and poses, points
+    and lines are optimised together."""
+    pb = JointProblem(scene)
+    normals, directions = pb.initial_plucker()
+    state = build_state(pb.groups, normals, directions, pb.num_lines, use_groups=use_groups)
+    model = LineModel(state, state.column_lines())
+    poses, _, state, info = solve_joint(pb, model, loss=loss, scale=scale, max_iterations=max_iterations)
+    n, d = state.decode()
+    return {
+        "scene_id": scene.get("scene_id"),
+        "method": "struct_riemanline" if use_groups else "riemanline",
+        "num_parameters": state.dof,
+        "solver": info,
+        "frames": frames_payload(pb, poses),
+        "lines": [{"id": pb.line_ids[i], "normal": n[i].tolist(), "direction": d[i].tolist()} for i in range(pb.num_lines)],
+    }
+
+
+def solve_any(scene: dict[str, Any], **kwargs: Any) -> dict[str, Any]:
+    if scene.get("task") == "joint_ba":
+        return solve_joint_scene(scene, **kwargs)
+    return solve_scene(scene, **kwargs)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run (Struct)RiemanLine on every scene JSON in a directory.")
     parser.add_argument("input_dir")
@@ -218,10 +258,11 @@ def main() -> None:
     out.mkdir(parents=True, exist_ok=True)
     for path in sorted(Path(args.input_dir).glob("*.json")):
         scene = load_json(path)
-        result = solve_scene(scene, use_groups=not args.no_groups, loss=args.loss)
+        t0 = time.time()
+        result = solve_any(scene, use_groups=not args.no_groups, loss=args.loss)
         dump_json(out / path.name, result)
         print(f"{path.name}: cost {result['solver']['initial_cost']:.1f} -> {result['solver']['final_cost']:.1f} "
-              f"in {result['solver']['iterations']} it, {result['num_parameters']} params", flush=True)
+              f"in {result['solver']['iterations']} it, {result['num_parameters']} params, {time.time() - t0:.1f}s", flush=True)
 
 
 if __name__ == "__main__":
