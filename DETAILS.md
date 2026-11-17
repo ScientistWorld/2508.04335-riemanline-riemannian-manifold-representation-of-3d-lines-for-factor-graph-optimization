@@ -1,3 +1,7 @@
+# Historical reproduction notes
+
+This file preserves earlier iterations and contains superseded interfaces, experiments and results. The current gym is described in [the problem](briefing/problem.md), [evaluation](briefing/evaluation.md), [method](briefing/method.md) and [hardening report](HARDENING.md). In particular, the final gym includes joint camera/point/line experiments and has no solver wall-clock cutoff. Earlier statements below about fixed cameras only or missing joint optimization do not describe the final package.
+
 # Overview
 
 - **Paper ID:** 2508.04335

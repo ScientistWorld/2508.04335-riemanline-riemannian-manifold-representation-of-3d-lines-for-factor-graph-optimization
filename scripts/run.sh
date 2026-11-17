@@ -1,6 +1,6 @@
 #!/bin/bash
 # Reproduce the reference end to end (CPU only).
-# Final verification includes identical observable-graph selection on both splits.
+# Both splits use the same observable-graph selection.
 #
 # 1. Export the visible procedural train scenes (public inputs + ground truth)
 #    to data/train_scenes/ for development.  (Open-Structure train instances
@@ -9,13 +9,12 @@
 #    baselines) on the train instances  -> scoring/scores_train.json (= scores.json)
 # 3. Run every solver on the hidden test instances built inside eval/test/
 #                                       -> scoring/scores_test.json
-# 4. Hardening checks: variants and shortcuts through the real hidden test
-#    (redteam/hardening2/), then the analysis -> redteam/hardening2/summary.json
-# 5. Validate the workspace.
+# 4. Validate the workspace.
 #
 # Resumable (jobs can be preempted): steps 2-3 are skipped when their score
-# file was produced by the same code (stamp in outputs/), and finished
-# hardening cases are skipped.
+# file was produced by the same code (stamp in outputs/).
+# The separate hardening audit is documented in HARDENING.md; its candidates
+# are never inserted into the canonical reference score files.
 set -e
 
 WORKSPACE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -50,9 +49,5 @@ else
     bash scripts/evaluate_test.sh
     echo "$HASH" > outputs/.stamp_test
 fi
-
-python redteam/hardening2/run_cases.py
-python redteam/hardening2/analyze.py
-python redteam/hardening2/verify.py
 
 python validate.py
