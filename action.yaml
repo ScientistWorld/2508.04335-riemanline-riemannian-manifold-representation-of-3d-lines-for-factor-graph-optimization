@@ -3,4 +3,4 @@ action: submit
 gpus: 0
 test: false
 milestone: secondary_claims
-notes: "Hardening cases only: joint warm-start, joint group verification, both, and the isolated train-GT lookup through the hidden test; analysis."
+notes: "Resume: evaluations already stamped (skipped); remaining hardening cases through the hidden test, analysis, validate."
