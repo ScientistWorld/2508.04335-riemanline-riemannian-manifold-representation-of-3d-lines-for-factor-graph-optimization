@@ -1,6 +1,8 @@
 # Once you set action to 'submit' or 'done', STOP immediately.
-action: submit
+# Do NOT sleep, poll, or wait for jobs. The system reads this file
+# only after your turn ends.
+action: pending
 gpus: 0
 test: false
 milestone: secondary_claims
-notes: "Resume: evaluations already stamped (skipped); remaining hardening cases through the hidden test, analysis, validate."
+notes: ""
