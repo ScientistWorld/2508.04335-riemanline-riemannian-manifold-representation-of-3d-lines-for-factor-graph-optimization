@@ -1,0 +1,39 @@
+{
+  "mode": "display_only_from_evaluator_records",
+  "source_reference_job": "1c13524f-b40",
+  "raw_prediction_rescore_run": false,
+  "train": {
+    "max_abs_change_to_ranked_values": 0.0,
+    "display_primary": {
+      "open_structure_joint_ba": {
+        "orthline": 4.0,
+        "orthline_constr": 4.0,
+        "riemanline": 4.0,
+        "struct_riemanline": 2.35828534868842
+      },
+      "open_structure_joint_ba_clustered": {
+        "orthline": 4.0,
+        "orthline_constr": 4.0,
+        "riemanline": 4.0,
+        "struct_riemanline": 2.193589743589744
+      }
+    }
+  },
+  "test": {
+    "max_abs_change_to_ranked_values": 0.0,
+    "display_primary": {
+      "open_structure_joint_ba": {
+        "orthline": 4.0,
+        "orthline_constr": 4.0,
+        "riemanline": 4.0,
+        "struct_riemanline": 2.2753623188405796
+      },
+      "open_structure_joint_ba_clustered": {
+        "orthline": 4.0,
+        "orthline_constr": 4.0,
+        "riemanline": 4.0,
+        "struct_riemanline": 2.1291409320606403
+      }
+    }
+  }
+}

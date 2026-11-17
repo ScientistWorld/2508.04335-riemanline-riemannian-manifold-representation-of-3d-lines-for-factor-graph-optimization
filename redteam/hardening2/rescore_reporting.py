@@ -1,9 +1,9 @@
-"""Recompute final calibration from saved raw predictions; never run a solver.
+"""Complete calibration reporting without running a solver.
 
-Used for the reporting-only correction after job 1c13524f-b40. Hidden inputs,
-truth and detailed errors stay in eval/test/. No method-produced counts,
-scores, flags or verdicts are consumed. All previously ranked values must
-remain unchanged, or the correction aborts.
+The default recomputes metrics from saved raw predictions and requires a job.
+The lightweight --from-records mode adds only the zero-coefficient display
+using direction counts already computed by the evaluator in job 1c13524f-b40.
+It never changes a ranked number. Hidden detailed records stay in eval/test/.
 """
 from __future__ import annotations
 
@@ -14,6 +14,66 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 DISPLAY = "effective_line_parameters_per_line"
+
+
+def complete_display_from_records() -> None:
+    """Backfill the informational display from evaluator-owned primitives."""
+    import copy
+    reference = json.loads((ROOT / "scoring/reference.json").read_text())["experiments"]
+    report = {"mode": "display_only_from_evaluator_records",
+              "source_reference_job": "1c13524f-b40",
+              "raw_prediction_rescore_run": False}
+    for split in ("train", "test"):
+        public_path = ROOT / "scoring" / f"scores_{split}.json"
+        source_path = ROOT / "eval/test/results_full.json" if split == "test" else public_path
+        scores = json.loads(source_path.read_text())
+        previous_results = {e: copy.deepcopy(p["results"]) for e, p in scores["experiments"].items()}
+        displays = {}
+        for exp, cfg in reference.items():
+            if DISPLAY not in cfg["metrics"]:
+                continue
+            assert cfg["metrics"][DISPLAY]["coefficient"] == 0.0
+            payload = scores["experiments"][exp]
+            assert set(payload["results"]) == set(cfg["results"])
+            displays[exp] = {}
+            for method, vals in payload["results"].items():
+                assert not payload["_status"][method]["failed"], (split, exp, method)
+                rows = payload["_per_scene"][method]
+                assert rows
+                for row in rows:
+                    n = row["num_lines_scored"]
+                    d = row["distinct_directions"]
+                    assert type(n) is int and type(d) is int and 0 <= d <= n
+                    assert n == len(row["direction_errors_deg"]) == len(row["normal_errors_deg"])
+                n = sum(row["num_lines_scored"] for row in rows)
+                assert n > 0
+                value = 2.0 + 2.0 * sum(row["distinct_directions"] for row in rows) / n
+                assert 2.0 < value <= 4.0
+                vals[DISPLAY] = value
+                displays[exp][method] = value
+                if split == "test":
+                    assert cfg["results"][method][DISPLAY] == value, (exp, method)
+        # A zero-coefficient field cannot alter a normalized rank or interval.
+        # Check exact preservation of every original ranked value, not a tolerance.
+        for exp, payload in scores["experiments"].items():
+            for method, vals in payload["results"].items():
+                ranked = [m for m, mc in reference[exp]["metrics"].items() if abs(mc["coefficient"]) > 0]
+                assert {m: vals[m] for m in ranked} == {m: previous_results[exp][method][m] for m in ranked}
+                assert set(vals) == set(reference[exp]["metrics"])
+        scores["_metadata"]["joint_ba_worst_values"][DISPLAY] = 4.0
+        scores["_metadata"]["reporting_correction"] = (
+            "Zero-coefficient dimensionality display derived from evaluator-owned direction/line counts "
+            "saved by job 1c13524f-b40; every ranked value unchanged. No additional raw-prediction rescore."
+        )
+        source_path.write_text(json.dumps(scores, indent=1, sort_keys=True) + "\n")
+        if split == "test":
+            for payload in scores["experiments"].values():
+                payload.pop("_per_scene", None)
+            public_path.write_text(json.dumps(scores, indent=1, sort_keys=True) + "\n")
+        report[split] = {"max_abs_change_to_ranked_values": 0.0, "display_primary": displays}
+    (ROOT / "scoring/scores.json").write_bytes((ROOT / "scoring/scores_train.json").read_bytes())
+    (ROOT / "redteam/hardening2/reporting_correction.json").write_text(json.dumps(report, indent=2) + "\n")
+    print("Completed both splits from evaluator-owned counts; every ranked value is unchanged.")
 
 
 def rescore(split: str) -> dict:
@@ -87,4 +147,12 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--from-records", action="store_true",
+                        help="Only add the unranked display from saved evaluator counts; no heavy computation.")
+    args = parser.parse_args()
+    if args.from_records:
+        complete_display_from_records()
+    else:
+        main()

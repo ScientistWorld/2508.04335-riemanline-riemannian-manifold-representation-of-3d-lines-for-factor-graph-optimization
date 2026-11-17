@@ -18,6 +18,16 @@ for split in ('train', 'test'):
             assert all(math.isfinite(v) and v >= 0 for v in vals.values())
         if split == 'test':
             assert '_per_scene' not in p and '_per_scene_summary' not in p
+            for method, vals in p['results'].items():
+                assert vals == {m: v for m, v in e['results'][method].items() if m != 'type'}, (exp, method)
+train = json.loads((ROOT / 'scoring/scores_train.json').read_text())
+test = json.loads((ROOT / 'scoring/scores_test.json').read_text())
+for exp, ecfg in cfg.items():
+    primary = ecfg['primary_metric']
+    tr = train['experiments'][exp]['results']
+    te = test['experiments'][exp]['results']
+    assert all(primary in vals for vals in list(tr.values()) + list(te.values())), (exp, primary)
+    assert any(tr[m][primary] != te[m][primary] for m in tr), (exp, primary)
 c = report['candidates']
 assert report['repeat_max_abs_metric_difference'] < 1e-8
 for method in ('orthline', 'orthline_constr', 'riemanline', 'no_optimization', 'gaussian_loss'):

@@ -9,12 +9,14 @@
   },
   "joint_ba_worst_values": {
    "ate_rmse_cm": 1000.0,
+   "effective_line_parameters_per_line": 4.0,
    "median_direction_error_deg": 90.0,
    "median_normal_error_deg": 90.0,
    "p90_direction_error_deg": 90.0,
    "param_count_error_per_line": 2.0,
    "rotation_rmse_deg": 180.0
   },
+  "reporting_correction": "Zero-coefficient dimensionality display derived from evaluator-owned direction/line counts saved by job 1c13524f-b40; every ranked value unchanged. No additional raw-prediction rescore.",
   "scenes_per_experiment": 24,
   "solver_dir": "scripts/methods",
   "split": "train",
@@ -14292,6 +14294,7 @@
    "results": {
     "orthline": {
      "ate_rmse_cm": 5.173117589971485,
+     "effective_line_parameters_per_line": 4.0,
      "median_direction_error_deg": 3.420958,
      "median_normal_error_deg": 2.277218,
      "p90_direction_error_deg": 31.27463459999999,
@@ -14300,6 +14303,7 @@
     },
     "orthline_constr": {
      "ate_rmse_cm": 5.2351367695579745,
+     "effective_line_parameters_per_line": 4.0,
      "median_direction_error_deg": 1.833013,
      "median_normal_error_deg": 1.57087,
      "p90_direction_error_deg": 12.893904799999984,
@@ -14308,6 +14312,7 @@
     },
     "riemanline": {
      "ate_rmse_cm": 4.8786412180279335,
+     "effective_line_parameters_per_line": 4.0,
      "median_direction_error_deg": 3.766669,
      "median_normal_error_deg": 2.418575,
      "p90_direction_error_deg": 29.297297199999996,
@@ -14316,6 +14321,7 @@
     },
     "struct_riemanline": {
      "ate_rmse_cm": 4.840080712562143,
+     "effective_line_parameters_per_line": 2.35828534868842,
      "median_direction_error_deg": 0.48619,
      "median_normal_error_deg": 0.825362,
      "p90_direction_error_deg": 18.5375938,
@@ -28564,6 +28570,7 @@
    "results": {
     "orthline": {
      "ate_rmse_cm": 5.35476367455119,
+     "effective_line_parameters_per_line": 4.0,
      "median_direction_error_deg": 3.373912,
      "median_normal_error_deg": 2.049124,
      "p90_direction_error_deg": 40.03692000000007,
@@ -28572,6 +28579,7 @@
     },
     "orthline_constr": {
      "ate_rmse_cm": 5.209492895524957,
+     "effective_line_parameters_per_line": 4.0,
      "median_direction_error_deg": 1.5979915,
      "median_normal_error_deg": 1.305717,
      "p90_direction_error_deg": 24.330938400000015,
@@ -28580,6 +28588,7 @@
     },
     "riemanline": {
      "ate_rmse_cm": 5.476774874527647,
+     "effective_line_parameters_per_line": 4.0,
      "median_direction_error_deg": 3.5578015,
      "median_normal_error_deg": 2.277655,
      "p90_direction_error_deg": 45.013478400000004,
@@ -28588,6 +28597,7 @@
     },
     "struct_riemanline": {
      "ate_rmse_cm": 5.7245190195432825,
+     "effective_line_parameters_per_line": 2.193589743589744,
      "median_direction_error_deg": 0.914215,
      "median_normal_error_deg": 1.0907725,
      "p90_direction_error_deg": 18.819495,

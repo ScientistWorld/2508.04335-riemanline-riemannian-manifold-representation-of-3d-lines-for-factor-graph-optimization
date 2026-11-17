@@ -1,5 +1,3 @@
-action: submit
-gpus: 0
-test: false
+action: done
 milestone: secondary_claims
-notes: "Reporting-only correction: rescore saved raw reference/baseline geometry on both splits, verify every ranked number and paired interval is unchanged, and run post-design validation."
+notes: "Completed missing joint display metrics from evaluator records; strict post-design validation and evidence checks pass with all ranked numbers unchanged."
