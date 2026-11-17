@@ -1,8 +1,6 @@
 # Once you set action to 'submit' or 'done', STOP immediately.
-# Do NOT sleep, poll, or wait for jobs. The system reads this file
-# only after your turn ends.
-action: pending
+action: submit
 gpus: 0
 test: false
 milestone: secondary_claims
-notes: ""
+notes: "Diagnostic: new Open-Structure joint-BA experiment end to end (train+test evaluators, 4 solvers) plus calibration variants (no-opt, 300 it, linear loss, points-only)."
