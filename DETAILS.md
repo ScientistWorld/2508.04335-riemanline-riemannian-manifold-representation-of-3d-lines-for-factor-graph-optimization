@@ -1,7 +1,3 @@
-# Historical reproduction notes
-
-This file preserves earlier iterations and contains superseded interfaces, experiments and results. The current gym is described in [the problem](briefing/problem.md), [evaluation](briefing/evaluation.md), [method](briefing/method.md) and [hardening report](HARDENING.md). In particular, the final gym includes joint camera/point/line experiments and has no solver wall-clock cutoff. Earlier statements below about fixed cameras only or missing joint optimization do not describe the final package.
-
 # Overview
 
 - **Paper ID:** 2508.04335
@@ -23,23 +19,11 @@ The paper addresses line landmark representation in visual factor graph optimiza
 
 # Problem Definition
 
-## Research Question
+Recover accurate, compact 3D maps from calibrated multi-view observations when some line landmarks are believed to be parallel. Incorrect structural associations should not corrupt the geometry.
 
-How should a visual mapping optimizer represent and refine 3D line landmarks, especially when many of them are known (or believed) to be parallel, so that the reconstructed line geometry is as accurate as possible while the map stays compact?
+The procedural tasks provide known camera poses and noisy, partially visible 2D line segments. Segment endpoints do not correspond between views. The dataset tasks provide initial camera poses, point and line landmarks, pixel measurements, correspondences and declared parallel groups from ICL-NUIM and TartanAir factor graphs. Here camera poses also need refinement. Some tasks contain imperfect parallel associations.
 
-## Setting
-
-Each scene is a small factor graph: a set of calibrated cameras with known poses, and noisy 2D line-segment detections of a set of 3D straight lines (several observations per line, from different cameras). Detected segments are noisy in pixel position and cover only part of the 3D segment, so endpoints do not correspond across views. Each scene also lists *declared parallel groups*: sets of line ids that an upstream module (e.g. vanishing-point clustering) believes to be parallel. Lines outside any group are individual lines. In some scenes these declarations contain mistakes.
-
-The task is to output, for every line of every scene, an infinite 3D line in Plucker form: a direction vector and a normal (moment) vector, expressed in the world frame (the frame of the first camera).
-
-## Why It Matters
-
-Man-made environments are full of parallel line structures. A mapper that exploits them can reconstruct lines more accurately from the same images and store the map with fewer free parameters; a mapper that trusts wrong structure, or ignores structure, pays in accuracy.
-
-## Success Criteria
-
-A good method recovers line directions and positions more accurately (in 3D and when the lines are projected into views it never saw), represents the scene with no more and no fewer degrees of freedom than its true structure needs, and does so on unseen scenes, including scenes where the declared parallel groups are partly wrong.
+For each input, output an infinite 3D line for every line id, represented by its direction and Plucker moment in the input world frame. For joint tasks also output every camera pose in that frame. A world point X maps to camera coordinates as R_cw X + t_cw. A good method reduces geometric error and trajectory error while representing the true line structure compactly, including on unseen sequences and imperfect associations.
 
 ---
 
@@ -57,7 +41,7 @@ Each line is decoupled into a unit direction u2 on the sphere S^2 and a scaled n
 
 ## Implementation in this gym
 
-`method/struct_riemanline.py` (+ `method/line_ba.py`): linear multi-view triangulation as the initial factor graph, the authors' group consensus check, shared-direction initialization from the members' principal direction, and a Levenberg-Marquardt solver whose steps are applied through the Eq. 4-7 retraction (Jacobians in local coordinates by finite differences). Camera poses are known and fixed; the paper's joint pose/point optimisation and ATE evaluation are not reproduced.
+`method/struct_riemanline.py` (+ `method/line_ba.py`): linear multi-view triangulation as the initial factor graph, the authors' group consensus check, shared-direction initialization from the members' principal direction, and a Levenberg-Marquardt solver whose steps are applied through the Eq. 4-7 retraction (Jacobians in local coordinates by finite differences). `method/joint_ba.py` extends the same line states and factors to joint camera pose, point and line optimization on dataset factor graphs, using sparse line derivatives and point Schur elimination. Procedural cameras stay fixed. Dataset instances retain the initial graph estimates and prune landmarks observed by fewer than three selected cameras. Camera pruning requires at least six retained point tracks and keeps the largest connected point co-visibility component; camera and landmark pruning repeat to stability. This common preprocessing uses graph incidence without ground truth. At most 150 keyframes, four phases per sequence, replace the full-sequence scale. Joint ATE uses Sim(3) alignment because inputs have 2D measurements only. Full paper ATE gains and runtime are not claimed.
 
 ## Main Claims
 
@@ -67,43 +51,34 @@ Encoding parallelism inside the minimal representation improves line reconstruct
 
 # Evaluation
 
-How success is measured for any method that reconstructs 3D lines from the scene files described in `briefing/problem.md`. This file describes the measurement only.
+Run `bash scripts/evaluate_train.sh` for visible development scores and `bash scripts/evaluate_test.sh` for the hidden test. Both take no arguments and evaluate every `scripts/methods/*.sh` on disk. Numbers are written under each experiment's `results` in `scoring/scores_train.json` and `scoring/scores_test.json`. Required methods without a solver receive complete failed rows.
 
-## Interface
+A solver is called once per split as `bash scripts/methods/<name>.sh INPUT_DIR OUTPUT_DIR`, with all experiments mixed under opaque scene ids. It writes one JSON per input, named identically:
 
-A method is a solver script `scripts/methods/<name>.sh` called as
+```
+{"lines": [{"id": 1, "normal": [x,y,z], "direction": [x,y,z]}]}
+```
 
-    bash scripts/methods/<name>.sh INPUT_DIR OUTPUT_DIR
+Joint inputs (`task: "joint_ba"`) additionally require `"frames": [{"id": 1, "R_cw": [[...],[...],[...]], "t_cw": [x,y,z]}]`. All frame and line ids must be answered exactly once. Each output JSON is limited to 16 MiB. Direction vectors may have arbitrary nonzero scale if the moment has the same scale; moment and direction must be orthogonal. Other output fields are ignored.
 
-It is called once per split with the scenes of all experiments mixed in one directory under opaque ids (a scene file does not say which experiment it belongs to). It must read every `INPUT_DIR/<scene_id>.json` and write `OUTPUT_DIR/<scene_id>.json` containing
+Procedural inputs contain `cameras` (id, K, R_cw, t_cw), `observations` (line_id, camera_id, pixel endpoints p0, p1), `lines` (ids), `parallel_groups`, and `image_size`. Joint inputs contain `intrinsics` (fx, fy, cx, cy), `frames`, `points` (id, xyz), `lines` (id, start, end), `point_observations` ([point_id, frame_id, u, v]), `line_observations` ([line_id, frame_id, us, vs, ue, ve]), and `parallel_groups`. Initial landmark endpoints in joint inputs are estimates, not ground truth.
 
-    {"lines": [{"id": <int>, "normal": [x, y, z], "direction": [x, y, z]}, ...]}
+The three procedural experiments use 24 train and 64 test scenes each. The two joint experiments use six train sequences and six disjoint test sequences, four keyframe phases per sequence (24/24 instances per experiment), with at most 150 keyframes. ICL-NUIM retains its original measurement noise; TartanAir's exact projected measurements receive 1 px Gaussian noise. After landmark visibility pruning, cameras need at least six retained point tracks; only the largest connected point co-visibility component is retained, with pruning repeated to stability. This prevents unidentifiable camera poses from corrupting global trajectory alignment. All methods see identical instances. The clustered joint experiment derives imperfect associations from the initial estimates. Fixed seeds and deterministic reference optimization eliminate seed noise. Train and test use independent evaluator implementations and the same interface and preprocessing. Train procedural truth is exported to `data/train_scenes/`; train dataset truth is public in `data/downloads/`. Test data, seeds and generators remain in `eval/test/`. Filesystem confinement denies solver access there, including absolute paths; public code and model files remain readable. Inputs, output directories and temporary work directories are writable.
 
-with one entry per line id of the scene. Any other field is ignored. Scene files contain `scene_id`, `cameras` (`id`, `K`, `R_cw`, `t_cw`; a world point X maps to camera coordinates `R_cw X + t_cw`), `observations` (`line_id`, `camera_id`, segment endpoints `p0`, `p1` in pixels), `lines` (ids only), `parallel_groups` (declared groups of line ids) and `image_size`.
+All metrics are lower-is-better and are recomputed from raw geometry against evaluator-owned observations and truth:
 
-Every solver on disk is evaluated; the row named `struct_riemanline` is the reference row. A row listed in `scoring/reference.json` whose solver is missing is scored as a failed run.
+- Direction and moment errors: unsigned angular errors in degrees, median over lines; direction p90 is also scored in every experiment. Procedural experiments additionally score moment p90.
+- `novel_view_line_rmse_px` (procedural only): RMS endpoint-to-line distance in unseen noise-free views, distances clipped at 100 px.
+- `ate_rmse_cm` (joint only): camera-center RMSE after Sim(3) alignment to dataset truth, geometric mean over instances, clipped to [0.01, 1000] cm. Scale is unobservable from the input's 2D measurements.
+- `rotation_rmse_deg` (joint only): orientation RMSE after the same alignment, geometric mean over instances, clipped to [0.001, 180] degrees.
+- `param_count_error_per_line`: absolute difference between the geometric representation's effective and true minimal line parameter counts, divided by the number of scored lines. Each count is 2 times the number of distinct directions plus 2 times the number of lines. Estimated direction equality uses 1e-7 rad; dataset truth uses 0.01 degree to account for coordinate precision. This measures structural compactness; it does not count internal optimizer state or trust declared parameter counts.
+- `effective_line_parameters_per_line` (joint only, display primary): effective geometric line parameters divided by the number of scored lines, or `2 + 2d/n` for `d` distinct estimated directions and `n` scored lines. The evaluator derives both counts from geometry. Its coefficient is zero because compactness already contributes through the preceding error metric; it adds no ranking term. This reports direct dimensionality rather than a residual against scene-specific true structure.
 
-## Splits
+Dataset line metrics pool only landmarks with supplied ground truth. The public carwelding archive has no line-landmark truth, so its four instances contribute trajectory metrics and undergo the line reprojection gate, but do not contribute to line accuracy or compactness. Those quantities use the other five held-out sequences. The disjoint dataset splits have unequal observed difficulty despite the common preprocessing: reference ATE is 4.84 / 5.72 cm on train versus 1.67 / 1.77 cm on test (dataset / clustered associations). Treat train scores as development measurements, not a calibrated predictor of test error. The procedural split errors are comparable. Full numerical comparisons and remaining limitations are in `HARDENING.md`.
 
-- **Train** (`scripts/evaluate_train.sh`, also `scripts/evaluate.sh`): 24 scenes per experiment generated by `eval/train/` with public seeds. Full scenes with ground truth are exported to `data/train_scenes/`; solver inputs and outputs are kept under `outputs/train/`.
-- **Hidden test** (`scripts/evaluate_test.sh`, no arguments): 64 unseen scenes per experiment from the same distribution, generated inside `eval/test/` at evaluation time. Solvers run once on their public inputs; ground truth and held-out cameras never leave the evaluator.
+A nonzero exit, missing output/id, non-finite or impossible geometry, invalid rotation or Plucker constraint, or median endpoint reprojection residual above 10 px in any input fails the entire run. Every experiment then gets every metric's worst value: angular errors 90 degrees, novel-view error 100 px, parameter error 2; joint ATE 1000 cm and rotation 180 degrees. The joint dimensionality display receives 4 parameters per line. A failed task cannot gain rank through compactness. There is no scored runtime or solver wall-clock cutoff.
 
-## Validity
-
-A run fails, and receives the worst value of every metric in every experiment, if the solver exits non-zero or times out, misses a scene or a line, writes a non-finite line, writes a line whose normal is not orthogonal to its direction (Plucker constraint), or does not solve the task: the median endpoint-to-line distance of the scene's own observations to the projected estimated lines exceeds 10 px in any scene (good reconstructions are near 1 px; constant or wrong-structure outputs are at 15-100 px). Worst values: 90 degrees for angles, 100 px for the novel-view error, 2.0 for the parameter-count error.
-
-## Metrics (all lower is better; pooled over all lines of all scenes of an experiment)
-
-- `median_direction_error_deg`, `p90_direction_error_deg`: unsigned angle between estimated and true line directions.
-- `median_normal_error_deg`, `p90_normal_error_deg`: unsigned angle between estimated and true Plucker normal vectors (world frame at the first camera).
-- `novel_view_line_rmse_px`: the true 3D segments are projected (noise-free) into held-out cameras that the method never sees; RMS distance (each distance clipped at 100 px) of those projected endpoints to the projection of the estimated line.
-- `param_count_error_per_line`: the output's effective parameter count is 2 x (number of distinct estimated directions, exact equality up to 1e-7 rad) + 2 x (number of lines); the scene's minimal count is the same formula with the true distinct directions. The metric is |effective - minimal| summed over scenes, divided by the number of lines. Sharing directions that are truly parallel lowers it; sharing directions that are not parallel, or not sharing truly parallel ones, raises it.
-
-All numbers are recomputed by the evaluator from the line estimates; self-reported counts, costs or flags are not read.
-
-## Reference points
-
-`scoring/scores_train.json` and `scoring/scores_test.json` hold the current reference row and three baseline rows on each split. `scoring/reference.json` holds the metric directions, coefficients and experiment weights, and the source paper's own reported numbers.
+The ranking uses the sum, over experiments and metrics, of experiment weight times the absolute coefficient times improvement over the frozen reference in the metric's better direction, divided by that metric's population standard deviation across attempts being ranked (zero variance contributes zero). Failed runs participate with their complete worst-value vectors. Only `results` numbers are ranked; diagnostic status, runtime, bootstrap intervals and illustrative rank deltas are not inputs to ranking. `scoring/reference.json` defines directions, coefficients, weights and calibration rows. Paper numbers on a different scale are preserved under `_paper_reported`; agreement with a paper number is never a metric.
 
 ---
 
@@ -512,6 +487,60 @@ All numbers are recomputed by the evaluator from the line estimates; self-report
 - **Milestone**: `secondary_claims` | **Status**: done
 - **Working time**: 36m | **GPU**: 0.0h
 - **Jobs**: 13 total (10 completed, 2 failed)
+
+<details>
+<summary>Progress Log</summary>
+
+### [2026-06-12 16:36] - method_runs
+- Implemented the paper's line reprojection optimization with the RiemanLine shared-direction parameterization on a fixed synthetic parallel-line factor graph.
+- Added the independent OrthLine baseline and evaluator that reads saved method outputs.
+
+### [2026-06-12 16:36] - core_claim
+- Reproduced the core compactness and structural-consistency claim on `scaled_synthetic_parallel_lines`.
+- StructRiemanLine used 26 effective line parameters versus 48 for the independent-line baseline, with lower median direction and normal angular errors.
+
+### [2026-06-12 16:36] - core_claim_plus
+- Added `scaled_synthetic_parallel_lines_harder` with more lines, more cameras, and higher pixel noise.
+- StructRiemanLine retained the compact `2n + 2` parameter count and lower line geometry errors than the independent baseline on the additional setting.
+
+### [2026-06-12 16:52] - core_claim
+- Continuing audit found the latest CPU packaging job failed before data generation with a Python import-path error.
+- Hardened all shell entrypoints to derive the workspace root from their script location and added an `orthline_constr` explicit parallel-residual baseline for the next validation job.
+
+### [2026-06-12 17:00] - core_claim_plus
+- CPU job `fc48f35f-b33` completed the full two-setting reproduction in the container and passed `python validate.py --compare`.
+- The additional harder setting again showed StructRiemanLine with lower line direction/normal errors and fewer parameters than independent-line baselines.
+
+### [2026-06-12 17:00] - secondary_claims
+- Added and scored the paper's explicit parallel-constraint baseline family as `orthline_constr`.
+- StructRiemanLine preserved exact shared-direction consistency with 26/34 parameters, while explicit constrained OrthLine kept 48/64 independent-line parameters.
+
+### [2026-06-12 17:08] - secondary_claims
+- CPU job `556fa2ba-0ac` reran the full suite after the output metadata fix and passed `python validate.py --compare`.
+- Confirmed all six output artifacts now report the correct experiment names for default and harder settings.
+
+### [2026-06-12 17:11] - secondary_claims
+- Patched the standard evaluator so `scoring/scores.json` covers both target experiments and all metrics, matching `TARGETS.md` and `reference.json`.
+- Removed generated job and trajectory artifacts from the git index; a CPU validation job is being submitted to regenerate scores with the fixed contract.
+
+### [2026-06-12 17:18] - secondary_claims
+- CPU job `4b3ae4c3-066` completed the final validation run and regenerated `scores.json`, `scores_train.json`, and `scores_test.json` with both experiments and full metric coverage.
+- Final verification passed with the milestone unchanged; the gym is ready at scaled synthetic scope.
+
+### [2026-06-12 17:22] - secondary_claims
+- Final verifier reran `python validate.py --compare`; scoring, import separation, train/test wiring, and shared-path checks passed.
+- Tightened method-agnostic evaluation and scoring documentation while keeping the milestone unchanged.
+
+### [2026-11-09] - secondary_claims
+- Hardening: hidden-test scenes generated only inside `eval/test/`, one solver interface for train and test, recomputed metrics with worst-value failures, reference restored to the paper's procedure (triangulation init, Eq. 4-7 updates, Cauchy loss, authors' group inlier check), Eq. 11 / Bartoli-Sturm baselines, and a new `parallel_lines_mislabeled` headroom experiment.
+- StructRiemanLine beats OrthLine, OrthLine_Constr and RiemanLine on the 64-scene hidden test of both correctly grouped experiments with paired bootstrap CIs far from zero; details in `HARDENING.md`.
+
+</details>
+
+### Iteration 11: gpt-6.1-sol (hardener)
+- **Milestone**: `secondary_claims` | **Status**: done
+- **Working time**: 35m | **GPU**: 0.0h
+- **Jobs**: 21 total (15 completed, 3 failed)
 
 <details>
 <summary>Progress Log</summary>

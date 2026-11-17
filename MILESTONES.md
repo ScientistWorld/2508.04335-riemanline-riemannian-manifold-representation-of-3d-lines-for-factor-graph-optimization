@@ -50,20 +50,3 @@
 
 ## Stop Justification
 - Completed at milestone `secondary_claims`.
-
-### [2026-11-17] - secondary_claims
-- Post-design reporting correction completed: all canonical score files include the joint display primary, direct effective parameters per line, computed from evaluator-owned counts saved by job `1c13524f-b40`. Its zero coefficient and exact preservation of every ranked value leave ranks and intervals unchanged. No additional raw-prediction rescore ran. Evidence checks and strict `python validate.py --post-design` pass. Method, data and milestone are unchanged; dataset train/test difficulty remains a limitation.
-
-### [2026-11-17] - secondary_claims
-- Final review pass adds joint pose/point/line experiments on ICL-NUIM and TartanAir, including imperfect initial associations, and balances the public/held-out dataset splits.
-- Closes absolute-path hidden-answer reads with filesystem confinement; removes solver wall-clock limits, pins baseline comparisons, validates overflow and retains private raw test outputs.
-- Combined final reference/baseline and paired control verification pending; no claim of full-sequence ATE or runtime reproduction.
-
-### [2026-11-17] - secondary_claims
-- Combined job `75aa9655-ca8` passed: strict better variant +0.067951, paired 95% CI [+0.060171, +0.076121]; clustered real-data sequence-block CI [+0.024240, +0.066076]. Reference repeat difference zero; replayed paying answer reader now fails; all validity checks and validate.py pass.
-- Audit found a train graph with underconstrained camera poses, so finalizing requires a common graph-observability pruning correction on both splits and one combined rerun. No full-sequence trajectory/runtime claim is added.
-
-### [2026-11-17] - secondary_claims
-- Combined job `1c13524f-b40` completed the final graph-filtered reference and baseline runs on both splits, the better/weaker variants, and affected shortcuts. Reference repeat difference is zero. The strict better variant improves normalized rank by +0.594703, paired 95% CI [+0.527369, +0.660945]; its clustered dataset sequence-block interval is [+0.049904, +0.463743].
-- Answer reads, invalid geometry and missing rows receive complete failure vectors; metadata and observation-copy tampering gain nothing. Canonical scores contain the four reference/baseline methods only. Validation passes.
-- Final packaging retains the milestone `secondary_claims`. Dataset train/test difficulty remains unequal, carwelding lacks line-landmark truth, and full-sequence trajectory gains and runtime claims remain unverified; these limits are explicit in `HARDENING.md` and the evaluation documents.
