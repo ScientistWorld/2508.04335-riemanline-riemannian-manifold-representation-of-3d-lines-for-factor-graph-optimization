@@ -26,6 +26,7 @@ code_hash() {
     find eval method baseline scripts/methods scoring/reference.json -type f \
         \( -name '*.py' -o -name '*.sh' -o -name '*.json' \) \
         -not -path '*/__pycache__/*' -not -path '*/downloads/*' -not -path '*/outputs/*' -not -path 'method/upstream/*' \
+        -not -path '*/hardening_cases/*' -not -path '*/archive_before/*' -not -name 'results_full.json' \
         | LC_ALL=C sort | xargs sha256sum | sha256sum | cut -c1-16
 }
 HASH="$(code_hash)"
