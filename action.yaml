@@ -3,4 +3,4 @@ action: submit
 gpus: 0
 test: false
 milestone: secondary_claims
-notes: "Rerun after evaluator fix (far-away line no longer invalidates a joint run): reference + baselines train/test, 14 hardening cases through the hidden test, analysis, validate."
+notes: "Hardening cases only: joint warm-start, joint group verification, both, and the isolated train-GT lookup through the hidden test; analysis."
