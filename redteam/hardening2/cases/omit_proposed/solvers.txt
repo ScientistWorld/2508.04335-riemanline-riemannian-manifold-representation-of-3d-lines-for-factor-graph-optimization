@@ -1,0 +1,4 @@
+solver scripts on disk: 
+
+struct_riemanline.sh:
+<removed>

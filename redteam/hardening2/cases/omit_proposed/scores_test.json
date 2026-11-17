@@ -1,0 +1,312 @@
+{
+ "_metadata": {
+  "failed_methods": {
+   "orthline": "no solver script scripts/methods/orthline.sh",
+   "orthline_constr": "no solver script scripts/methods/orthline_constr.sh",
+   "riemanline": "no solver script scripts/methods/riemanline.sh",
+   "struct_riemanline": "no solver script scripts/methods/struct_riemanline.sh"
+  },
+  "gate_median_residual_px": 10.0,
+  "joint_ba_gate_median_line_residual_px": 10.0,
+  "joint_ba_instances": {
+   "open_structure_joint_ba": 24,
+   "open_structure_joint_ba_clustered": 24
+  },
+  "joint_ba_worst_values": {
+   "ate_rmse_cm": 1000.0,
+   "median_direction_error_deg": 90.0,
+   "median_normal_error_deg": 90.0,
+   "p90_direction_error_deg": 90.0,
+   "param_count_error_per_line": 2.0,
+   "rotation_rmse_deg": 180.0
+  },
+  "scenes_per_experiment": 64,
+  "solver_dir": "scripts/methods",
+  "split": "test",
+  "worst_values": {
+   "median_direction_error_deg": 90.0,
+   "median_normal_error_deg": 90.0,
+   "novel_view_line_rmse_px": 100.0,
+   "p90_direction_error_deg": 90.0,
+   "p90_normal_error_deg": 90.0,
+   "param_count_error_per_line": 2.0
+  }
+ },
+ "experiments": {
+  "open_structure_joint_ba": {
+   "_per_scene_summary": {},
+   "_status": {
+    "orthline": {
+     "failed": true,
+     "reason": "no solver script scripts/methods/orthline.sh"
+    },
+    "orthline_constr": {
+     "failed": true,
+     "reason": "no solver script scripts/methods/orthline_constr.sh"
+    },
+    "riemanline": {
+     "failed": true,
+     "reason": "no solver script scripts/methods/riemanline.sh"
+    },
+    "struct_riemanline": {
+     "failed": true,
+     "reason": "no solver script scripts/methods/struct_riemanline.sh"
+    }
+   },
+   "results": {
+    "orthline": {
+     "ate_rmse_cm": 1000.0,
+     "median_direction_error_deg": 90.0,
+     "median_normal_error_deg": 90.0,
+     "p90_direction_error_deg": 90.0,
+     "param_count_error_per_line": 2.0,
+     "rotation_rmse_deg": 180.0
+    },
+    "orthline_constr": {
+     "ate_rmse_cm": 1000.0,
+     "median_direction_error_deg": 90.0,
+     "median_normal_error_deg": 90.0,
+     "p90_direction_error_deg": 90.0,
+     "param_count_error_per_line": 2.0,
+     "rotation_rmse_deg": 180.0
+    },
+    "riemanline": {
+     "ate_rmse_cm": 1000.0,
+     "median_direction_error_deg": 90.0,
+     "median_normal_error_deg": 90.0,
+     "p90_direction_error_deg": 90.0,
+     "param_count_error_per_line": 2.0,
+     "rotation_rmse_deg": 180.0
+    },
+    "struct_riemanline": {
+     "ate_rmse_cm": 1000.0,
+     "median_direction_error_deg": 90.0,
+     "median_normal_error_deg": 90.0,
+     "p90_direction_error_deg": 90.0,
+     "param_count_error_per_line": 2.0,
+     "rotation_rmse_deg": 180.0
+    }
+   }
+  },
+  "open_structure_joint_ba_clustered": {
+   "_per_scene_summary": {},
+   "_status": {
+    "orthline": {
+     "failed": true,
+     "reason": "no solver script scripts/methods/orthline.sh"
+    },
+    "orthline_constr": {
+     "failed": true,
+     "reason": "no solver script scripts/methods/orthline_constr.sh"
+    },
+    "riemanline": {
+     "failed": true,
+     "reason": "no solver script scripts/methods/riemanline.sh"
+    },
+    "struct_riemanline": {
+     "failed": true,
+     "reason": "no solver script scripts/methods/struct_riemanline.sh"
+    }
+   },
+   "results": {
+    "orthline": {
+     "ate_rmse_cm": 1000.0,
+     "median_direction_error_deg": 90.0,
+     "median_normal_error_deg": 90.0,
+     "p90_direction_error_deg": 90.0,
+     "param_count_error_per_line": 2.0,
+     "rotation_rmse_deg": 180.0
+    },
+    "orthline_constr": {
+     "ate_rmse_cm": 1000.0,
+     "median_direction_error_deg": 90.0,
+     "median_normal_error_deg": 90.0,
+     "p90_direction_error_deg": 90.0,
+     "param_count_error_per_line": 2.0,
+     "rotation_rmse_deg": 180.0
+    },
+    "riemanline": {
+     "ate_rmse_cm": 1000.0,
+     "median_direction_error_deg": 90.0,
+     "median_normal_error_deg": 90.0,
+     "p90_direction_error_deg": 90.0,
+     "param_count_error_per_line": 2.0,
+     "rotation_rmse_deg": 180.0
+    },
+    "struct_riemanline": {
+     "ate_rmse_cm": 1000.0,
+     "median_direction_error_deg": 90.0,
+     "median_normal_error_deg": 90.0,
+     "p90_direction_error_deg": 90.0,
+     "param_count_error_per_line": 2.0,
+     "rotation_rmse_deg": 180.0
+    }
+   }
+  },
+  "parallel_lines": {
+   "_per_scene_summary": {},
+   "_status": {
+    "orthline": {
+     "failed": true,
+     "reason": "no solver script scripts/methods/orthline.sh"
+    },
+    "orthline_constr": {
+     "failed": true,
+     "reason": "no solver script scripts/methods/orthline_constr.sh"
+    },
+    "riemanline": {
+     "failed": true,
+     "reason": "no solver script scripts/methods/riemanline.sh"
+    },
+    "struct_riemanline": {
+     "failed": true,
+     "reason": "no solver script scripts/methods/struct_riemanline.sh"
+    }
+   },
+   "results": {
+    "orthline": {
+     "median_direction_error_deg": 90.0,
+     "median_normal_error_deg": 90.0,
+     "novel_view_line_rmse_px": 100.0,
+     "p90_direction_error_deg": 90.0,
+     "p90_normal_error_deg": 90.0,
+     "param_count_error_per_line": 2.0
+    },
+    "orthline_constr": {
+     "median_direction_error_deg": 90.0,
+     "median_normal_error_deg": 90.0,
+     "novel_view_line_rmse_px": 100.0,
+     "p90_direction_error_deg": 90.0,
+     "p90_normal_error_deg": 90.0,
+     "param_count_error_per_line": 2.0
+    },
+    "riemanline": {
+     "median_direction_error_deg": 90.0,
+     "median_normal_error_deg": 90.0,
+     "novel_view_line_rmse_px": 100.0,
+     "p90_direction_error_deg": 90.0,
+     "p90_normal_error_deg": 90.0,
+     "param_count_error_per_line": 2.0
+    },
+    "struct_riemanline": {
+     "median_direction_error_deg": 90.0,
+     "median_normal_error_deg": 90.0,
+     "novel_view_line_rmse_px": 100.0,
+     "p90_direction_error_deg": 90.0,
+     "p90_normal_error_deg": 90.0,
+     "param_count_error_per_line": 2.0
+    }
+   }
+  },
+  "parallel_lines_harder": {
+   "_per_scene_summary": {},
+   "_status": {
+    "orthline": {
+     "failed": true,
+     "reason": "no solver script scripts/methods/orthline.sh"
+    },
+    "orthline_constr": {
+     "failed": true,
+     "reason": "no solver script scripts/methods/orthline_constr.sh"
+    },
+    "riemanline": {
+     "failed": true,
+     "reason": "no solver script scripts/methods/riemanline.sh"
+    },
+    "struct_riemanline": {
+     "failed": true,
+     "reason": "no solver script scripts/methods/struct_riemanline.sh"
+    }
+   },
+   "results": {
+    "orthline": {
+     "median_direction_error_deg": 90.0,
+     "median_normal_error_deg": 90.0,
+     "novel_view_line_rmse_px": 100.0,
+     "p90_direction_error_deg": 90.0,
+     "p90_normal_error_deg": 90.0,
+     "param_count_error_per_line": 2.0
+    },
+    "orthline_constr": {
+     "median_direction_error_deg": 90.0,
+     "median_normal_error_deg": 90.0,
+     "novel_view_line_rmse_px": 100.0,
+     "p90_direction_error_deg": 90.0,
+     "p90_normal_error_deg": 90.0,
+     "param_count_error_per_line": 2.0
+    },
+    "riemanline": {
+     "median_direction_error_deg": 90.0,
+     "median_normal_error_deg": 90.0,
+     "novel_view_line_rmse_px": 100.0,
+     "p90_direction_error_deg": 90.0,
+     "p90_normal_error_deg": 90.0,
+     "param_count_error_per_line": 2.0
+    },
+    "struct_riemanline": {
+     "median_direction_error_deg": 90.0,
+     "median_normal_error_deg": 90.0,
+     "novel_view_line_rmse_px": 100.0,
+     "p90_direction_error_deg": 90.0,
+     "p90_normal_error_deg": 90.0,
+     "param_count_error_per_line": 2.0
+    }
+   }
+  },
+  "parallel_lines_mislabeled": {
+   "_per_scene_summary": {},
+   "_status": {
+    "orthline": {
+     "failed": true,
+     "reason": "no solver script scripts/methods/orthline.sh"
+    },
+    "orthline_constr": {
+     "failed": true,
+     "reason": "no solver script scripts/methods/orthline_constr.sh"
+    },
+    "riemanline": {
+     "failed": true,
+     "reason": "no solver script scripts/methods/riemanline.sh"
+    },
+    "struct_riemanline": {
+     "failed": true,
+     "reason": "no solver script scripts/methods/struct_riemanline.sh"
+    }
+   },
+   "results": {
+    "orthline": {
+     "median_direction_error_deg": 90.0,
+     "median_normal_error_deg": 90.0,
+     "novel_view_line_rmse_px": 100.0,
+     "p90_direction_error_deg": 90.0,
+     "p90_normal_error_deg": 90.0,
+     "param_count_error_per_line": 2.0
+    },
+    "orthline_constr": {
+     "median_direction_error_deg": 90.0,
+     "median_normal_error_deg": 90.0,
+     "novel_view_line_rmse_px": 100.0,
+     "p90_direction_error_deg": 90.0,
+     "p90_normal_error_deg": 90.0,
+     "param_count_error_per_line": 2.0
+    },
+    "riemanline": {
+     "median_direction_error_deg": 90.0,
+     "median_normal_error_deg": 90.0,
+     "novel_view_line_rmse_px": 100.0,
+     "p90_direction_error_deg": 90.0,
+     "p90_normal_error_deg": 90.0,
+     "param_count_error_per_line": 2.0
+    },
+    "struct_riemanline": {
+     "median_direction_error_deg": 90.0,
+     "median_normal_error_deg": 90.0,
+     "novel_view_line_rmse_px": 100.0,
+     "p90_direction_error_deg": 90.0,
+     "p90_normal_error_deg": 90.0,
+     "param_count_error_per_line": 2.0
+    }
+   }
+  }
+ }
+}
