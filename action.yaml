@@ -3,4 +3,4 @@ action: submit
 gpus: 0
 test: false
 milestone: secondary_claims
-notes: "Diagnostic: new Open-Structure joint-BA experiment end to end (train+test evaluators, 4 solvers) plus calibration variants (no-opt, 300 it, linear loss, points-only)."
+notes: "Rerun after evaluator fix (far-away line no longer invalidates a joint run): reference + baselines train/test, 14 hardening cases through the hidden test, analysis, validate."
