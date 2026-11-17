@@ -1,0 +1,9 @@
+solver scripts on disk: struct_riemanline.sh
+
+struct_riemanline.sh:
+#!/bin/bash
+set -e
+WORKSPACE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+cd "$WORKSPACE_DIR"
+export PYTHONPATH="$WORKSPACE_DIR:${PYTHONPATH:-}"
+python -m redteam.hardening2.candidates --mode zero_params "$1" "$2"

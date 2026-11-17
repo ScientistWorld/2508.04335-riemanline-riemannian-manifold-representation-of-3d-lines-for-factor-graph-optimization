@@ -3,7 +3,8 @@
   "failed_methods": {
    "orthline": "no solver script scripts/methods/orthline.sh",
    "orthline_constr": "no solver script scripts/methods/orthline_constr.sh",
-   "riemanline": "no solver script scripts/methods/riemanline.sh"
+   "riemanline": "no solver script scripts/methods/riemanline.sh",
+   "struct_riemanline": "exit code 1: is_dir()):\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/user/tmp/hardening2/hidden_abspath/workspace/tmp/eval_test_tf9fj3dp/solver_workspace/redteam/hardening2/candidates.py\", line 277, in <genexpr>\n    for seq_dir in sorted(p for p in root.iterdir() "
   },
   "gate_median_residual_px": 10.0,
   "joint_ba_gate_median_line_residual_px": 10.0,
@@ -33,6 +34,7 @@
  },
  "experiments": {
   "open_structure_joint_ba": {
+   "_note": "Detailed paired records are private to eval/test/.",
    "_status": {
     "orthline": {
      "failed": true,
@@ -47,8 +49,8 @@
      "reason": "no solver script scripts/methods/riemanline.sh"
     },
     "struct_riemanline": {
-     "failed": false,
-     "reason": ""
+     "failed": true,
+     "reason": "exit code 1: is_dir()):\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/user/tmp/hardening2/hidden_abspath/workspace/tmp/eval_test_tf9fj3dp/solver_workspace/redteam/hardening2/candidates.py\", line 277, in <genexpr>\n    for seq_dir in sorted(p for p in root.iterdir() "
     }
    },
    "results": {
@@ -77,16 +79,17 @@
      "rotation_rmse_deg": 180.0
     },
     "struct_riemanline": {
-     "ate_rmse_cm": 0.010000000000000004,
-     "median_direction_error_deg": 0.155067,
-     "median_normal_error_deg": 0.2603775,
-     "p90_direction_error_deg": 1.335586,
-     "param_count_error_per_line": 0.01220865704772475,
-     "rotation_rmse_deg": 0.0010000000000000002
+     "ate_rmse_cm": 1000.0,
+     "median_direction_error_deg": 90.0,
+     "median_normal_error_deg": 90.0,
+     "p90_direction_error_deg": 90.0,
+     "param_count_error_per_line": 2.0,
+     "rotation_rmse_deg": 180.0
     }
    }
   },
   "open_structure_joint_ba_clustered": {
+   "_note": "Detailed paired records are private to eval/test/.",
    "_status": {
     "orthline": {
      "failed": true,
@@ -101,8 +104,8 @@
      "reason": "no solver script scripts/methods/riemanline.sh"
     },
     "struct_riemanline": {
-     "failed": false,
-     "reason": ""
+     "failed": true,
+     "reason": "exit code 1: is_dir()):\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/user/tmp/hardening2/hidden_abspath/workspace/tmp/eval_test_tf9fj3dp/solver_workspace/redteam/hardening2/candidates.py\", line 277, in <genexpr>\n    for seq_dir in sorted(p for p in root.iterdir() "
     }
    },
    "results": {
@@ -131,16 +134,17 @@
      "rotation_rmse_deg": 180.0
     },
     "struct_riemanline": {
-     "ate_rmse_cm": 0.010000000000000004,
-     "median_direction_error_deg": 0.146707,
-     "median_normal_error_deg": 0.25166,
-     "p90_direction_error_deg": 1.4242523000000025,
-     "param_count_error_per_line": 0.1418994413407821,
-     "rotation_rmse_deg": 0.0010000000000000002
+     "ate_rmse_cm": 1000.0,
+     "median_direction_error_deg": 90.0,
+     "median_normal_error_deg": 90.0,
+     "p90_direction_error_deg": 90.0,
+     "param_count_error_per_line": 2.0,
+     "rotation_rmse_deg": 180.0
     }
    }
   },
   "parallel_lines": {
+   "_note": "Detailed paired records are private to eval/test/.",
    "_status": {
     "orthline": {
      "failed": true,
@@ -155,8 +159,8 @@
      "reason": "no solver script scripts/methods/riemanline.sh"
     },
     "struct_riemanline": {
-     "failed": false,
-     "reason": ""
+     "failed": true,
+     "reason": "exit code 1: is_dir()):\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/user/tmp/hardening2/hidden_abspath/workspace/tmp/eval_test_tf9fj3dp/solver_workspace/redteam/hardening2/candidates.py\", line 277, in <genexpr>\n    for seq_dir in sorted(p for p in root.iterdir() "
     }
    },
    "results": {
@@ -185,16 +189,17 @@
      "param_count_error_per_line": 2.0
     },
     "struct_riemanline": {
-     "median_direction_error_deg": 0.0,
-     "median_normal_error_deg": 0.0,
-     "novel_view_line_rmse_px": 8.553081990864445e-14,
-     "p90_direction_error_deg": 0.0,
-     "p90_normal_error_deg": 1e-06,
-     "param_count_error_per_line": 0.0
+     "median_direction_error_deg": 90.0,
+     "median_normal_error_deg": 90.0,
+     "novel_view_line_rmse_px": 100.0,
+     "p90_direction_error_deg": 90.0,
+     "p90_normal_error_deg": 90.0,
+     "param_count_error_per_line": 2.0
     }
    }
   },
   "parallel_lines_harder": {
+   "_note": "Detailed paired records are private to eval/test/.",
    "_status": {
     "orthline": {
      "failed": true,
@@ -209,8 +214,8 @@
      "reason": "no solver script scripts/methods/riemanline.sh"
     },
     "struct_riemanline": {
-     "failed": false,
-     "reason": ""
+     "failed": true,
+     "reason": "exit code 1: is_dir()):\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/user/tmp/hardening2/hidden_abspath/workspace/tmp/eval_test_tf9fj3dp/solver_workspace/redteam/hardening2/candidates.py\", line 277, in <genexpr>\n    for seq_dir in sorted(p for p in root.iterdir() "
     }
    },
    "results": {
@@ -239,16 +244,17 @@
      "param_count_error_per_line": 2.0
     },
     "struct_riemanline": {
-     "median_direction_error_deg": 0.0,
-     "median_normal_error_deg": 0.0,
-     "novel_view_line_rmse_px": 9.428884980473538e-14,
-     "p90_direction_error_deg": 0.0,
-     "p90_normal_error_deg": 1e-06,
-     "param_count_error_per_line": 0.0
+     "median_direction_error_deg": 90.0,
+     "median_normal_error_deg": 90.0,
+     "novel_view_line_rmse_px": 100.0,
+     "p90_direction_error_deg": 90.0,
+     "p90_normal_error_deg": 90.0,
+     "param_count_error_per_line": 2.0
     }
    }
   },
   "parallel_lines_mislabeled": {
+   "_note": "Detailed paired records are private to eval/test/.",
    "_status": {
     "orthline": {
      "failed": true,
@@ -263,8 +269,8 @@
      "reason": "no solver script scripts/methods/riemanline.sh"
     },
     "struct_riemanline": {
-     "failed": false,
-     "reason": ""
+     "failed": true,
+     "reason": "exit code 1: is_dir()):\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/user/tmp/hardening2/hidden_abspath/workspace/tmp/eval_test_tf9fj3dp/solver_workspace/redteam/hardening2/candidates.py\", line 277, in <genexpr>\n    for seq_dir in sorted(p for p in root.iterdir() "
     }
    },
    "results": {
@@ -293,12 +299,12 @@
      "param_count_error_per_line": 2.0
     },
     "struct_riemanline": {
-     "median_direction_error_deg": 0.0,
-     "median_normal_error_deg": 0.0,
-     "novel_view_line_rmse_px": 1.2911819314084042e-13,
-     "p90_direction_error_deg": 0.0,
-     "p90_normal_error_deg": 1e-06,
-     "param_count_error_per_line": 0.0
+     "median_direction_error_deg": 90.0,
+     "median_normal_error_deg": 90.0,
+     "novel_view_line_rmse_px": 100.0,
+     "p90_direction_error_deg": 90.0,
+     "p90_normal_error_deg": 90.0,
+     "param_count_error_per_line": 2.0
     }
    }
   }

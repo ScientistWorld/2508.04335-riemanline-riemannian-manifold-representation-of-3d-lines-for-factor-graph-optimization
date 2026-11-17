@@ -34,6 +34,7 @@
  },
  "experiments": {
   "open_structure_joint_ba": {
+   "_note": "Detailed paired records are private to eval/test/.",
    "_status": {
     "orthline": {
      "failed": true,
@@ -88,6 +89,7 @@
    }
   },
   "open_structure_joint_ba_clustered": {
+   "_note": "Detailed paired records are private to eval/test/.",
    "_status": {
     "orthline": {
      "failed": true,
@@ -142,6 +144,7 @@
    }
   },
   "parallel_lines": {
+   "_note": "Detailed paired records are private to eval/test/.",
    "_status": {
     "orthline": {
      "failed": true,
@@ -196,6 +199,7 @@
    }
   },
   "parallel_lines_harder": {
+   "_note": "Detailed paired records are private to eval/test/.",
    "_status": {
     "orthline": {
      "failed": true,
@@ -250,6 +254,7 @@
    }
   },
   "parallel_lines_mislabeled": {
+   "_note": "Detailed paired records are private to eval/test/.",
    "_status": {
     "orthline": {
      "failed": true,
