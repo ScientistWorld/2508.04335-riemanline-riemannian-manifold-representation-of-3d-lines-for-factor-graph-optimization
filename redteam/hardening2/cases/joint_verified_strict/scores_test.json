@@ -78,12 +78,12 @@
      "rotation_rmse_deg": 180.0
     },
     "struct_riemanline": {
-     "ate_rmse_cm": 1.7418340256985483,
-     "median_direction_error_deg": 0.159305,
-     "median_normal_error_deg": 0.26328949999999995,
-     "p90_direction_error_deg": 1.277219,
-     "param_count_error_per_line": 0.06104328523862375,
-     "rotation_rmse_deg": 0.4377038166647851
+     "ate_rmse_cm": 1.6204509113407848,
+     "median_direction_error_deg": 0.15623399999999998,
+     "median_normal_error_deg": 0.244673,
+     "p90_direction_error_deg": 1.31581,
+     "param_count_error_per_line": 0.05351170568561873,
+     "rotation_rmse_deg": 0.35746532364699235
     }
    }
   },
@@ -133,12 +133,12 @@
      "rotation_rmse_deg": 180.0
     },
     "struct_riemanline": {
-     "ate_rmse_cm": 1.7798788803377659,
-     "median_direction_error_deg": 0.138287,
-     "median_normal_error_deg": 0.2505115,
-     "p90_direction_error_deg": 1.366267,
-     "param_count_error_per_line": 0.07039106145251396,
-     "rotation_rmse_deg": 0.4607714757984377
+     "ate_rmse_cm": 1.6417046551469336,
+     "median_direction_error_deg": 0.136564,
+     "median_normal_error_deg": 0.245615,
+     "p90_direction_error_deg": 1.368522,
+     "param_count_error_per_line": 0.06962380685008422,
+     "rotation_rmse_deg": 0.3642280654078546
     }
    }
   },

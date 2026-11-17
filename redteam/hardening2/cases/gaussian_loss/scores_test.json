@@ -3,8 +3,7 @@
   "failed_methods": {
    "orthline": "no solver script scripts/methods/orthline.sh",
    "orthline_constr": "no solver script scripts/methods/orthline_constr.sh",
-   "riemanline": "no solver script scripts/methods/riemanline.sh",
-   "struct_riemanline": "open_structure_joint_ba: a7161bbefae39bfa: median line residual 10.53px on its own measurements exceeds 10.0px (task not solved)"
+   "riemanline": "no solver script scripts/methods/riemanline.sh"
   },
   "gate_median_residual_px": 10.0,
   "joint_ba_gate_median_line_residual_px": 10.0,
@@ -49,8 +48,8 @@
      "reason": "no solver script scripts/methods/riemanline.sh"
     },
     "struct_riemanline": {
-     "failed": true,
-     "reason": "open_structure_joint_ba: a7161bbefae39bfa: median line residual 10.53px on its own measurements exceeds 10.0px (task not solved)"
+     "failed": false,
+     "reason": ""
     }
    },
    "results": {
@@ -79,12 +78,12 @@
      "rotation_rmse_deg": 180.0
     },
     "struct_riemanline": {
-     "ate_rmse_cm": 1000.0,
-     "median_direction_error_deg": 90.0,
-     "median_normal_error_deg": 90.0,
-     "p90_direction_error_deg": 90.0,
-     "param_count_error_per_line": 2.0,
-     "rotation_rmse_deg": 180.0
+     "ate_rmse_cm": 2.8579357559808827,
+     "median_direction_error_deg": 0.6964925,
+     "median_normal_error_deg": 0.9013884999999999,
+     "p90_direction_error_deg": 10.221022,
+     "param_count_error_per_line": 0.012263099219620958,
+     "rotation_rmse_deg": 0.6457231064343375
     }
    }
   },
@@ -104,8 +103,8 @@
      "reason": "no solver script scripts/methods/riemanline.sh"
     },
     "struct_riemanline": {
-     "failed": true,
-     "reason": "open_structure_joint_ba: a7161bbefae39bfa: median line residual 10.53px on its own measurements exceeds 10.0px (task not solved)"
+     "failed": false,
+     "reason": ""
     }
    },
    "results": {
@@ -134,12 +133,12 @@
      "rotation_rmse_deg": 180.0
     },
     "struct_riemanline": {
-     "ate_rmse_cm": 1000.0,
-     "median_direction_error_deg": 90.0,
-     "median_normal_error_deg": 90.0,
-     "p90_direction_error_deg": 90.0,
-     "param_count_error_per_line": 2.0,
-     "rotation_rmse_deg": 180.0
+     "ate_rmse_cm": 2.6708274916746544,
+     "median_direction_error_deg": 0.579686,
+     "median_normal_error_deg": 0.779285,
+     "p90_direction_error_deg": 5.124634,
+     "param_count_error_per_line": 0.14261650758001124,
+     "rotation_rmse_deg": 0.6940428171581844
     }
    }
   },
@@ -159,8 +158,8 @@
      "reason": "no solver script scripts/methods/riemanline.sh"
     },
     "struct_riemanline": {
-     "failed": true,
-     "reason": "open_structure_joint_ba: a7161bbefae39bfa: median line residual 10.53px on its own measurements exceeds 10.0px (task not solved)"
+     "failed": false,
+     "reason": ""
     }
    },
    "results": {
@@ -189,12 +188,12 @@
      "param_count_error_per_line": 2.0
     },
     "struct_riemanline": {
-     "median_direction_error_deg": 90.0,
-     "median_normal_error_deg": 90.0,
-     "novel_view_line_rmse_px": 100.0,
-     "p90_direction_error_deg": 90.0,
-     "p90_normal_error_deg": 90.0,
-     "param_count_error_per_line": 2.0
+     "median_direction_error_deg": 0.138828,
+     "median_normal_error_deg": 0.108619,
+     "novel_view_line_rmse_px": 0.7144620603954522,
+     "p90_direction_error_deg": 0.344495,
+     "p90_normal_error_deg": 0.4184721,
+     "param_count_error_per_line": 0.0
     }
    }
   },
@@ -214,8 +213,8 @@
      "reason": "no solver script scripts/methods/riemanline.sh"
     },
     "struct_riemanline": {
-     "failed": true,
-     "reason": "open_structure_joint_ba: a7161bbefae39bfa: median line residual 10.53px on its own measurements exceeds 10.0px (task not solved)"
+     "failed": false,
+     "reason": ""
     }
    },
    "results": {
@@ -244,12 +243,12 @@
      "param_count_error_per_line": 2.0
     },
     "struct_riemanline": {
-     "median_direction_error_deg": 90.0,
-     "median_normal_error_deg": 90.0,
-     "novel_view_line_rmse_px": 100.0,
-     "p90_direction_error_deg": 90.0,
-     "p90_normal_error_deg": 90.0,
-     "param_count_error_per_line": 2.0
+     "median_direction_error_deg": 0.462387,
+     "median_normal_error_deg": 0.320594,
+     "novel_view_line_rmse_px": 3.1148563992517784,
+     "p90_direction_error_deg": 1.5485596000000013,
+     "p90_normal_error_deg": 1.3081088000000005,
+     "param_count_error_per_line": 0.02592810842663524
     }
    }
   },
@@ -269,8 +268,8 @@
      "reason": "no solver script scripts/methods/riemanline.sh"
     },
     "struct_riemanline": {
-     "failed": true,
-     "reason": "open_structure_joint_ba: a7161bbefae39bfa: median line residual 10.53px on its own measurements exceeds 10.0px (task not solved)"
+     "failed": false,
+     "reason": ""
     }
    },
    "results": {
@@ -299,12 +298,12 @@
      "param_count_error_per_line": 2.0
     },
     "struct_riemanline": {
-     "median_direction_error_deg": 90.0,
-     "median_normal_error_deg": 90.0,
-     "novel_view_line_rmse_px": 100.0,
-     "p90_direction_error_deg": 90.0,
-     "p90_normal_error_deg": 90.0,
-     "param_count_error_per_line": 2.0
+     "median_direction_error_deg": 0.949873,
+     "median_normal_error_deg": 0.6475985,
+     "novel_view_line_rmse_px": 3.829967395145574,
+     "p90_direction_error_deg": 4.9583007,
+     "p90_normal_error_deg": 3.625444999999998,
+     "param_count_error_per_line": 0.2973300970873786
     }
    }
   }

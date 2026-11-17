@@ -4,7 +4,7 @@
    "orthline": "no solver script scripts/methods/orthline.sh",
    "orthline_constr": "no solver script scripts/methods/orthline_constr.sh",
    "riemanline": "no solver script scripts/methods/riemanline.sh",
-   "struct_riemanline": "exit code 1: is_dir()):\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/user/tmp/hardening2/hidden_abspath/workspace/tmp/eval_test_tf9fj3dp/solver_workspace/redteam/hardening2/candidates.py\", line 277, in <genexpr>\n    for seq_dir in sorted(p for p in root.iterdir() "
+   "struct_riemanline": "exit code 1: is_dir()):\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/user/tmp/hardening2/hidden_abspath/workspace/tmp/eval_test_hu32uthd/solver_workspace/redteam/hardening2/candidates.py\", line 277, in <genexpr>\n    for seq_dir in sorted(p for p in root.iterdir() "
   },
   "gate_median_residual_px": 10.0,
   "joint_ba_gate_median_line_residual_px": 10.0,
@@ -50,7 +50,7 @@
     },
     "struct_riemanline": {
      "failed": true,
-     "reason": "exit code 1: is_dir()):\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/user/tmp/hardening2/hidden_abspath/workspace/tmp/eval_test_tf9fj3dp/solver_workspace/redteam/hardening2/candidates.py\", line 277, in <genexpr>\n    for seq_dir in sorted(p for p in root.iterdir() "
+     "reason": "exit code 1: is_dir()):\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/user/tmp/hardening2/hidden_abspath/workspace/tmp/eval_test_hu32uthd/solver_workspace/redteam/hardening2/candidates.py\", line 277, in <genexpr>\n    for seq_dir in sorted(p for p in root.iterdir() "
     }
    },
    "results": {
@@ -105,7 +105,7 @@
     },
     "struct_riemanline": {
      "failed": true,
-     "reason": "exit code 1: is_dir()):\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/user/tmp/hardening2/hidden_abspath/workspace/tmp/eval_test_tf9fj3dp/solver_workspace/redteam/hardening2/candidates.py\", line 277, in <genexpr>\n    for seq_dir in sorted(p for p in root.iterdir() "
+     "reason": "exit code 1: is_dir()):\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/user/tmp/hardening2/hidden_abspath/workspace/tmp/eval_test_hu32uthd/solver_workspace/redteam/hardening2/candidates.py\", line 277, in <genexpr>\n    for seq_dir in sorted(p for p in root.iterdir() "
     }
    },
    "results": {
@@ -160,7 +160,7 @@
     },
     "struct_riemanline": {
      "failed": true,
-     "reason": "exit code 1: is_dir()):\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/user/tmp/hardening2/hidden_abspath/workspace/tmp/eval_test_tf9fj3dp/solver_workspace/redteam/hardening2/candidates.py\", line 277, in <genexpr>\n    for seq_dir in sorted(p for p in root.iterdir() "
+     "reason": "exit code 1: is_dir()):\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/user/tmp/hardening2/hidden_abspath/workspace/tmp/eval_test_hu32uthd/solver_workspace/redteam/hardening2/candidates.py\", line 277, in <genexpr>\n    for seq_dir in sorted(p for p in root.iterdir() "
     }
    },
    "results": {
@@ -215,7 +215,7 @@
     },
     "struct_riemanline": {
      "failed": true,
-     "reason": "exit code 1: is_dir()):\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/user/tmp/hardening2/hidden_abspath/workspace/tmp/eval_test_tf9fj3dp/solver_workspace/redteam/hardening2/candidates.py\", line 277, in <genexpr>\n    for seq_dir in sorted(p for p in root.iterdir() "
+     "reason": "exit code 1: is_dir()):\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/user/tmp/hardening2/hidden_abspath/workspace/tmp/eval_test_hu32uthd/solver_workspace/redteam/hardening2/candidates.py\", line 277, in <genexpr>\n    for seq_dir in sorted(p for p in root.iterdir() "
     }
    },
    "results": {
@@ -270,7 +270,7 @@
     },
     "struct_riemanline": {
      "failed": true,
-     "reason": "exit code 1: is_dir()):\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/user/tmp/hardening2/hidden_abspath/workspace/tmp/eval_test_tf9fj3dp/solver_workspace/redteam/hardening2/candidates.py\", line 277, in <genexpr>\n    for seq_dir in sorted(p for p in root.iterdir() "
+     "reason": "exit code 1: is_dir()):\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/user/tmp/hardening2/hidden_abspath/workspace/tmp/eval_test_hu32uthd/solver_workspace/redteam/hardening2/candidates.py\", line 277, in <genexpr>\n    for seq_dir in sorted(p for p in root.iterdir() "
     }
    },
    "results": {
