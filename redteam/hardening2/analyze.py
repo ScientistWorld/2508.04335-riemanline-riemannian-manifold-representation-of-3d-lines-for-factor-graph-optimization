@@ -100,7 +100,9 @@ def main() -> None:
                       "failed": failed,
                       "reason": sc["experiments"][exp0]["_status"].get(REF, {}).get("reason", "")}
 
-    honest_cohort = [REF] + BASELINES + [c for c in HONEST if c in rows]
+    # Failed runs are left out of the standard deviations (their worst values
+    # would otherwise set the scale); they are still ranked against it.
+    honest_cohort = [REF] + BASELINES + [c for c in HONEST if c in rows and not rows[c]["failed"]]
 
     def sds(cohort: list[str]) -> dict:
         out = {}
@@ -132,7 +134,7 @@ def main() -> None:
         if name == REF:
             continue
         is_shortcut = name in SHORTCUTS or name == "omit_proposed"
-        sd = sds(honest_cohort + [name]) if is_shortcut else sd_q
+        sd = sds(honest_cohort + [name]) if (is_shortcut and not rows[name]["failed"]) else sd_q
         entry = {"failed": rows[name]["failed"], "reason": rows[name].get("reason", "")[:200],
                  "status": status.get(name),
                  "rank_delta_vs_reference": delta(rows[name]["results"], rows[REF]["results"], sd),

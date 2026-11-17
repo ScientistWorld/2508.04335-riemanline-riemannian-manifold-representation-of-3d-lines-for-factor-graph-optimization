@@ -111,6 +111,124 @@ def staged(scene: dict[str, Any], loss: str = "cauchy") -> dict[str, Any]:
     return out
 
 
+CHI2_2DOF_1E4 = 18.42
+
+
+def _joint_solve(scene: dict[str, Any], use_groups: bool = True, loss: str = "cauchy"):
+    pb = JointProblem(scene)
+    n, d = pb.initial_plucker()
+    state = build_state(pb.groups, n, d, pb.num_lines, use_groups=use_groups)
+    poses, x, state, info = solve_joint(pb, LineModel(state, state.column_lines()), loss=loss)
+    return pb, poses, x, state, info
+
+
+def _scene_from(scene: dict[str, Any], pb: JointProblem, poses: Poses, x: np.ndarray, state: Any,
+                groups: list[list[int]] | None = None) -> dict[str, Any]:
+    """A new initial factor graph from a solution (poses, points, lines)."""
+    n, d = state.decode()
+    lines = []
+    for i, lid in enumerate(pb.line_ids):
+        p = np.cross(d[i], n[i])
+        lines.append({"id": lid, "start": p.tolist(), "end": (p + d[i]).tolist()})
+    return dict(scene, frames=frames_payload(pb, poses),
+                points=[{"id": pid, "xyz": x[i].tolist()} for i, pid in enumerate(pb.point_ids)],
+                lines=lines, parallel_groups=groups if groups is not None else scene.get("parallel_groups", []))
+
+
+def _payload(pb: JointProblem, poses: Poses, state: Any, info: dict[str, Any]) -> dict[str, Any]:
+    n, d = state.decode()
+    return {"frames": frames_payload(pb, poses), "solver": info,
+            "lines": [{"id": pb.line_ids[i], "normal": n[i].tolist(), "direction": d[i].tolist()} for i in range(pb.num_lines)]}
+
+
+def _line_rows(pb: JointProblem, poses: Poses, idx: np.ndarray, n: np.ndarray, d: np.ndarray) -> np.ndarray:
+    r = poses.R[pb.l_fr[idx]]
+    t = poses.t[pb.l_fr[idx]]
+    nc = np.einsum("kji,kj->ki", r, n[None, :] - np.cross(t, d[None, :]))
+    den = np.sqrt(nc[:, 0] ** 2 + nc[:, 1] ** 2) + 1e-12
+    r0 = (nc[:, 0] * pb.l_s[idx, 0] + nc[:, 1] * pb.l_s[idx, 1] + nc[:, 2]) / den
+    r1 = (nc[:, 0] * pb.l_e[idx, 0] + nc[:, 1] * pb.l_e[idx, 1] + nc[:, 2]) / den
+    return pb.scale * np.concatenate([r0, r1])
+
+
+def _free_fit(pb: JointProblem, poses: Poses, i: int, n_i: np.ndarray, d_i: np.ndarray) -> float:
+    """Squared residual of line i's measurements after refitting it as a free
+    4-DoF RiemanLine with the poses held fixed."""
+    from method.line_ba import levenberg_marquardt
+    from method.struct_riemanline import GroupedLines, group_from_lines
+
+    idx = np.nonzero(pb.l_ln == i)[0]
+    normals = np.zeros((pb.num_lines, 3))
+    directions = np.tile(np.array([0.0, 0.0, 1.0]), (pb.num_lines, 1))
+    normals[i], directions[i] = n_i, d_i
+    single = GroupedLines([group_from_lines([i], normals, directions, u2=d_i)], pb.num_lines)
+
+    def residual(st):
+        nn, dd = st.decode()
+        return _line_rows(pb, poses, idx, nn[i], dd[i])
+
+    free, _ = levenberg_marquardt(single, lambda st, dl: st.plus(dl), residual, single.column_lines(),
+                                  [(i,)] * (2 * len(idx)), pb.num_lines, loss="cauchy", scale=CAUCHY_PX)
+    nn, dd = free.decode()
+    return float(np.sum(_line_rows(pb, poses, idx, nn[i], dd[i]) ** 2))
+
+
+def joint_verified(scene: dict[str, Any], warm: bool = False, max_rounds: int = 4) -> dict[str, Any]:
+    """StructRiemanLine with a statistical membership test on the joint graph:
+    after each optimisation, every group member whose own measurements reject
+    the shared direction (freeing its direction lowers its squared residual by
+    more than the chi^2(2) 1e-4 quantile, robust sigma) is a candidate; the
+    worst one per group is ejected (it becomes an individual RiemanLine) and the
+    graph is re-optimised from the current solution.  ``warm`` first solves the
+    graph with independent RiemanLines and starts StructRiemanLine from there."""
+    if warm:
+        pb, poses, x, state, _ = _joint_solve(scene, use_groups=False)
+        scene = _scene_from(scene, pb, poses, x, state)
+    pb, poses, x, state, info = _joint_solve(scene)
+    groups = [list(map(int, g)) for g in scene.get("parallel_groups", [])]
+    ejected: list[int] = []
+    for _ in range(max_rounds):
+        n, d = state.decode()
+        r_all = line_residual_vector(pb, poses, n, d)
+        sigma2 = (1.4826 * float(np.median(np.abs(r_all)))) ** 2 + 1e-12
+        drop: list[int] = []
+        for g in state.groups:
+            if len(g.lines) < 3:
+                continue
+            best = (-1.0, -1)
+            for i in g.lines:
+                idx = np.nonzero(pb.l_ln == i)[0]
+                shared = float(np.sum(_line_rows(pb, poses, idx, n[i], d[i]) ** 2))
+                stat = (shared - _free_fit(pb, poses, int(i), n[i], d[i])) / sigma2
+                if stat > best[0]:
+                    best = (stat, int(i))
+            if best[0] > CHI2_2DOF_1E4:
+                drop.append(best[1])
+        if not drop:
+            break
+        ids = {pb.line_ids[i] for i in drop}
+        ejected.extend(sorted(ids))
+        groups = [[m for m in g if m not in ids] for g in groups]
+        scene = _scene_from(scene, pb, poses, x, state, groups=groups)
+        pb, poses, x, state, info = _joint_solve(scene)
+    out = _payload(pb, poses, state, info)
+    out["ejected_lines"] = len(ejected)
+    return out
+
+
+def joint_warm(scene: dict[str, Any]) -> dict[str, Any]:
+    """StructRiemanLine started from the independent-RiemanLine solution of the same graph."""
+    pb, poses, x, state, _ = _joint_solve(scene, use_groups=False)
+    pb, poses, x, state, info = _joint_solve(_scene_from(scene, pb, poses, x, state))
+    return _payload(pb, poses, state, info)
+
+
+def line_residual_vector(pb: JointProblem, poses: Poses, n: np.ndarray, d: np.ndarray) -> np.ndarray:
+    from method.joint_ba import line_residuals
+
+    return line_residuals(pb, poses, n, d)
+
+
 # ------------------------------------------------------------------ shortcuts
 
 def _read_traj(path: Path) -> dict[int, np.ndarray]:
@@ -223,7 +341,7 @@ def public_gt_lookup(scene: dict[str, Any]) -> dict[str, Any]:
     """Look the instance up among the public (train) Open-Structure sequences."""
     if is_joint(scene):
         return ground_truth_poses(scene, [ROOT / "data" / "downloads" / "open_structure"])
-    return old.visible_answers(scene)
+    return reference(scene)
 
 
 def scale_gauge(scene: dict[str, Any]) -> dict[str, Any]:
@@ -299,7 +417,7 @@ def _guarded(fn, scene: dict[str, Any]) -> dict[str, Any]:
     except Exception as exc:  # noqa: BLE001
         import traceback
 
-        print(f"WARNING: {fn.__name__} failed on {scene.get('scene_id')}: {exc!r}\n{traceback.format_exc()}", flush=True)
+        print(f"WARNING: {getattr(fn, '__name__', 'variant')} failed on {scene.get('scene_id')}: {exc!r}\n{traceback.format_exc()}", flush=True)
         out = reference(scene)
         out["fallback"] = "reference"
         return out
@@ -321,6 +439,13 @@ def run(mode: str, input_dir: Path, output_dir: Path) -> None:
             out = _guarded(staged, scene) if joint else reference(scene)
         elif mode == "verified_staged":
             out = _guarded(staged, scene) if joint else old.verified_groups(scene, loss="cauchy")
+        elif mode == "joint_warm":
+            out = _guarded(joint_warm, scene) if joint else old.verified_groups(scene, loss="cauchy")
+        elif mode == "joint_verified":
+            out = _guarded(joint_verified, scene) if joint else old.verified_groups(scene, loss="cauchy")
+        elif mode == "joint_warm_verified":
+            out = (_guarded(lambda sc: joint_verified(sc, warm=True), scene) if joint
+                   else old.verified_groups(scene, loss="cauchy"))
         elif mode == "hidden_abspath":
             out = hidden_abspath(scene)
         elif mode == "public_gt_lookup":

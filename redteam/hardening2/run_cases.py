@@ -31,7 +31,8 @@ export PYTHONPATH="$WORKSPACE_DIR:${{PYTHONPATH:-}}"
 python -m redteam.hardening2.candidates --mode {mode} "$1" "$2"
 """
 
-HONEST = ["no_optimization", "gaussian_loss", "verified_groups", "staged", "verified_staged"]
+HONEST = ["no_optimization", "gaussian_loss", "verified_groups", "staged", "verified_staged",
+          "joint_warm", "joint_verified", "joint_warm_verified"]
 SHORTCUTS = ["hidden_abspath", "public_gt_lookup", "scale_gauge", "constant_lines", "bad_rotation",
              "missing_frames", "nan_geometry", "observation_replace"]
 CASES: dict[str, dict] = {m: {"replace": m} for m in HONEST + SHORTCUTS}

@@ -3,12 +3,12 @@
   "bad_rotation": {
    "failed": true,
    "per_experiment_delta": {
-    "open_structure_joint_ba": -10.317353342946609,
-    "parallel_lines": -9.691957459466881,
-    "parallel_lines_harder": -9.730806259689338,
-    "parallel_lines_mislabeled": -9.549756305081571
+    "open_structure_joint_ba": -639.3650811245421,
+    "parallel_lines": -2637.8716325001096,
+    "parallel_lines_harder": -550.4228721172067,
+    "parallel_lines_mislabeled": -906.8124699455699
    },
-   "rank_delta_vs_reference": -9.928555399745468,
+   "rank_delta_vs_reference": -1161.3203854901212,
    "reason": "open_structure_joint_ba: 15c4c77a0d5d42ef.json: R_cw of frame 73 is not a rotation",
    "results": {
     "open_structure_joint_ba": {
@@ -52,12 +52,12 @@
   "constant_lines": {
    "failed": true,
    "per_experiment_delta": {
-    "open_structure_joint_ba": -10.317353342946609,
-    "parallel_lines": -9.691957459466881,
-    "parallel_lines_harder": -9.730806259689338,
-    "parallel_lines_mislabeled": -9.549756305081571
+    "open_structure_joint_ba": -639.3650811245421,
+    "parallel_lines": -2637.8716325001096,
+    "parallel_lines_harder": -550.4228721172067,
+    "parallel_lines_mislabeled": -906.8124699455699
    },
-   "rank_delta_vs_reference": -9.928555399745468,
+   "rank_delta_vs_reference": -1161.3203854901212,
    "reason": "parallel_lines: scene_601004111776482d: median residual 100.00px on its own observations exceeds 10.0px (task not solved)",
    "results": {
     "open_structure_joint_ba": {
@@ -101,12 +101,12 @@
   "gaussian_loss": {
    "failed": true,
    "per_experiment_delta": {
-    "open_structure_joint_ba": -12.799724405003637,
-    "parallel_lines": -12.096236143772433,
-    "parallel_lines_harder": -12.13280181208967,
-    "parallel_lines_mislabeled": -11.951027974130914
+    "open_structure_joint_ba": -639.3650811245421,
+    "parallel_lines": -2637.8716325001096,
+    "parallel_lines_harder": -550.4228721172067,
+    "parallel_lines_mislabeled": -906.8124699455699
    },
-   "rank_delta_vs_reference": -12.363163356482133,
+   "rank_delta_vs_reference": -1161.3203854901212,
    "reason": "open_structure_joint_ba: a7161bbefae39bfa: median line residual 10.53px on its own measurements exceeds 10.0px (task not solved)",
    "results": {
     "open_structure_joint_ba": {
@@ -150,12 +150,12 @@
   "hidden_abspath": {
    "failed": false,
    "per_experiment_delta": {
-    "open_structure_joint_ba": 0.00975723125198094,
-    "parallel_lines": 0.037259045716657745,
-    "parallel_lines_harder": 0.1745841313630564,
-    "parallel_lines_mislabeled": 0.5065066709639956
+    "open_structure_joint_ba": 0.8380150055682912,
+    "parallel_lines": 4.490931743833526,
+    "parallel_lines_harder": 3.4129035884266776,
+    "parallel_lines_mislabeled": 5.6232277319912916
    },
-   "rank_delta_vs_reference": 0.12411048084716744,
+   "rank_delta_vs_reference": 2.9840038156697277,
    "reason": "",
    "results": {
     "open_structure_joint_ba": {
@@ -199,12 +199,12 @@
   "missing_frames": {
    "failed": true,
    "per_experiment_delta": {
-    "open_structure_joint_ba": -10.317353342946609,
-    "parallel_lines": -9.691957459466881,
-    "parallel_lines_harder": -9.730806259689338,
-    "parallel_lines_mislabeled": -9.549756305081571
+    "open_structure_joint_ba": -639.3650811245421,
+    "parallel_lines": -2637.8716325001096,
+    "parallel_lines_harder": -550.4228721172067,
+    "parallel_lines_mislabeled": -906.8124699455699
    },
-   "rank_delta_vs_reference": -9.928555399745468,
+   "rank_delta_vs_reference": -1161.3203854901212,
    "reason": "open_structure_joint_ba: 15c4c77a0d5d42ef.json: frame ids mismatch",
    "results": {
     "open_structure_joint_ba": {
@@ -248,12 +248,12 @@
   "nan_geometry": {
    "failed": true,
    "per_experiment_delta": {
-    "open_structure_joint_ba": -10.317353342946609,
-    "parallel_lines": -9.691957459466881,
-    "parallel_lines_harder": -9.730806259689338,
-    "parallel_lines_mislabeled": -9.549756305081571
+    "open_structure_joint_ba": -639.3650811245421,
+    "parallel_lines": -2637.8716325001096,
+    "parallel_lines_harder": -550.4228721172067,
+    "parallel_lines_mislabeled": -906.8124699455699
    },
-   "rank_delta_vs_reference": -9.928555399745468,
+   "rank_delta_vs_reference": -1161.3203854901212,
    "reason": "parallel_lines: scene_601004111776482d.json: non-finite line 0",
    "results": {
     "open_structure_joint_ba": {
@@ -297,30 +297,30 @@
   "no_optimization": {
    "failed": false,
    "per_experiment_delta": {
-    "open_structure_joint_ba": -1.3588258724871307,
-    "parallel_lines": -0.0419779234269345,
-    "parallel_lines_harder": -0.28878495465504095,
-    "parallel_lines_mislabeled": -0.13041221789038687
+    "open_structure_joint_ba": -10.849450729319816,
+    "parallel_lines": -4.364356484087138,
+    "parallel_lines_harder": -5.355969094375523,
+    "parallel_lines_mislabeled": -6.062906075598195
    },
    "per_experiment_delta_ci95": {
     "open_structure_joint_ba": [
-     -1.456,
-     -1.268
+     -14.47,
+     -8.652
     ],
     "parallel_lines": [
-     -0.049,
-     -0.035
+     -5.221,
+     -3.645
     ],
     "parallel_lines_harder": [
-     -0.343,
-     -0.232
+     -6.401,
+     -4.334
     ],
     "parallel_lines_mislabeled": [
-     -0.149,
-     -0.114
+     -6.627,
+     -5.412
     ]
    },
-   "rank_delta_vs_reference": -0.6313436534661522,
+   "rank_delta_vs_reference": -7.411499142964545,
    "reason": "",
    "results": {
     "open_structure_joint_ba": {
@@ -413,12 +413,12 @@
   "omit_proposed": {
    "failed": true,
    "per_experiment_delta": {
-    "open_structure_joint_ba": -10.317353342946609,
-    "parallel_lines": -9.691957459466881,
-    "parallel_lines_harder": -9.730806259689338,
-    "parallel_lines_mislabeled": -9.549756305081571
+    "open_structure_joint_ba": -639.3650811245421,
+    "parallel_lines": -2637.8716325001096,
+    "parallel_lines_harder": -550.4228721172067,
+    "parallel_lines_mislabeled": -906.8124699455699
    },
-   "rank_delta_vs_reference": -9.928555399745468,
+   "rank_delta_vs_reference": -1161.3203854901212,
    "reason": "no solver script scripts/methods/struct_riemanline.sh",
    "results": {
     "open_structure_joint_ba": {
@@ -462,30 +462,30 @@
   "orthline": {
    "failed": false,
    "per_experiment_delta": {
-    "open_structure_joint_ba": -1.388162199071378,
-    "parallel_lines": -0.9226971568073477,
-    "parallel_lines_harder": -1.0976126035579978,
-    "parallel_lines_mislabeled": -0.5238731483915897
+    "open_structure_joint_ba": -4.741251277115879,
+    "parallel_lines": -7.271428413893098,
+    "parallel_lines_harder": -7.678720850452003,
+    "parallel_lines_mislabeled": 0.6398376733129219
    },
    "per_experiment_delta_ci95": {
     "open_structure_joint_ba": [
-     -1.522,
-     -1.284
+     -6.172,
+     -3.765
     ],
     "parallel_lines": [
-     -0.937,
-     -0.909
+     -7.893,
+     -6.804
     ],
     "parallel_lines_harder": [
-     -1.133,
-     -1.07
+     -8.394,
+     -7.119
     ],
     "parallel_lines_mislabeled": [
-     -0.559,
-     -0.488
+     0.227,
+     1.099
     ]
    },
-   "rank_delta_vs_reference": -1.0840426618007264,
+   "rank_delta_vs_reference": -5.154126133413088,
    "reason": "",
    "results": {
     "open_structure_joint_ba": {
@@ -526,30 +526,30 @@
   "orthline_constr": {
    "failed": false,
    "per_experiment_delta": {
-    "open_structure_joint_ba": -1.0910394999347077,
-    "parallel_lines": -0.9218166824615388,
-    "parallel_lines_harder": -0.9981693607904614,
-    "parallel_lines_mislabeled": -0.5210179491541382
+    "open_structure_joint_ba": -2.3322397242921444,
+    "parallel_lines": -7.169227210612892,
+    "parallel_lines_harder": -5.250419681557329,
+    "parallel_lines_mislabeled": 0.7378941025512002
    },
    "per_experiment_delta_ci95": {
     "open_structure_joint_ba": [
-     -1.114,
-     -1.056
+     -2.477,
+     -2.148
     ],
     "parallel_lines": [
-     -0.936,
-     -0.909
+     -7.681,
+     -6.694
     ],
     "parallel_lines_harder": [
-     -1.015,
-     -0.981
+     -5.555,
+     -4.947
     ],
     "parallel_lines_mislabeled": [
-     -0.559,
-     -0.484
+     0.307,
+     1.166
     ]
    },
-   "rank_delta_vs_reference": -0.9446565351204808,
+   "rank_delta_vs_reference": -3.664602513298867,
    "reason": "",
    "results": {
     "open_structure_joint_ba": {
@@ -587,82 +587,33 @@
    },
    "status": null
   },
-  "public_gt_lookup": {
-   "failed": true,
-   "per_experiment_delta": {
-    "open_structure_joint_ba": -10.317353342946609,
-    "parallel_lines": -9.691957459466881,
-    "parallel_lines_harder": -9.730806259689338,
-    "parallel_lines_mislabeled": -9.549756305081571
-   },
-   "rank_delta_vs_reference": -9.928555399745468,
-   "reason": "parallel_lines: scene_601004111776482d: median residual 100.00px on its own observations exceeds 10.0px (task not solved)",
-   "results": {
-    "open_structure_joint_ba": {
-     "ate_rmse_cm": 1000.0,
-     "median_direction_error_deg": 90.0,
-     "median_normal_error_deg": 90.0,
-     "p90_direction_error_deg": 90.0,
-     "param_count_error_per_line": 2.0,
-     "rotation_rmse_deg": 180.0
-    },
-    "parallel_lines": {
-     "median_direction_error_deg": 90.0,
-     "median_normal_error_deg": 90.0,
-     "novel_view_line_rmse_px": 100.0,
-     "p90_direction_error_deg": 90.0,
-     "p90_normal_error_deg": 90.0,
-     "param_count_error_per_line": 2.0
-    },
-    "parallel_lines_harder": {
-     "median_direction_error_deg": 90.0,
-     "median_normal_error_deg": 90.0,
-     "novel_view_line_rmse_px": 100.0,
-     "p90_direction_error_deg": 90.0,
-     "p90_normal_error_deg": 90.0,
-     "param_count_error_per_line": 2.0
-    },
-    "parallel_lines_mislabeled": {
-     "median_direction_error_deg": 90.0,
-     "median_normal_error_deg": 90.0,
-     "novel_view_line_rmse_px": 100.0,
-     "p90_direction_error_deg": 90.0,
-     "p90_normal_error_deg": 90.0,
-     "param_count_error_per_line": 2.0
-    }
-   },
-   "status": {
-    "returncode": 0,
-    "seconds": 90.3
-   }
-  },
   "riemanline": {
    "failed": false,
    "per_experiment_delta": {
-    "open_structure_joint_ba": -1.3276847693742306,
-    "parallel_lines": -0.9226970291011729,
-    "parallel_lines_harder": -1.1025917131471774,
-    "parallel_lines_mislabeled": -0.523873139624835
+    "open_structure_joint_ba": -4.3966445498352,
+    "parallel_lines": -7.271414062736082,
+    "parallel_lines_harder": -7.711424411388698,
+    "parallel_lines_mislabeled": 0.6398468747036679
    },
    "per_experiment_delta_ci95": {
     "open_structure_joint_ba": [
-     -1.406,
-     -1.263
+     -5.425,
+     -3.688
     ],
     "parallel_lines": [
-     -0.937,
-     -0.91
+     -7.901,
+     -6.812
     ],
     "parallel_lines_harder": [
-     -1.139,
-     -1.076
+     -8.481,
+     -7.153
     ],
     "parallel_lines_mislabeled": [
-     -0.559,
-     -0.487
+     0.186,
+     1.061
     ]
    },
-   "rank_delta_vs_reference": -1.0608474785981463,
+   "rank_delta_vs_reference": -5.02281918669029,
    "reason": "",
    "results": {
     "open_structure_joint_ba": {
@@ -703,12 +654,12 @@
   "scale_gauge": {
    "failed": false,
    "per_experiment_delta": {
-    "open_structure_joint_ba": 8.851447479892255e-15,
+    "open_structure_joint_ba": 6.564614781906164e-13,
     "parallel_lines": 0.0,
     "parallel_lines_harder": 0.0,
     "parallel_lines_mislabeled": 0.0
    },
-   "rank_delta_vs_reference": 3.5405789919569022e-15,
+   "rank_delta_vs_reference": 2.6258459127624656e-13,
    "reason": "",
    "results": {
     "open_structure_joint_ba": {
@@ -752,15 +703,15 @@
   "staged": {
    "failed": false,
    "per_experiment_delta": {
-    "open_structure_joint_ba": -0.4136150335617473,
+    "open_structure_joint_ba": -1.7473781472663958,
     "parallel_lines": 0.0,
     "parallel_lines_harder": 0.0,
     "parallel_lines_mislabeled": 0.0
    },
    "per_experiment_delta_ci95": {
     "open_structure_joint_ba": [
-     -0.75,
-     -0.237
+     -3.154,
+     -0.909
     ],
     "parallel_lines": [
      0.0,
@@ -775,7 +726,7 @@
      0.0
     ]
    },
-   "rank_delta_vs_reference": -0.16544601342469895,
+   "rank_delta_vs_reference": -0.6989512589065583,
    "reason": "",
    "results": {
     "open_structure_joint_ba": {
@@ -820,9 +771,9 @@
    "failed": false,
    "per_experiment_delta": {
     "open_structure_joint_ba": 0.0,
-    "parallel_lines": -0.0011304077225843768,
-    "parallel_lines_harder": -0.007435370506051236,
-    "parallel_lines_mislabeled": 0.44789940362768
+    "parallel_lines": -0.01821432489046363,
+    "parallel_lines_harder": -0.03995129677832786,
+    "parallel_lines_mislabeled": 3.9297348988153753
    },
    "per_experiment_delta_ci95": {
     "open_structure_joint_ba": [
@@ -830,19 +781,19 @@
      0.0
     ],
     "parallel_lines": [
-     -0.004,
-     0.0
+     -0.078,
+     0.013
     ],
     "parallel_lines_harder": [
-     -0.017,
-     -0.001
+     -0.12,
+     0.0
     ],
     "parallel_lines_mislabeled": [
-     0.419,
-     0.475
+     3.552,
+     4.286
     ]
    },
-   "rank_delta_vs_reference": 0.06541523451229567,
+   "rank_delta_vs_reference": 0.5769163942440247,
    "reason": "",
    "results": {
     "open_structure_joint_ba": {
@@ -886,30 +837,30 @@
   "verified_staged": {
    "failed": false,
    "per_experiment_delta": {
-    "open_structure_joint_ba": -0.4136150335617473,
-    "parallel_lines": -0.0011304077225843768,
-    "parallel_lines_harder": -0.007435370506051236,
-    "parallel_lines_mislabeled": 0.44789940362768
+    "open_structure_joint_ba": -1.7473781472663958,
+    "parallel_lines": -0.01821432489046363,
+    "parallel_lines_harder": -0.03995129677832786,
+    "parallel_lines_mislabeled": 3.9297348988153753
    },
    "per_experiment_delta_ci95": {
     "open_structure_joint_ba": [
-     -0.735,
-     -0.229
+     -3.029,
+     -0.932
     ],
     "parallel_lines": [
-     -0.004,
-     0.0
+     -0.075,
+     0.014
     ],
     "parallel_lines_harder": [
-     -0.017,
-     -0.002
+     -0.112,
+     0.0
     ],
     "parallel_lines_mislabeled": [
-     0.422,
-     0.477
+     3.575,
+     4.328
     ]
    },
-   "rank_delta_vs_reference": -0.10003077891240328,
+   "rank_delta_vs_reference": -0.12203486466253372,
    "reason": "",
    "results": {
     "open_structure_joint_ba": {
@@ -957,7 +908,6 @@
   "orthline_constr",
   "riemanline",
   "no_optimization",
-  "gaussian_loss",
   "verified_groups",
   "staged",
   "verified_staged"
