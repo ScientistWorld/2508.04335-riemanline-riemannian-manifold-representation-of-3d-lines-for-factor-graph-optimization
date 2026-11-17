@@ -6,11 +6,20 @@ factor graph built by a VO front end (drifting camera poses, point and line
 landmarks), the 2D point / line-segment measurements, declared parallel-line
 groups, and the ground-truth trajectory and line landmarks.
 
-An instance is one sequence restricted to keyframes (every ``stride``-th frame,
-at most ``MAX_KEYFRAMES``).  As in the paper (Sec. 5, "Landmarks observed by
-fewer than three cameras are pruned prior to optimization"), landmarks with
-fewer than three keyframe observations are pruned; so are degenerate initial
-landmarks.  The public scene expresses everything in a world frame moved by
+An instance is one sequence restricted to keyframes: every ``stride``-th
+frame (at most ``MAX_KEYFRAMES``), starting at one of ``INSTANCES_PER_SEQUENCE``
+phase offsets, so each sequence yields several factor graphs over the whole
+trajectory with disjoint keyframes and measurements.  As in the paper (Sec. 5,
+"Landmarks observed by fewer than three cameras are pruned prior to
+optimization"), landmarks with fewer than three keyframe observations are
+pruned; so are degenerate initial landmarks.
+
+ICL-NUIM measurements come from real feature detection (about 1 px error).
+Open-Structure's TartanAir measurements are exact projections of the
+ground-truth landmarks; we add zero-mean Gaussian pixel noise
+(``TARTAN_PIXEL_NOISE`` px, a fresh draw per instance) to their point and
+segment-endpoint measurements, so that the problem stays an estimation
+problem instead of one with an exact zero-error solution.  The public scene expresses everything in a world frame moved by
 a rigid transform drawn from this split's seed and uses relabelled ids; ground
 truth (trajectory, line landmarks) stays in the evaluator.
 
@@ -30,7 +39,7 @@ ROOT = Path(__file__).resolve().parents[2]
 DATA_DIR = ROOT / "data" / "downloads" / "open_structure"
 SPLIT = "train"
 SEED = 20250806
-SEQUENCES = ["livingroom0", "livingroom1", "office0", "office1", "office", "japanesealley"]
+SEQUENCES = ["livingroom0", "livingroom1", "office0", "office", "japanesealley"]
 EXPERIMENT = "open_structure_joint_ba"
 
 ICL = {"livingroom0", "livingroom1", "livingroom2", "livingroom3", "office0", "office1", "office2", "office3"}
@@ -40,6 +49,8 @@ INTRINSICS = {
 }
 IMAGE_SIZE = [640, 480]
 MAX_KEYFRAMES = 150
+INSTANCES_PER_SEQUENCE = 4
+TARTAN_PIXEL_NOISE = 1.0
 MIN_OBS = 3
 
 
@@ -116,8 +127,8 @@ def sequence_dir(seq: str) -> Path:
 
 # ------------------------------------------------------------------ instances
 
-def _rng(seq: str) -> np.random.Generator:
-    h = hashlib.sha256(f"{SEED}:{seq}".encode()).digest()
+def _rng(seq: str, k: int) -> np.random.Generator:
+    h = hashlib.sha256(f"{SEED}:{seq}:{k}".encode()).digest()
     return np.random.default_rng(int.from_bytes(h[:16], "little"))
 
 
@@ -126,25 +137,33 @@ def _random_rotation(rng: np.random.Generator) -> np.ndarray:
     return quat_to_R(q)
 
 
-def _scene_id(seq: str) -> str:
-    return hashlib.sha256(f"{SPLIT}:{SEED}:{seq}:joint".encode()).hexdigest()[:16]
+def _scene_id(seq: str, k: int) -> str:
+    return hashlib.sha256(f"{SPLIT}:{SEED}:{seq}:{k}:joint".encode()).hexdigest()[:16]
 
 
-def build_instance(seq: str) -> dict[str, Any]:
-    base = sequence_dir(seq)
-    venom = _find(base, "venom_sequence.txt")
-    gt_path = _find(base, "ground_truth.txt")
-    if venom is None or gt_path is None:
-        raise FileNotFoundError(f"Open-Structure sequence {seq} missing under {base}; run scripts/download.sh")
-    g = parse_venom(venom)
-    gt = read_traj(gt_path)
-    gt_lines = read_gt_lines(base)
+_SEQ_CACHE: dict[str, tuple] = {}
+
+
+def load_sequence(seq: str) -> tuple[dict[str, Any], dict[int, np.ndarray], dict[int, np.ndarray]]:
+    if seq not in _SEQ_CACHE:
+        base = sequence_dir(seq)
+        venom = _find(base, "venom_sequence.txt")
+        gt_path = _find(base, "ground_truth.txt")
+        if venom is None or gt_path is None:
+            raise FileNotFoundError(f"Open-Structure sequence {seq} missing under {base}; run scripts/download.sh")
+        _SEQ_CACHE[seq] = (parse_venom(venom), read_traj(gt_path), read_gt_lines(base))
+    return _SEQ_CACHE[seq]
+
+
+def build_instance(seq: str, k: int = 0) -> dict[str, Any]:
+    g, gt, gt_lines = load_sequence(seq)
     intr = INTRINSICS["icl" if seq in ICL else "tartan"]
-    rng = _rng(seq)
+    rng = _rng(seq, k)
 
     frames_all = sorted(i for i in g["V"] if i in gt)
     stride = max(1, math.ceil(len(frames_all) / MAX_KEYFRAMES))
-    kfs = frames_all[::stride]
+    offset = (k * stride) // INSTANCES_PER_SEQUENCE
+    kfs = frames_all[offset::stride]
     kf_set = set(kfs)
 
     # landmarks: non-degenerate, observed in >= MIN_OBS distinct keyframes
@@ -190,16 +209,20 @@ def build_instance(seq: str) -> dict[str, Any]:
     order_l = rng.permutation(len(lines))
     points = [points[i] for i in order_p]
     lines = [lines[i] for i in order_l]
-    point_obs = [[point_new[a[0]], frame_new[a[1]], round(a[2], 4), round(a[3], 4)] for a in pobs]
-    line_obs = [[line_new[a[0]], frame_new[a[1]], round(a[2], 4), round(a[3], 4), round(a[4], 4), round(a[5], 4)]
-                for a in lobs]
+    sigma = 0.0 if seq in ICL else TARTAN_PIXEL_NOISE
+    pn = rng.normal(0.0, sigma, size=(len(pobs), 2)) if sigma > 0 else np.zeros((len(pobs), 2))
+    ln = rng.normal(0.0, sigma, size=(len(lobs), 4)) if sigma > 0 else np.zeros((len(lobs), 4))
+    point_obs = [[point_new[a[0]], frame_new[a[1]], round(a[2] + e[0], 4), round(a[3] + e[1], 4)]
+                 for a, e in zip(pobs, pn)]
+    line_obs = [[line_new[a[0]], frame_new[a[1]], round(a[2] + e[0], 4), round(a[3] + e[1], 4),
+                 round(a[4] + e[2], 4), round(a[5] + e[3], 4)] for a, e in zip(lobs, ln)]
     groups = []
     for grp in g["G"]:
         members = [line_new[m] for m in grp if m in keep_l]
         if len(members) >= 2:
             groups.append(sorted(members))
 
-    sid = _scene_id(seq)
+    sid = _scene_id(seq, k)
     public = {
         "scene_id": sid,
         "task": "joint_ba",
@@ -224,7 +247,9 @@ def build_instance(seq: str) -> dict[str, Any]:
                 gt_l[line_new[l]] = {"start": e[:3].tolist(), "end": e[3:].tolist()}
     hidden = {
         "sequence": seq,
+        "instance": k,
         "stride": stride,
+        "offset": offset,
         "frames": gt_frames,
         "lines": gt_l,
         "initial_frames": {frame_new[f]: g["V"][f][:3].tolist() for f in kfs},
@@ -233,21 +258,27 @@ def build_instance(seq: str) -> dict[str, Any]:
 
 
 def all_instances() -> list[dict[str, Any]]:
-    return [build_instance(seq) for seq in SEQUENCES]
+    return [build_instance(seq, k) for seq in SEQUENCES for k in range(INSTANCES_PER_SEQUENCE)]
 
 
 # ------------------------------------------------------------------ scoring helpers
 
-def umeyama_se3(src: np.ndarray, dst: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
-    """R, t minimising sum |R src + t - dst|^2 (no scale), as evo's SE(3) alignment."""
+def umeyama_sim3(src: np.ndarray, dst: np.ndarray) -> tuple[float, np.ndarray, np.ndarray]:
+    """s, R, t minimising sum |s R src + t - dst|^2 (Umeyama 1991; evo's Sim(3) alignment).
+    The factor graph has 2D measurements only, so its scale is a free gauge."""
     ms, md = src.mean(0), dst.mean(0)
-    h = (src - ms).T @ (dst - md) / len(src)
-    u, _, vt = np.linalg.svd(h)
-    s = np.eye(3)
+    a, b = src - ms, dst - md
+    h = a.T @ b / len(src)
+    u, sv, vt = np.linalg.svd(h)
+    d = np.eye(3)
     if np.linalg.det(u) * np.linalg.det(vt) < 0:
-        s[2, 2] = -1.0
-    r = vt.T @ s @ u.T
-    return r, md - r @ ms
+        d[2, 2] = -1.0
+    r = vt.T @ d @ u.T
+    var = float(np.sum(a * a)) / len(src)
+    scale = float(np.sum(sv * np.diag(d))) / var if var > 1e-18 else 1.0
+    if not (math.isfinite(scale) and scale > 1e-9):
+        scale = 1.0
+    return scale, r, md - scale * r @ ms
 
 
 # ------------------------------------------------------------------ scoring
@@ -261,8 +292,11 @@ WORST = {
     "median_direction_error_deg": 90.0,
     "p90_direction_error_deg": 90.0,
     "median_normal_error_deg": 90.0,
+    "param_count_error_per_line": 2.0,
 }
 METRICS = tuple(WORST)
+SAME_DIRECTION_RAD = 1e-7  # estimated directions count as shared only when (numerically) identical
+GT_SAME_DIRECTION_DEG = 0.01  # ground-truth parallel classes (declared groups are exactly parallel)
 ATE_FLOOR_CM = 0.01
 ROT_FLOOR_DEG = 1e-3
 
@@ -336,6 +370,33 @@ def _read_output(path: Path, frame_ids: list[int], line_ids: list[int]):
     return frames, lines
 
 
+def _count_classes(directions: list[np.ndarray], tol_rad: float) -> int:
+    reps: list[np.ndarray] = []
+    for d in directions:
+        d = d / np.linalg.norm(d)
+        if not any(float(np.linalg.norm(np.cross(d, r))) < tol_rad for r in reps):
+            reps.append(d)
+    return len(reps)
+
+
+def _count_shared(directions: list[np.ndarray]) -> int:
+    """Distinct estimated directions: union of lines whose directions coincide."""
+    n = len(directions)
+    parent = list(range(n))
+
+    def find(i: int) -> int:
+        while parent[i] != i:
+            parent[i] = parent[parent[i]]
+            i = parent[i]
+        return i
+
+    for i in range(n):
+        for j in range(i + 1, n):
+            if float(np.linalg.norm(np.cross(directions[i], directions[j]))) < SAME_DIRECTION_RAD:
+                parent[find(i)] = find(j)
+    return len({find(i) for i in range(n)})
+
+
 def score_instance(instance: dict[str, Any], output_path: Path) -> dict[str, Any]:
     public, hidden = instance["public"], instance["hidden"]
     frame_ids = [int(f["id"]) for f in public["frames"]]
@@ -365,12 +426,12 @@ def score_instance(instance: dict[str, Any], output_path: Path) -> dict[str, Any
             f"{public['scene_id']}: median line residual {gate:.2f}px on its own measurements exceeds "
             f"{GATE_MEDIAN_LINE_RESIDUAL_PX}px (task not solved)")
 
-    # Trajectory: SE(3) alignment of camera centres to ground truth (evo -a).
+    # Trajectory: Sim(3) alignment of camera centres to ground truth (evo -as).
     ids = sorted(hidden["frames"], key=int)
     c_est = np.array([-frames[int(i)][0].T @ frames[int(i)][1] for i in ids])
     c_gt = np.array([hidden["frames"][i]["center"] for i in ids], float)
-    r_a, t_a = umeyama_se3(c_est, c_gt)
-    err = np.linalg.norm(c_est @ r_a.T + t_a - c_gt, axis=1)
+    s_a, r_a, t_a = umeyama_sim3(c_est, c_gt)
+    err = np.linalg.norm(s_a * c_est @ r_a.T + t_a - c_gt, axis=1)
     rot = []
     for i in ids:
         r_wc = r_a @ frames[int(i)][0].T
@@ -381,24 +442,28 @@ def score_instance(instance: dict[str, Any], output_path: Path) -> dict[str, Any
 
     # Lines in the ground-truth frame (same alignment).
     dir_err, nrm_err = [], []
+    est_dirs, gt_dirs = [], []
     for lid, gl in sorted(hidden["lines"].items(), key=lambda kv: int(kv[0])):
         m, d = lines[int(lid)]
+        est_dirs.append(d)
         d2 = r_a @ d
-        m2 = r_a @ m + np.cross(t_a, d2)
+        m2 = s_a * (r_a @ m) + np.cross(t_a, d2)  # moment of the line under X -> s R X + t
         s, e = np.asarray(gl["start"], float), np.asarray(gl["end"], float)
         dg = e - s
+        gt_dirs.append(dg)
         mg = np.cross(s, e) / np.linalg.norm(dg)
         dir_err.append(_angle_deg(d2, dg))
         nrm_err.append(_angle_deg(m2, mg))
 
     init = np.array([hidden["initial_frames"][i] for i in ids], float)
-    r0, t0 = umeyama_se3(init, c_gt)
-    init_err = np.linalg.norm(init @ r0.T + t0 - c_gt, axis=1)
+    s0, r0, t0 = umeyama_sim3(init, c_gt)
+    init_err = np.linalg.norm(s0 * init @ r0.T + t0 - c_gt, axis=1)
     return {
         "scene_id": public["scene_id"],
         "sequence": hidden["sequence"],
         "num_frames": len(ids),
         "num_lines_scored": len(dir_err),
+        "sim3_scale": s_a,
         "ate_rmse_cm": float(100.0 * math.sqrt(float(np.mean(err**2)))),
         "ate_median_cm": float(100.0 * np.median(err)),
         "rotation_rmse_deg": float(math.sqrt(float(np.mean(rot**2)))),
@@ -406,6 +471,9 @@ def score_instance(instance: dict[str, Any], output_path: Path) -> dict[str, Any
         "direction_errors_deg": [round(v, 6) for v in dir_err],
         "normal_errors_deg": [round(v, 6) for v in nrm_err],
         "line_gate_median_px": gate,
+        # Table 6 compactness on the scored lines: effective 2 x distinct directions + 2 x lines
+        "distinct_directions": _count_shared(est_dirs),
+        "true_direction_classes": _count_classes(gt_dirs, math.radians(GT_SAME_DIRECTION_DEG)),
     }
 
 
@@ -424,4 +492,7 @@ def pooled_metrics(rows: list[dict[str, Any]]) -> dict[str, float]:
         "median_direction_error_deg": float(np.median(dirs)) if len(dirs) else 90.0,
         "p90_direction_error_deg": float(np.percentile(dirs, 90)) if len(dirs) else 90.0,
         "median_normal_error_deg": float(np.median(nrms)) if len(nrms) else 90.0,
+        "param_count_error_per_line": float(
+            sum(2 * abs(r["distinct_directions"] - r["true_direction_classes"]) for r in rows)
+            / max(1, sum(r["num_lines_scored"] for r in rows))) if any(r["num_lines_scored"] for r in rows) else 2.0,
     }

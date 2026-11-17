@@ -1,10 +1,10 @@
 {
-  "_notes": "Scaled reproduction: line landmarks only, known camera poses, procedural scenes. The hidden test generates its scenes inside eval/test/ and runs every solver in scripts/methods/ on them. All coefficients are magnitudes; direction comes from higher_is_better.",
+  "_notes": "Line landmarks with known poses on procedural scenes (parallel_lines*), plus the paper's joint pose/point/line factor-graph optimisation on Open-Structure ICL-NUIM and TartanAir sequences (open_structure_joint_ba; keyframe subsets, Sim(3)-aligned ATE). The hidden test generates or loads its instances inside eval/test/ and runs every solver in scripts/methods/ on them. All coefficients are magnitudes; direction comes from higher_is_better.",
   "experiments": {
     "parallel_lines": {
       "description": "Recover 3D line landmarks (2-3 declared parallel groups plus individual lines) from noisy multi-view segment observations with known poses; 8 cameras around the scene, 1.0 px noise, partial visibility and truncated segments.",
       "notes": "Result values are the paper's Table 6 parameter counts expressed per line: StructRiemanLine uses the minimal count of the true structure (44 for 20 lines, error 0), independent 4n representations use 80, i.e. (80 - 44) / 20 = 1.8 excess parameters per line. The paper reports no number on this synthetic scale for the angular and novel-view metrics; its Table 4 values are kept under _paper_reported for context only.",
-      "weight": 0.4,
+      "weight": 0.25,
       "primary_metric": "param_count_error_per_line",
       "metrics": {
         "median_direction_error_deg": {
@@ -150,7 +150,7 @@
     "parallel_lines_harder": {
       "description": "Same task with three parallel groups and more individual lines, 6 cameras on a 110-degree arc (narrow baseline), 1.5 px noise, 70% visibility, shorter segments.",
       "notes": "Result values are the paper's Table 6 parameter counts expressed per line: StructRiemanLine uses the minimal count of the true structure (44 for 20 lines, error 0), independent 4n representations use 80, i.e. (80 - 44) / 20 = 1.8 excess parameters per line. The paper reports no number on this synthetic scale for the angular and novel-view metrics; its Table 4 values are kept under _paper_reported for context only.",
-      "weight": 0.35,
+      "weight": 0.2,
       "primary_metric": "param_count_error_per_line",
       "metrics": {
         "median_direction_error_deg": {
@@ -296,7 +296,7 @@
     "parallel_lines_mislabeled": {
       "description": "Where the paper's method falls short: the declared parallel associations contain errors (1-2 members per group are 3-10 degrees off parallel, and half of the scenes contain one grossly wrong member), as produced by imperfect vanishing-point clustering. 8 cameras, 1.2 px noise.",
       "notes": "Result values are the paper's Table 6 parameter counts expressed per line: StructRiemanLine uses the minimal count of the true structure (44 for 20 lines, error 0), independent 4n representations use 80, i.e. (80 - 44) / 20 = 1.8 excess parameters per line. The paper reports no number on this synthetic scale for the angular and novel-view metrics; its Table 4 values are kept under _paper_reported for context only. This setting is not in the paper; the paper assumes correct associations, so its Table 6 numbers describe the correctly grouped case only.",
-      "weight": 0.25,
+      "weight": 0.15,
       "primary_metric": "param_count_error_per_line",
       "metrics": {
         "median_direction_error_deg": {
@@ -361,6 +361,251 @@
             "orthline_constr": 3152,
             "struct_riemanline": 3116
           }
+        }
+      }
+    },
+    "open_structure_joint_ba": {
+      "description": "Joint optimisation of camera poses, point landmarks and line landmarks from the initial co-visibility factor graph of an Open-Structure sequence (paper Sec. 4-5, Tables 2-4). Hidden test: 6 held-out sequences (ICL-NUIM livingroom2, livingroom3, office2, office3; TartanAir hospital, carwelding), 4 keyframe-phase instances each (at most 150 keyframes), scored against the datasets' own ground-truth trajectories and line landmarks.",
+      "notes": "Scaled reproduction of Tables 2-4: keyframe subsets instead of every frame; ATE RMSE uses Sim(3) alignment (the factor graph has 2D measurements only, so its scale is a free gauge) and is the geometric mean over instances; 1 px Gaussian noise is added to the TartanAir measurements, which Open-Structure provides as exact projections. The ate_rmse_cm values below are the geometric means of the paper's own per-sequence ATE RMSE (SE(3)-aligned, every frame; Tables 2-3) over the six held-out sequences, given for orientation only: they are not on exactly this gym's scale. param_count_error_per_line follows the paper's Table 6 (2n + 2 per parallel group vs 4n), as in the procedural experiments.",
+      "weight": 0.4,
+      "primary_metric": "ate_rmse_cm",
+      "metrics": {
+        "ate_rmse_cm": {
+          "higher_is_better": false,
+          "coefficient": 1.0,
+          "description": "Absolute trajectory error (cm): RMSE of keyframe camera centres after Sim(3) alignment to the ground-truth trajectory, geometric mean over instances (paper Tables 2-3)."
+        },
+        "rotation_rmse_deg": {
+          "higher_is_better": false,
+          "coefficient": 0.5,
+          "description": "RMS rotation error (deg) of the keyframe orientations after the same alignment, geometric mean over instances (paper Sec. 5: rotational consistency)."
+        },
+        "median_direction_error_deg": {
+          "higher_is_better": false,
+          "coefficient": 1.0,
+          "description": "Median unsigned angle (deg) between estimated and ground-truth line directions, after the trajectory alignment, pooled over every scored line (paper Table 4, 'Dir.')."
+        },
+        "p90_direction_error_deg": {
+          "higher_is_better": false,
+          "coefficient": 0.5,
+          "description": "90th percentile of the same direction errors (paper Fig. 5: error tails)."
+        },
+        "median_normal_error_deg": {
+          "higher_is_better": false,
+          "coefficient": 0.6,
+          "description": "Median unsigned angle (deg) between estimated and ground-truth Plucker normal (moment) vectors in the ground-truth frame (paper Table 4, 'Norm.')."
+        },
+        "param_count_error_per_line": {
+          "higher_is_better": false,
+          "coefficient": 0.5,
+          "description": "|effective - minimal| line parameters per scored line: effective = 2 x (distinct estimated directions) + 2 x (lines); minimal = the same count for the ground-truth direction classes (paper Table 6)."
+        }
+      },
+      "results": {
+        "struct_riemanline": {
+          "type": "proposed",
+          "ate_rmse_cm": 1.802,
+          "param_count_error_per_line": 0.0
+        },
+        "riemanline": {
+          "type": "baseline",
+          "ate_rmse_cm": 2.157,
+          "param_count_error_per_line": 1.8
+        },
+        "orthline": {
+          "type": "baseline",
+          "ate_rmse_cm": 2.047,
+          "param_count_error_per_line": 1.8
+        },
+        "orthline_constr": {
+          "type": "baseline",
+          "ate_rmse_cm": 2.1,
+          "param_count_error_per_line": 1.8
+        }
+      },
+      "_paper_reported": {
+        "table2_ate_rmse_cm": {
+          "_source": "Paper Table 2 (ICL-NUIM, translation APE RMSE in cm, SE(3)-aligned, every frame).",
+          "sequences": [
+            "livingroom0",
+            "livingroom1",
+            "livingroom2",
+            "livingroom3",
+            "office0",
+            "office1",
+            "office2",
+            "office3"
+          ],
+          "initial": [
+            12.13,
+            2.15,
+            12.95,
+            18.26,
+            1.73,
+            11.93,
+            2.95,
+            7.56
+          ],
+          "orthline": [
+            0.81,
+            4.13,
+            0.79,
+            6.7,
+            0.38,
+            1.81,
+            0.75,
+            0.78
+          ],
+          "riemanline": [
+            0.81,
+            1.19,
+            0.78,
+            6.71,
+            0.38,
+            1.89,
+            0.75,
+            0.79
+          ],
+          "orthline_constr": [
+            0.81,
+            3.58,
+            0.79,
+            6.71,
+            0.38,
+            1.81,
+            0.76,
+            0.85
+          ],
+          "struct_riemanline": [
+            0.81,
+            0.9,
+            0.75,
+            6.65,
+            0.38,
+            1.76,
+            0.75,
+            0.77
+          ]
+        },
+        "table3_ate_rmse_cm": {
+          "_source": "Paper Table 3 (TartanAir, translation APE RMSE in cm). Its 'Rot.' column matches the SE(3)-aligned median translation error of the initial graphs, so it is not used here.",
+          "sequences": [
+            "carwelding",
+            "hospital",
+            "office",
+            "japanesealley"
+          ],
+          "initial": [
+            14.74,
+            33.78,
+            57.0,
+            10.92
+          ],
+          "orthline": [
+            4.47,
+            5.32,
+            43.25,
+            3.75
+          ],
+          "orthline_constr": [
+            4.56,
+            5.49,
+            50.04,
+            3.68
+          ],
+          "riemanline": [
+            4.46,
+            7.29,
+            40.95,
+            3.85
+          ],
+          "struct_riemanline": [
+            4.08,
+            2.91,
+            15.6,
+            3.65
+          ]
+        },
+        "table4_median_line_errors_deg": {
+          "_source": "Paper Table 4 (TartanAir, median line direction / normal errors in degrees).",
+          "sequences": [
+            "carwelding",
+            "hospital",
+            "office",
+            "japanesealley"
+          ],
+          "orthline": [
+            [
+              1.52,
+              1.42
+            ],
+            [
+              5.16,
+              4.11
+            ],
+            [
+              3.89,
+              4.49
+            ],
+            [
+              0.88,
+              0.86
+            ]
+          ],
+          "orthline_constr": [
+            [
+              0.92,
+              0.93
+            ],
+            [
+              5.05,
+              2.54
+            ],
+            [
+              2.04,
+              2.28
+            ],
+            [
+              0.46,
+              0.42
+            ]
+          ],
+          "riemanline": [
+            [
+              1.55,
+              1.43
+            ],
+            [
+              5.38,
+              4.68
+            ],
+            [
+              3.89,
+              4.48
+            ],
+            [
+              0.88,
+              0.73
+            ]
+          ],
+          "struct_riemanline": [
+            [
+              0.82,
+              0.83
+            ],
+            [
+              1.6,
+              0.91
+            ],
+            [
+              0.04,
+              0.51
+            ],
+            [
+              0.07,
+              0.15
+            ]
+          ]
         }
       }
     }
